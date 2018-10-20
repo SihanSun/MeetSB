@@ -8,8 +8,9 @@ Study Buddies Team
 ## Dependencies
 
 - Android-Studio : [https://developer.android.com/studio/install](https://developer.android.com/studio/install) Please go to the website and download the latest version and install.
-- FireBase: [https://firebase.google.com/](https://firebase.google.com/) 
+- FireBase: [https://firebase.google.com/](https://firebase.google.com/)
 
+- SwipeCards Library: com.lorentzos.swipecards:library:1.0.8
 
 ## Platforms
 
