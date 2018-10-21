@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
         btnDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(MainActivity.this, "Dislike Gary! How dare are you!");
+                flingContainer.getTopCardListener().selectLeft();
             }
         });
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(MainActivity.this, "You made one of the best decision in your lifetime ;)");
+                flingContainer.getTopCardListener().selectRight();
             }
         });
 
