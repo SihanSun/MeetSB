@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">meetSB</string>
+    <string name="personal_description">Passionate hair style designer seeking intern or full time job as senior hair dressor</string>
+    <string name="class_list">HSD100, HSD110, HW11, HC140, HC140L</string>
 </resources>
