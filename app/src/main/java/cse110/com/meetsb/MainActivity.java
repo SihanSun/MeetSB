@@ -115,13 +115,21 @@ public class MainActivity extends AppCompatActivity {
         btnDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 left();
+=======
+                flingContainer.getTopCardListener().selectLeft();
+>>>>>>> 1935059d6e0ad2c900b21bf7c50dd521d569be22
             }
         });
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 right();
+=======
+                flingContainer.getTopCardListener().selectRight();
+>>>>>>> 1935059d6e0ad2c900b21bf7c50dd521d569be22
             }
         });
 
