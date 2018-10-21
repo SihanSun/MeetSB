@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(MainActivity.this, "You Clicked Gary!!", Toast.LENGTH_SHORT).show();
+                makeToast(MainActivity.this, "You Clicked Gary!!");
             }
         });
 
@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
         btnDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(MainActivity.this, "Dislike Gary! How dare are you!");
+                left();
             }
         });
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(MainActivity.this, "You made one of the best decision in your lifetime ;)");
+                right();
             }
         });
 
