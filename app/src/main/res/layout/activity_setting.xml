@@ -6,44 +6,87 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SettingActivity">
+
+    <ImageButton
+        android:id="@+id/setting_pic_input"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <EditText
+        android:id="@+id/setting_username_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter Username"
+        android:inputType="textPersonName" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="Description"/>
+
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/setting_description_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:ems="10"
-            android:inputType="textPersonName"/>
+            android:hint="Enter Description"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="GPA"/>
+
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/setting_gpa_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:ems="10"
+            android:hint="Enter GPA"
             android:inputType="textPersonName"
             android:text="" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/setting_major_input"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:entries="@array/major_array"
+            android:prompt="@string/major_prompt" />
+
+        <Spinner
+            android:id="@+id/setting_gender_input"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:entries="@array/gender_array"
+            android:prompt="@string/gender_prompt" />
+
+        <Spinner
+            android:id="@+id/setting_class_input"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:entries="@array/class_array"
+            android:prompt="@string/class_prompt" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/setting_button_input"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="SUBMIT"
+        android:textColor="#B2B1B3"
+        android:textSize="30sp" />
 
 </LinearLayout>
