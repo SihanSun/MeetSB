@@ -16,4 +16,38 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string-array name="major_array">
+        <item>Computer Science</item>
+        <item>Mathemetics</item>
+        <item>Biology</item>
+        <item>Music</item>
+        <item>Economics</item>
+        <item>MathEcon</item>
+        <item>Literature</item>
+        <item>Others</item>
+    </string-array>
+
+    <string name="major_prompt">Choose a major</string>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="gender_prompt">Choose a gender</string>
+
+    <string-array name="class_array">
+        <item>CSE110</item>
+        <item>CSE105</item>
+        <item>CSE158</item>
+        <item>CSE101</item>
+        <item>CSE140</item>
+        <item>CSE140L</item>
+        <item>CSE120</item>
+        <item>CSE130</item>
+    </string-array>
+
+    <string name="class_prompt">What class are you taking</string>
 </resources>
+
