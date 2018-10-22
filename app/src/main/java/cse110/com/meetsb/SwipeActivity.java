@@ -1,6 +1,5 @@
 package cse110.com.meetsb;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class SwipeActivity extends AppCompatActivity {
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_swipe);
 
         al = new ArrayList<>();
         al.add("Tony");
@@ -57,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                Toast.makeText(MainActivity.this, "Dislike me! How dare are you!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SwipeActivity.this, "Dislike me! How dare are you!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "You made one of the best decision in your lifetime ;)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SwipeActivity.this, "You made one of the best decision in your lifetime ;)", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SwipeActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
             }
         });
 
