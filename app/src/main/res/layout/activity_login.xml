@@ -2,19 +2,19 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
+    tools:context=".LoginActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/passwordField"
+            android:id="@+id/passwordFieldSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -23,10 +23,10 @@
             android:ems="10"
             android:hint="enter your password"
             android:inputType="textPassword"
-             />
+            />
 
         <EditText
-            android:id="@+id/emailField"
+            android:id="@+id/emailFieldSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -40,21 +40,21 @@
             tools:layout_editor_absoluteY="174dp" />
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/signInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="Sign In"
             />
 
         <TextView
-            android:id="@+id/textViewSignIn"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewRegister"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Already Regestered? Sign in here"
+            android:text="Not have an account? Register here."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.448"
@@ -62,7 +62,5 @@
             app:layout_constraintTop_toBottomOf="@+id/registerButton"
             app:layout_constraintVertical_bias="0.359" />
     </LinearLayout>
-
-
-
+</LinearLayout>
 </android.support.constraint.ConstraintLayout>
