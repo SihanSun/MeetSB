@@ -33,7 +33,7 @@ public class SigninActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signin);
 
         //set all the buttons, editText, and textView
-        userEmailAddress = (EditText) findViewById(R.id.signIn_editText_password);
+        userEmailAddress = (EditText) findViewById(R.id.signIn_editText_emailAdress);
         userPassword = (EditText) findViewById(R.id.signIn_editText_password);
         signInButton = (Button) findViewById(R.id.signIn_button_signIn);
         returnToSignUp = (TextView) findViewById(R.id.signIn_textView_returnToSignUp);
