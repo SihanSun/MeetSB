@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/email_signup"
+                    android:id="@+id/signUp_textView_emailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/password_signup"
+                    android:id="@+id/signUp_editText_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/password_signup_confirm"
+                    android:id="@+id/signUp_editText_passwordConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
@@ -76,7 +76,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/register_button"
+                android:id="@+id/signUp_button_signUp"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,12 +85,11 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/return_login_button"
+                android:id="@+id/signUp_button_returnToLogin"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:onClick="openLogin"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
