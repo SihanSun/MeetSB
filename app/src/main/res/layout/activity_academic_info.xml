@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AcademicInfoActivity">
+
+    <TextView
+        android:id="@+id/academic_info_textView_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Academic Info"
+        android:textAlignment="center"
+        android:textSize="36sp" />
+
+    <Spinner
+        android:id="@+id/academic_info_spinner_major"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_weight="0"
+        android:entries="@array/major_array"
+        android:prompt="@string/major_prompt" />
+
+    <EditText
+        android:id="@+id/academic_info_editText_GPA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="GPA"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/academic_info_multilineText_description"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textMultiLine" />
+</LinearLayout>
