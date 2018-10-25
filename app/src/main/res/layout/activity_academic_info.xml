@@ -38,4 +38,10 @@
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/academic_info_button_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue" />
 </LinearLayout>

@@ -22,14 +22,18 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".ConfirmActivity" />
         <activity android:name=".SigninActivity">
+        </activity>
+        <activity android:name=".BasicInfoActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BasicInfoActivity" />
-        <activity android:name=".AcademicInfoActivity"></activity>
+        <activity android:name=".AcademicInfoActivity">
+        </activity>
+        <activity android:name=".ClassInfoActivity">
+        </activity>
     </application>
 
 </manifest>
