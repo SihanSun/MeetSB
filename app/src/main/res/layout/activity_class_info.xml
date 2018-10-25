@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ClassInfoActivity">
+
+    <TextView
+        android:id="@+id/class_info_textView_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Add Classes"
+        android:textAlignment="center"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/class_info_textView_classList"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="80dp"
+        android:layout_weight="0" />
+
+    <Button
+        android:id="@+id/class_info_button_addClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight="0"
+        android:text="Add class" />
+
+    <Button
+        android:id="@+id/class_info_button_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Continue" />
+
+</LinearLayout>
