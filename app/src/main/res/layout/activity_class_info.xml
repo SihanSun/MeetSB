@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,35 +7,30 @@
     android:orientation="vertical"
     tools:context=".ClassInfoActivity">
 
-    <TextView
-        android:id="@+id/class_info_textView_title"
+    <ListView
+        android:id="@+id/class_info_listview_classlist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Add Classes"
-        android:textAlignment="center"
-        android:textSize="36sp" />
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_weight="0" />
 
-    <TextView
-        android:id="@+id/class_info_textView_classList"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="80dp"
+    <ListView
+        android:id="@+id/class_info_listview_addedClass"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="100dp"
         android:layout_weight="0" />
 
     <Button
-        android:id="@+id/class_info_button_addClass"
-        android:layout_width="match_parent"
+        android:id="@+id/class_info_button_submit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_weight="0"
-        android:text="Add class" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp"
+        android:text="Submit" />
 
-    <Button
-        android:id="@+id/class_info_button_continue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Continue" />
 
-</LinearLayout>
+</RelativeLayout>

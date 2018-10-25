@@ -40,7 +40,6 @@
     <string name="gender_prompt">Choose a gender</string>
 
     <string-array name="class_array">
-        <item>Choose a class...</item>
         <item>CSE110</item>
         <item>CSE105</item>
         <item>CSE158</item>
