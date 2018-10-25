@@ -35,7 +35,7 @@ public class ConfirmActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(ConfirmActivity.this, SwipeActivity.class));
         } else {
-            Toast.makeText(this, "Email not verified!!!+User is " + firebaseAuth.getCurrentUser().getEmail() + "email:" + firebaseAuth.getCurrentUser().isEmailVerified(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "email not verified!!!+User is " + firebaseAuth.getCurrentUser().getEmail() + "email:" + firebaseAuth.getCurrentUser().isEmailVerified(), Toast.LENGTH_SHORT).show();
         }
     }
 

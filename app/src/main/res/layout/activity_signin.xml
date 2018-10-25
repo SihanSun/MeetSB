@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".SigninActivity">
 
     <LinearLayout
@@ -17,6 +18,7 @@
             android:id="@+id/signIn_editText_emailAdress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="290dp"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -39,9 +41,13 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/sign_in_btn"
             android:text="@string/action_sign_in"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/signIn_textView_returnToSignUp"
