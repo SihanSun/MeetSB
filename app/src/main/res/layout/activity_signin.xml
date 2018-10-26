@@ -11,30 +11,48 @@
         android:id="@+id/signIn_linearLayout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/logo" />
 
         <EditText
             android:id="@+id/signIn_editText_emailAdress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="290dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/password"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:id="@+id/signIn_editText_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/password"
             android:hint="@string/prompt_password"
             android:imeActionId="6"
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="@android:color/white" />
 
         <Button
             android:id="@+id/signIn_button_signIn"
@@ -55,7 +73,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:text="Don't have a account? Sign up here."
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
 
     </LinearLayout>
