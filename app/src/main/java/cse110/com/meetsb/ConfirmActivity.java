@@ -17,7 +17,7 @@ public class ConfirmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
-        verifyButton = (Button) findViewById(R.id.confirm_button_verify);
+        verifyButton = (Button) findViewById(R.id.confirm_button_resend);
         firebaseAuth = FirebaseAuth.getInstance();
 
         verifyButton.setOnClickListener(new View.OnClickListener() {

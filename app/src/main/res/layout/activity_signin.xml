@@ -1,83 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signIn_linearLayout_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".SigninActivity">
 
-    <LinearLayout
-        android:id="@+id/signIn_linearLayout_1"
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="58dp"
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/signIn_editText_emailAdress"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="259dp"
+        android:background="@drawable/password"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:singleLine="true"
+        android:textColorHint="@android:color/white"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/signIn_editText_password"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/password"
+        android:hint="@string/prompt_password"
+        android:imeActionId="6"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:singleLine="true"
+        android:textColorHint="@android:color/white"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/signIn_button_signIn"
+        style="?android:textAppearanceSmall"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/sign_in_btn"
+        android:textStyle="bold"
+        tools:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/signIn_textView_returnToSignUp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/dont_have_account"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/logo" />
-
-        <EditText
-            android:id="@+id/signIn_editText_emailAdress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="290dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/password"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColorHint="@android:color/white" />
-
-        <EditText
-            android:id="@+id/signIn_editText_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/password"
-            android:hint="@string/prompt_password"
-            android:imeActionId="6"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColorHint="@android:color/white" />
-
-        <Button
-            android:id="@+id/signIn_button_signIn"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/sign_in_btn"
-            android:text="@string/action_sign_in"
-            android:textStyle="bold"
-            tools:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/signIn_textView_returnToSignUp"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Don't have a account? Sign up here."
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

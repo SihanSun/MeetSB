@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/background_3"
     android:orientation="vertical">
 
     <ImageView
@@ -74,6 +74,5 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
-        android:background="@drawable/continuebtn"
-        android:text="continue" />
+        android:background="@drawable/continue_btn" />
 </LinearLayout>
