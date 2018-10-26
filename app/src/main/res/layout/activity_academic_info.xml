@@ -28,6 +28,7 @@
         android:background="@drawable/small_transparent_box"
         android:entries="@array/major_array"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:prompt="@string/major_prompt" />
 
     <EditText
@@ -40,6 +41,7 @@
         android:hint="GPA(Optional)"
         android:inputType="numberDecimal"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textColor="#fff" />
 
     <EditText
@@ -54,6 +56,7 @@
         android:inputType="textMultiLine"
         android:paddingLeft="20dp"
         android:paddingTop="15dp"
+        android:paddingRight="20dp"
         android:textColor="#fff" />
 
     <Button
