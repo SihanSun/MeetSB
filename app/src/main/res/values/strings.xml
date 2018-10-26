@@ -19,6 +19,7 @@
         completions."
     </string>
 
+    <string name="already_have_account"><u>Already have an account? Sign in here.</u></string>
     <string-array name="major_array">
         <item>Computer Science</item>
         <item>Mathemetics</item>
