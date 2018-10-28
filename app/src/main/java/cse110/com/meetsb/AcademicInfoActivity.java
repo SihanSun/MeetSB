@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class AcademicInfoActivity extends AppCompatActivity {
     Button continueBtn;
@@ -12,8 +13,10 @@ public class AcademicInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_academic_info);
-        continueBtn = (Button) findViewById(R.id.academic_info_button_continue);
 
+        Toast.makeText(getApplicationContext(), getIntent().getStringExtra("USERNAME"), Toast.LENGTH_SHORT).show();
+
+        continueBtn = (Button) findViewById(R.id.academic_info_button_continue);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

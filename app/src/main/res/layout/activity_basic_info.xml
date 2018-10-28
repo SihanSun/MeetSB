@@ -5,72 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_3"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/title" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="93dp"
+        android:gravity="center"
+        android:text="Basic Info"
+        android:textColor="#fff"
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/basic_info_imageView_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="130dp"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="130dp"
-        android:background="@drawable/profile_pic"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:background="@drawable/profile_pic" />
 
     <EditText
         android:id="@+id/basic_info_editText_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/password"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/small_transparent_box"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName"
-        android:text="Name"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_focused" />
+        android:paddingLeft="20dp" />
 
     <EditText
         android:id="@+id/basic_info_editText_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/email"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/small_transparent_box"
         android:ems="10"
         android:hint="create password"
         android:inputType="textPassword"
-        android:textColor="@android:color/black"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_focused" />
+        android:paddingLeft="20dp"
+        android:textColor="#fff" />
 
     <EditText
         android:id="@+id/basic_info_editText_passwordCofirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/password"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/small_transparent_box"
         android:ems="10"
         android:hint="confirm password"
         android:inputType="textPassword"
-        android:textColor="@android:color/black"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_focused" />
+        android:paddingLeft="20dp"
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/basic_info_button_continue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
