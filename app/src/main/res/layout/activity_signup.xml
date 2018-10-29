@@ -44,6 +44,16 @@
                 android:paddingLeft="20dp"
                 android:textColor="#fff" />
 
+            <EditText
+                android:id="@+id/signUp_editText_password"
+                android:layout_width="288dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/small_transparent_box"
+                android:hint="Passowrd"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp" />
+
             <Button
                 android:id="@+id/signUp_button_signUp"
                 style="?android:textAppearanceSmall"
