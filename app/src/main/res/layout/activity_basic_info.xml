@@ -36,30 +36,6 @@
         android:inputType="textPersonName"
         android:paddingLeft="20dp" />
 
-    <EditText
-        android:id="@+id/basic_info_editText_password"
-        android:layout_width="288dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/small_transparent_box"
-        android:ems="10"
-        android:hint="create password"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:textColor="#fff" />
-
-    <EditText
-        android:id="@+id/basic_info_editText_passwordCofirm"
-        android:layout_width="288dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/small_transparent_box"
-        android:ems="10"
-        android:hint="confirm password"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:textColor="#fff" />
-
     <Button
         android:id="@+id/basic_info_button_continue"
         android:layout_width="wrap_content"

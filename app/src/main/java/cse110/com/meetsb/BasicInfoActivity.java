@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 public class BasicInfoActivity extends AppCompatActivity {
     EditText userNameInput;
-    EditText passwordInput;
-    EditText passwordConfirm;
     Button continueBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +27,14 @@ public class BasicInfoActivity extends AppCompatActivity {
 
     public void submitInfo() {
         userNameInput = (EditText) findViewById(R.id.basic_info_editText_username);
-        passwordInput = (EditText) findViewById(R.id.basic_info_editText_password);
-        passwordConfirm = (EditText) findViewById(R.id.basic_info_editText_passwordCofirm);
 
         String userName = userNameInput.getText().toString();
-        String password = passwordInput.getText().toString();
-        String password_2 = passwordConfirm.getText().toString();
         Toast.makeText(getApplicationContext(), userName, Toast.LENGTH_SHORT).show();
         if (userName.isEmpty()) {
             Toast.makeText(getApplicationContext(), "user name empty", Toast.LENGTH_SHORT).show();
-        } else if (password.isEmpty() || password_2.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "password empty", Toast.LENGTH_SHORT).show();
-
-        } else if (!password.equals(password_2)) {
-            Toast.makeText(getApplicationContext(), "password must match", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, AcademicInfoActivity.class);
             intent.putExtra("USERNAME", userName);
-            intent.putExtra("PASSWORD", password);
             startActivity(intent);
         }
     }
