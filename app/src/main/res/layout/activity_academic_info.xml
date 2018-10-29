@@ -61,8 +61,8 @@
 
     <Button
         android:id="@+id/academic_info_button_continue"
-        android:layout_width="288dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
         android:background="@drawable/continue_btn" />
 </LinearLayout>

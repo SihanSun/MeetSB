@@ -41,8 +41,8 @@
 
         <Button
             android:id="@+id/confirm_button_verify"
-            android:layout_width="119dp"
-            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:background="@drawable/small_continue_btn" />
     </LinearLayout>
