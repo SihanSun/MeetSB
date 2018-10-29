@@ -29,8 +29,10 @@ public class SigninActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
 
         //set all the buttons, editText, and textView
         userEmailAddress = (EditText) findViewById(R.id.signIn_editText_emailAdress);

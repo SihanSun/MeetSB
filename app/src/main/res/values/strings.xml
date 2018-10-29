@@ -18,7 +18,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-
+    <string name="dont_have_account"><u>Don\'t have a account? Sign up here.</u></string>
+    <string name="already_have_account"><u>Already have an account? Sign in here.</u></string>
     <string-array name="major_array">
         <item>Computer Science</item>
         <item>Mathemetics</item>

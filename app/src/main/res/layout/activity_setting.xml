@@ -8,13 +8,13 @@
     tools:context=".SettingActivity">
 
     <ImageButton
-        android:id="@+id/setting_pic_input"
+        android:id="@+id/setting_imageButton_photo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <EditText
-        android:id="@+id/setting_username_input"
+        android:id="@+id/setting_editText_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -26,13 +26,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/setting_description_input"
-            android:layout_width="match_parent"
+            android:id="@+id/setting_multilineText_description"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter Description"
-            android:inputType="textPersonName" />
+            android:hint="Description"
+            android:inputType="textMultiLine" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,12 +40,12 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/setting_gpa_input"
+            android:id="@+id/setting_editText_GPA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:ems="10"
-            android:hint="Enter GPA"
+            android:hint="GPA"
             android:inputType="textPersonName"
             android:text="" />
 
@@ -57,7 +57,7 @@
         android:orientation="vertical">
 
         <Spinner
-            android:id="@+id/setting_major_input"
+            android:id="@+id/setting_spinner_major"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
@@ -65,7 +65,7 @@
             android:prompt="@string/major_prompt" />
 
         <Spinner
-            android:id="@+id/setting_gender_input"
+            android:id="@+id/setting_spineer_gender"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
@@ -73,7 +73,7 @@
             android:prompt="@string/gender_prompt" />
 
         <Spinner
-            android:id="@+id/setting_class_input"
+            android:id="@+id/setting_spinner_class"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="1"
@@ -82,7 +82,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/setting_button_input"
+        android:id="@+id/setting_button_submit"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="SUBMIT"

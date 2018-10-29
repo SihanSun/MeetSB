@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_3"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="93dp"
+        android:gravity="center"
+        android:text="Basic Info"
+        android:textColor="#fff"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/basic_info_imageView_avatar"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/profile_pic" />
+
+    <EditText
+        android:id="@+id/basic_info_editText_username"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/small_transparent_box"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp" />
+
+    <EditText
+        android:id="@+id/basic_info_editText_password"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/small_transparent_box"
+        android:ems="10"
+        android:hint="create password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColor="#fff" />
+
+    <EditText
+        android:id="@+id/basic_info_editText_passwordCofirm"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/small_transparent_box"
+        android:ems="10"
+        android:hint="confirm password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/basic_info_button_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/continue_btn" />
+</LinearLayout>
