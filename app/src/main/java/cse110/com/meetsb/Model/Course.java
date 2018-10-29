@@ -1,35 +1,37 @@
 package cse110.com.meetsb.Model;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class Course {
 
-    private String courseId;
-
-    private Set<String>  studentList;
+    private Map<String, List<String>> courseStudentMap;
 
     public Course() {
-        this.courseId = null;
-        this.studentList = new Set<String>();
+        courseStudentMap = new HashMap<>();
     }
 
-    public String getCourseId() {
-        return courseId;
+    public void addCourse(String courseId) {
+        if(!courseStudentMap.containsKey(courseId)) {
+            courseStudentMap.put(courseId, new ArrayList<String>());
+        }
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public List<String> getStudentList(String courseId) {
+        if(courseStudentMap.containsKey(courseId)) {
+            return courseStudentMap.get(courseId);
+        } else {
+            return null;
+        }
     }
 
-    public Set<String> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(Set<String> studentList) {
-        this.studentList = studentList;
-    }
-
-    public bool addStudentToCourse(String userId) {
-        return studentList.add(userId);
+    public void addStudent(String courseId, String userId) {
+        if(!courseStudentMap.containsKey(courseId)) {
+            courseStudentMap.put(courseId, new ArrayList<String>());
+        }
+        courseStudentMap.get(courseId).add(userId);
     }
 }
