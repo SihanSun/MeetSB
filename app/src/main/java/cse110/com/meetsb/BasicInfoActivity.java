@@ -11,12 +11,15 @@ import android.widget.Toast;
 public class BasicInfoActivity extends AppCompatActivity {
     EditText userNameInput;
     Button continueBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_info);
 
+        //set all the button
         continueBtn = (Button) findViewById(R.id.basic_info_button_continue);
+
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +38,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, AcademicInfoActivity.class);
             intent.putExtra("USERNAME", userName);
+            finish();
             startActivity(intent);
         }
     }
