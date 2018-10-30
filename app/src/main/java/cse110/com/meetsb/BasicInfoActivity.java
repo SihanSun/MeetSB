@@ -1,10 +1,14 @@
 package cse110.com.meetsb;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +21,7 @@ public class BasicInfoActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     EditText userNameInput;
     Button continueBtn;
+    //private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +39,15 @@ public class BasicInfoActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (!checkIfAlreadyhavePermission()) {
+                    ActivityCompat.requestPermissions(BasicInfoActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                } else {
+                    Intent i = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                    startActivityForResult(i, RESULT_LOAD_IMAGE);
+                }
             }
         });
     }
@@ -79,5 +88,9 @@ public class BasicInfoActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private boolean checkIfAlreadyhavePermission() {
+        return ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 }
