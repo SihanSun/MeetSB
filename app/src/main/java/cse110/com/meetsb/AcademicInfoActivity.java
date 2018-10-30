@@ -14,7 +14,7 @@ public class AcademicInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_academic_info);
 
-        Toast.makeText(getApplicationContext(), getIntent().getStringExtra("USERNAME"), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getIntent().getStringExtra("DESCRIPTION"), Toast.LENGTH_SHORT).show();
 
         continueBtn = (Button) findViewById(R.id.academic_info_button_continue);
         continueBtn.setOnClickListener(new View.OnClickListener() {

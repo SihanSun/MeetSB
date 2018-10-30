@@ -11,12 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class BasicInfoActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     EditText userNameInput;
+    EditText descriptionInput;
     Button continueBtn;
+    Spinner gender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +49,25 @@ public class BasicInfoActivity extends AppCompatActivity {
 
     public void submitInfo() {
         userNameInput = (EditText) findViewById(R.id.basic_info_editText_username);
-
         String userName = userNameInput.getText().toString();
+
+        gender = (Spinner)findViewById(R.id.basic_info_spinner_gender);
+        String genderOption = gender.getSelectedItem().toString();
+
+        descriptionInput = (EditText) findViewById(R.id.basic_info_multilineText_description);
+        String description = descriptionInput.getText().toString();
+
         Toast.makeText(getApplicationContext(), userName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), genderOption, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), description, Toast.LENGTH_SHORT).show();
+
         if (userName.isEmpty()) {
             Toast.makeText(getApplicationContext(), "user name empty", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, AcademicInfoActivity.class);
             intent.putExtra("USERNAME", userName);
+            intent.putExtra("GENDER",genderOption);
+            intent.putExtra("DESCRIPTION",genderOption);
             startActivity(intent);
         }
     }
@@ -80,4 +94,6 @@ public class BasicInfoActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
