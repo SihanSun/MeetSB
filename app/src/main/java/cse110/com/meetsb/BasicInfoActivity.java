@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,7 +23,6 @@ public class BasicInfoActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     EditText userNameInput;
     Button continueBtn;
-    //private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                 submitInfo();
             }
         });
-
         ImageView avatar = (ImageView) findViewById(R.id.basic_info_imageView_avatar);
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,8 @@ public class BasicInfoActivity extends AppCompatActivity {
     }
 
 
-    public void submitInfo() {
+
+        public void submitInfo() {
         userNameInput = (EditText) findViewById(R.id.basic_info_editText_username);
 
         String userName = userNameInput.getText().toString();
