@@ -1,15 +1,21 @@
 package cse110.com.meetsb;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -37,17 +43,22 @@ public class BasicInfoActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (!checkIfAlreadyhavePermission()) {
+                    ActivityCompat.requestPermissions(BasicInfoActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                } else {
+                    Intent i = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                    startActivityForResult(i, RESULT_LOAD_IMAGE);
+                }
             }
         });
     }
 
 
-    public void submitInfo() {
+
+        public void submitInfo() {
         userNameInput = (EditText) findViewById(R.id.basic_info_editText_username);
         String userName = userNameInput.getText().toString();
 
@@ -95,5 +106,7 @@ public class BasicInfoActivity extends AppCompatActivity {
 
     }
 
-
+    private boolean checkIfAlreadyhavePermission() {
+        return ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
 }

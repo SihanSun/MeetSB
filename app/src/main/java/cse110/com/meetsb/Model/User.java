@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import cse110.com.meetsb.AcademicInfoActivity;
+
 public class User {
 
-    class PersonalInformation {
+    public static class PersonalInformation {
         private String profilePicture;
 
         private String Gender;
@@ -33,21 +35,27 @@ public class User {
         public void setDescription(String description) { this.description = description; }
     }
 
-    class AcademicInformation {
-        private double gpa;
+    public static class AcademicInformation {
+        private String gpa;
+
+        private String major;
 
         private List<String> courseTaking;
 
-        public double getGpa() { return gpa; }
+        public String getMajor() { return major; }
 
-        public void setGpa(double gpa) { this.gpa = gpa; }
+        public void setMajor(String major) { this.major = major; }
+
+        public String getGpa() { return gpa; }
+
+        public void setGpa(String gpa) { this.gpa = gpa; }
 
         public List<String> getCourseTaking() { return courseTaking; }
 
         public void setCourseTaking(List<String> courseTaking) { this.courseTaking = courseTaking; }
     }
 
-    class SwipeInformation {
+    public static class SwipeInformation {
         //should store user id
         private List<String> matchedList;
 
@@ -82,87 +90,21 @@ public class User {
         public void setWeight(int weight) { this.weight = weight; }
     }
 
-    static class UserBuilder {
-        private String userId;
-
-        private String userName = "Undecided";
-
-        private String userPassword = "12345678";
-
-        private String gender = "Undecided";
-
-        private String description = "N/A";
-
-        private String profilePicture = null;
-
-        private double gpa = 0.0;
-
-        private List<String> courseTaking = new ArrayList<>();
-
-        private List<String> matchedList = new ArrayList<>();
-
-        private HashMap<String, HashSet<WeightUser>> likesData = new HashMap<>();
-
-        private HashMap<String, HashSet<WeightUser>> swipeData = new HashMap<>();
-
-        public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
-
-        public void setUserPassword(String userPassword) { this.userPassword = userPassword; }
-
-        public void setUserId(String userId) { this. userId = userId; };
-
-        public void setGender(String gender) { this.gender = gender; };
-
-        public void setGpa(double gpa) { this.gpa = gpa; }
-
-        public void setUserName(String userName) { this.userName = userName; }
-
-        public void setDescription(String description) { this.description = description; }
-
-        public void addCoursesTaken(String course) {
-            if(courseTaking == null) {
-                courseTaking = new ArrayList<>();
-            }
-            courseTaking.add(course);
-        }
-
-        public User build() {
-            return new User(this);
-        }
-    }
-
-    private User(UserBuilder userBuilder) {
-
-        this.userId = userBuilder.userId;
-
-        this.userPassword = userBuilder.userPassword;
-
-        //personal information
+    public User() {
         PersonalInformation personalInformation = new PersonalInformation();
-        personalInformation.setDescription(userBuilder.description);
-        personalInformation.setGender(userBuilder.gender);
-        personalInformation.setProfilePicture(userBuilder.profilePicture);
-        personalInformation.setUserName(userBuilder.userName);
         this.personalInformation = personalInformation;
 
-        //academic information
         AcademicInformation academicInformation = new AcademicInformation();
-        academicInformation.setCourseTaking(userBuilder.courseTaking);
-        academicInformation.setGpa(userBuilder.gpa);
+        academicInformation.courseTaking = new ArrayList<>();
         this.academicInformation = academicInformation;
 
-        //swipe information
         SwipeInformation swipeInformation = new SwipeInformation();
-        swipeInformation.setLikesData(userBuilder.likesData);
-        swipeInformation.setMatchedList(userBuilder.matchedList);
-        swipeInformation.setLikesData(userBuilder.likesData);
-        swipeInformation.setSwipeData(userBuilder.swipeData);
-        this.swipeInformation = swipeInformation;
+        swipeInformation.likesData = new HashMap<>();
+        swipeInformation.matchedList = new ArrayList<>();
+        swipeInformation.swipeData = new HashMap<>();
+        this.setSwipeInformation(swipeInformation);
     }
 
-    private String userId;
-
-    private String userPassword;
 
     private PersonalInformation personalInformation;
 
@@ -170,23 +112,16 @@ public class User {
 
     private SwipeInformation swipeInformation;
 
-    public String getUserId() { return userId; }
 
-    public void setUserId(String userId) { this.userId = userId; }
-
-    public String getUserPassword() { return userPassword; }
-
-    public void setUserPassword(String userPassword) { this.userPassword = userPassword; }
-
-    public PersonalInformation getPersonalInformation() { return personalInformation; }
+    public PersonalInformation getPersonalInformation() { return this.personalInformation; }
 
     public void setPersonalInformation(PersonalInformation personalInformation) { this.personalInformation = personalInformation; }
 
-    public AcademicInformation getAcademicInformation() { return academicInformation; }
+    public AcademicInformation getAcademicInformation() { return this.academicInformation; }
 
     public void setAcademicInformation(AcademicInformation academicInformation) { this.academicInformation = academicInformation; }
 
-    public SwipeInformation getSwipeInformation() { return swipeInformation; }
+    public SwipeInformation getSwipeInformation() { return this.swipeInformation; }
 
     public void setSwipeInformation(SwipeInformation swipeInformation) { this.swipeInformation = swipeInformation; }
 }
