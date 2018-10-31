@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_3"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ConfirmActivity">
+
+    <ImageView
+        android:id="@+id/confirm_imageView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginTop="58dp"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/confirm_textView_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:text="The email verification has been sent"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/confirm_button_resend"
+            android:layout_width="119dp"
+            android:layout_height="42dp"
+            android:background="@drawable/resend_btn" />
+
+        <Button
+            android:id="@+id/confirm_button_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/small_continue_btn" />
+    </LinearLayout>
+
+</LinearLayout>

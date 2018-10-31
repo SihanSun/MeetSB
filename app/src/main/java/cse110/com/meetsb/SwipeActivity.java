@@ -13,7 +13,7 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SwipeActivity extends AppCompatActivity {
 
     private ArrayList<StudentCardMode> al;
     private StudentCardAdapter arrayAdapter;
@@ -64,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(MainActivity.this, "Dislike Gary! How dare are you!");
+                makeToast(SwipeActivity.this, "Dislike Gary! How dare are you!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                makeToast(MainActivity.this, "You made one of the best decision in your lifetime ;)");
+                makeToast(SwipeActivity.this, "You made one of the best decision in your lifetime ;)");
             }
 
             @Override
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(MainActivity.this, "You Clicked Gary!!");
+                makeToast(SwipeActivity.this, "You Clicked Gary!!");
             }
         });
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(MainActivity.this, "Professionalism Time!");
+                makeToast(SwipeActivity.this, "Professionalism Time!");
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {

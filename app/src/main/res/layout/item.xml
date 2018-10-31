@@ -113,4 +113,12 @@
         android:alpha="0"
         android:background="@drawable/home_card_dislike" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openProfile"
+        android:layout_gravity="bottom"
+        android:text="Go" />
+
 </FrameLayout>
