@@ -72,6 +72,12 @@ public class ClassInfoActivity extends AppCompatActivity {
 
         //set firebase
         firebaseAuth = FirebaseAuth.getInstance();
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.class_array,
+                R.layout.activity_class_info);
+
     }
 
     private void submitClassInfo() {

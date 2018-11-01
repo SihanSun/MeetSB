@@ -52,7 +52,8 @@
     </string-array>
 
     <string name="class_prompt">What class are you taking</string>
-
+    <string name="title_activity_other_profile">OtherProfileActivity</string>
+    <string name="title_activity_ohter_user">OhterUserActivity</string>
 
 </resources>
 
