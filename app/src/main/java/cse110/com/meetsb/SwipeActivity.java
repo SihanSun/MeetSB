@@ -7,16 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+import android.content.Intent;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-
 import java.util.ArrayList;
 import java.util.List;
+import cse110.com.meetsb.Model.UserCardAdapter;
+import cse110.com.meetsb.Model.UserCardMode;
 
 public class SwipeActivity extends AppCompatActivity {
 
-    private ArrayList<StudentCardMode> al;
-    private StudentCardAdapter arrayAdapter;
+    private ArrayList<UserCardMode> al;
+    private UserCardAdapter arrayAdapter;
     private SwipeFlingAdapterView flingContainer;
     private int i;
     private List<List<String>> imageList;
@@ -34,19 +35,16 @@ public class SwipeActivity extends AppCompatActivity {
             imageList.add(s);
         }
 
-
         al = new ArrayList<>();
-        Student gary = new Student("Gary", 21, imageList.get(1));
-        al.add(new StudentCardMode( gary ));
-        al.add(new StudentCardMode("Still Gary", 21, imageList.get(1)));
-        al.add(new StudentCardMode("Another Gary", 21, imageList.get(1)));
-        al.add(new StudentCardMode("Gary Again", 21, imageList.get(1)));
-        al.add(new StudentCardMode("Double Gary", 21, imageList.get(1)));
-        al.add(new StudentCardMode("Professor Gary", 21, imageList.get(1)));
-        al.add(new StudentCardMode("Gary Gary", 21, imageList.get(1)));
-        al.add(new StudentCardMode("Gary 教授", 21, imageList.get(1)));
+        al.add(new UserCardMode("Still Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Another Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Gary Again", 21, imageList.get(1)));
+        al.add(new UserCardMode("Double Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Professor Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Gary Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Gary 教授", 21, imageList.get(1)));
 
-        arrayAdapter = new StudentCardAdapter(this, R.layout.item, R.id.buddyName, al);
+        arrayAdapter = new UserCardAdapter(this, R.layout.item, R.id.buddyName, al);
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
@@ -79,7 +77,7 @@ public class SwipeActivity extends AppCompatActivity {
              */
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                al.add(new StudentCardMode("No More Gary", 21, imageList.get(itemsInAdapter % imageUrls.length - 1)));
+                al.add(new UserCardMode("No More Gary", 21, imageList.get(itemsInAdapter % imageUrls.length - 1)));
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
@@ -104,6 +102,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(SwipeActivity.this, "You Clicked Gary!!");
+                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
             }
         });
 

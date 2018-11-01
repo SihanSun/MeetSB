@@ -1,25 +1,26 @@
-package cse110.com.meetsb;
+package cse110.com.meetsb.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+import cse110.com.meetsb.Model.User;
+
+
+public class UserCardMode {
     private String name;
     private int year;
-    private double gpa;
-    private int age;
     private List<String> images;
-    private List<Course> classes;
 
-    public Student() {
-        images = new ArrayList<>();
-        classes = new  ArrayList<>();
+    public UserCardMode( User student ) {
+        this.name = student.getPersonalInformation().getUserName();
+        this.year = student.getPersonalInformation().getGraduation_Year();
+        this.images = student.getPersonalInformation().getProfilePictures();
     }
-    public Student(String name, int year, List<String> images) {
+    public UserCardMode(String name, int year, List<String> images) {
         this.name = name;
         this.year = year;
         this.images = images;
     }
+
     public String getName() {
         return name;
     }
@@ -43,6 +44,4 @@ public class Student {
     public List<String> getImages() {
         return images;
     }
-
-
 }
