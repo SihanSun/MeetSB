@@ -10,7 +10,7 @@ import cse110.com.meetsb.AcademicInfoActivity;
 public class User {
 
     public static class PersonalInformation {
-        private String profilePicture;
+        private List<String> profilePictures;
 
         private String Gender;
 
@@ -18,13 +18,17 @@ public class User {
 
         private String userName;
 
+        private int graduation_Year;
+
+        public int getGraduation_Year() { return graduation_Year; }
+
         public String getUserName() { return userName; }
 
         public void setUserName(String userName) { this.userName = userName; }
 
-        public String getProfilePicture() { return profilePicture; }
+        public List<String> getProfilePictures() { return profilePictures; }
 
-        public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
+        public void setProfilePictures( List<String> profilePictures) { this.profilePictures = profilePictures; }
 
         public String getGender() { return Gender; }
 
