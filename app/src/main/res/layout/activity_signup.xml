@@ -52,14 +52,15 @@
                 android:background="@drawable/small_transparent_box"
                 android:hint="Passowrd"
                 android:inputType="textPassword"
-                android:paddingLeft="20dp" />
+                android:paddingLeft="20dp"
+                android:textColor="#fff" />
 
             <Button
                 android:id="@+id/signUp_button_signUp"
                 style="?android:textAppearanceSmall"
                 android:layout_width="288dp"
                 android:layout_height="42dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="26dp"
                 android:background="@drawable/sign_up_btn"
                 android:textStyle="bold" />
 
