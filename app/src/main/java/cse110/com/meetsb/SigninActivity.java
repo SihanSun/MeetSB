@@ -72,9 +72,12 @@ public class SigninActivity extends AppCompatActivity {
 
     private void userSignIn() {
 
-        //TODO
+        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
+            jumpToSwipePage();
+        }
+
         //check user email or password
-        Toast.makeText(this,"user email is " + userEmailAddress.getText(),Toast.LENGTH_SHORT).show();
+        //TODO
 
         firebaseAuth.signInWithEmailAndPassword(userEmailAddress.getText().toString().trim()
         ,userPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
