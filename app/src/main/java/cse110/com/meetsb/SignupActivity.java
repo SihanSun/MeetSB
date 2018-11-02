@@ -20,18 +20,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 public class SignupActivity extends AppCompatActivity {
 
 
     private Button registerButton;
 
-    private Button returnToLoginButton;
+    private TextView returnToLogin;
 
     private DatabaseReference firebaseReference;
 
     private FirebaseAuth firebaseAuth;
 
-    private AutoCompleteTextView emailAddress;
+    private TextView emailAddress;
 
     private EditText passwordEntered;
 
@@ -43,12 +45,12 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         registerButton = (Button) findViewById(R.id.signUp_button_signUp);
-        returnToLoginButton = (Button) findViewById(R.id.signUp_button_returnToLogin);
+        returnToLogin = (TextView) findViewById(R.id.signUp_textView_returnToSignIn);
         //firebaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
-        emailAddress = (AutoCompleteTextView) findViewById(R.id.signUp_textView_emailAddress);
+        emailAddress = (TextView) findViewById(R.id.signUp_editText_email);
         passwordEntered = (EditText) findViewById(R.id.signUp_editText_password);
-        passwordConfirmed = (EditText) findViewById(R.id.signUp_editText_passwordConfirm);
+        //passwordConfirmed = (EditText) findViewById(R.id.signUp_editText_passwordConfirm);
 
         //TODO
         //if(firebaseAuth.getCurrentUser() != null) {
@@ -61,7 +63,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        returnToLoginButton.setOnClickListener(new View.OnClickListener() {
+        returnToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this, SigninActivity.class));
