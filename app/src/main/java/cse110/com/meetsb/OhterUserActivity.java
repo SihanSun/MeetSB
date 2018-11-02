@@ -12,7 +12,7 @@ public class OhterUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ohter_user);
+        setContentView(R.layout.activity_other_user);
 
     }
 

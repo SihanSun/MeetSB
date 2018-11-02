@@ -1,13 +1,16 @@
 package cse110.com.meetsb;
 
 import android.content.Intent;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -26,6 +29,8 @@ public class AcademicInfoActivity extends AppCompatActivity {
         majorSpinner = (Spinner) findViewById(R.id.academic_info_spinner_major);
         gpaEditText = (EditText) findViewById(R.id.academic_info_editText_GPA);
         continueBtn = (Button) findViewById(R.id.academic_info_button_continue);
+
+
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
