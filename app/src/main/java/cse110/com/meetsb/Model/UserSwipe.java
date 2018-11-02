@@ -26,22 +26,23 @@ public class UserSwipe {
         this.matchedList = new ArrayList<>();
         this.swipeData = new HashMap<>();
     }
+
     //should store user id
     private List<String> matchedList;
 
-    private HashMap<String, HashSet<UserSwipe.WeightUser>> likesData;
+    private HashMap<String, HashMap<String, Integer>> likesData;
 
-    private HashMap<String, HashSet<UserSwipe.WeightUser>> swipeData;
+    private HashMap<String, HashMap<String, Integer>> swipeData;
 
     public List<String> getMatchedList() { return matchedList; }
 
     public void setMatchedList(List<String> matchedList) { this.matchedList = matchedList; }
 
-    public HashMap<String, HashSet<UserSwipe.WeightUser>> getLikesData() { return likesData; }
+    public HashMap<String, HashMap<String, Integer>> getLikesData() { return likesData; }
 
-    public void setLikesData(HashMap<String, HashSet<UserSwipe.WeightUser>> likesData) { this.likesData = likesData; }
+    public void setLikesData(HashMap<String, HashMap<String, Integer>> likesData) { this.likesData = likesData; }
 
-    public HashMap<String, HashSet<UserSwipe.WeightUser>> getSwipeData() { return swipeData; }
+    public HashMap<String, HashMap<String, Integer>> getSwipeData() { return swipeData; }
 
-    public void setSwipeData(HashMap<String, HashSet<UserSwipe.WeightUser>> swipeData) { this.swipeData = swipeData; }
+    public void setSwipeData(HashMap<String, HashMap<String, Integer>> swipeData) { this.swipeData = swipeData; }
 }

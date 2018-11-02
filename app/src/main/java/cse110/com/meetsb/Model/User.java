@@ -12,15 +12,11 @@ public class User {
     public static class PersonalInformation {
         private List<String> profilePictures;
 
-        private String Gender;
+        private String gender;
 
         private String description;
 
         private String userName;
-
-        private int graduation_Year;
-
-        public int getGraduation_Year() { return graduation_Year; }
 
         public String getUserName() { return userName; }
 
@@ -30,9 +26,9 @@ public class User {
 
         public void setProfilePictures( List<String> profilePictures) { this.profilePictures = profilePictures; }
 
-        public String getGender() { return Gender; }
+        public String getGender() { return gender; }
 
-        public void setGender(String gender) { Gender = gender; }
+        public void setGender(String gender) { gender = gender; }
 
         public String getDescription() { return description; }
 
@@ -45,6 +41,12 @@ public class User {
         private String major;
 
         private List<String> courseTaking;
+
+        private int graduationYear;
+
+        public int getGraduationYear() { return graduationYear; }
+
+        public void setGraduationYear(int graduationYear) { this.graduationYear = graduationYear; }
 
         public String getMajor() { return major; }
 

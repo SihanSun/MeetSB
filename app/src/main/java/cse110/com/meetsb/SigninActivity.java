@@ -46,14 +46,6 @@ public class SigninActivity extends AppCompatActivity {
         returnToSignUp = (TextView) findViewById(R.id.signIn_textView_returnToSignUp);
         firebaseAuth = FirebaseAuth.getInstance();
 
-
-        Toast.makeText(this, "In signin activity",Toast.LENGTH_SHORT).show();
-        //check if the user has already logged in
-//        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
-//            Toast.makeText(this, "current user is " + firebaseAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
-//            jumpToSwipePage();
-//        }
-
         //set button listner
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
