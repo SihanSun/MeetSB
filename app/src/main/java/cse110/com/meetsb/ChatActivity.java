@@ -2,8 +2,9 @@ package cse110.com.meetsb;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
+import android.support.v7.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,7 +25,8 @@ public class ChatActivity extends AppCompatActivity {
     private User user = new User();
     private String message;
 
-    private ListView lvMessage;
+    private RecyclerView rvMessage;
+    private FirebaseAuth firebaseAuth;
     /**
      * send message to firebase
      */
@@ -38,9 +40,11 @@ public class ChatActivity extends AppCompatActivity {
      */
     private void getMessagesFirebase(){
         firebaseReference = FirebaseDatabase.getInstance().getReference();
-        //final ChatAdapter chatAdapter = new ChatAdapter(firebaseReference.child(CHAT_REFERENCE),user.getUserName(),this);
-     /*   chatAdapter.registerAdapterDataObserver(new ListView.AdapterDataObserver() {
-            @Override
+        firebaseAuth = FirebaseAuth.getInstance();
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        //final ChatAdapter chatAdapter = new ChatAdapter(firebaseReference.child(CHAT_REFERENCE),userId,this);
+        //chatAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            /*@Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 int friendlyMessageCount = chatAdapter.getItemCount();
@@ -48,12 +52,12 @@ public class ChatActivity extends AppCompatActivity {
                 if (lastVisiblePosition == -1 ||
                         (positionStart >= (friendlyMessageCount - 1) &&
                                 lastVisiblePosition == (positionStart - 1))) {
-                    lvMessage.scrollToPosition(positionStart);
+                    rvMessage.scrollToPosition(positionStart);
                 }
             }
         });
-        lvMessage.setLayoutManager(mLinearLayoutManager);
-        lvMessage.setAdapter(firebaseAdapter);
+        rvMessage.setLayoutManager(mLinearLayoutManager);
+        rvMessage.setAdapter(firebaseAdapter);
     */
     }
 }
