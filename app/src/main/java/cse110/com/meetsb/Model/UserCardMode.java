@@ -12,7 +12,7 @@ public class UserCardMode {
 
     public UserCardMode( User student ) {
         this.name = student.getPersonalInformation().getUserName();
-        this.year = student.getPersonalInformation().getGraduation_Year();
+        this.year = student.getAcademicInformation().getGraduationYear();
         this.images = student.getPersonalInformation().getProfilePictures();
     }
     public UserCardMode(String name, int year, List<String> images) {
