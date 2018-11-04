@@ -8,6 +8,14 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:onClick="openProfile"
+        android:text="Go" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="100dp"
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:scaleType="centerCrop"
@@ -28,19 +35,16 @@
             android:textSize="40sp" />
 
         <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="fill_parent"
-            android:layout_alignParentEnd="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="0dp">
+            android:layout_marginTop="280dp">
 
             <TextView
                 android:id="@+id/card_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
                 android:layout_marginTop="23dp"
                 android:layout_marginBottom="23dp"
                 android:gravity="center"
@@ -53,8 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_name"
-                android:layout_marginLeft="-100dp"
-                android:layout_toRightOf="@id/card_name"
+                android:layout_marginTop="35dp"
                 android:gravity="center"
                 android:text="2018"
                 android:textColor="#878787"
@@ -112,13 +115,5 @@
         android:layout_margin="10dp"
         android:alpha="0"
         android:background="@drawable/home_card_dislike" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="openProfile"
-        android:layout_gravity="bottom"
-        android:text="Go" />
 
 </FrameLayout>

@@ -29,7 +29,8 @@
         android:entries="@array/major_array"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:prompt="@string/major_prompt" />
+        android:prompt="@string/major_prompt"
+        />
 
     <EditText
         android:id="@+id/academic_info_editText_GPA"
