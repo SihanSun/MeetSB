@@ -152,6 +152,7 @@ public class ClassInfoActivity extends AppCompatActivity {
             }
         });
 
+        progressDialog.dismiss();
         Intent intent = new Intent(this, SwipeActivity.class);
         finish();
         startActivity(intent);
