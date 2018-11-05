@@ -1,46 +1,52 @@
 package cse110.com.meetsb;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
-
+import android.content.Intent;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-
 import java.util.ArrayList;
+import java.util.List;
+import cse110.com.meetsb.Model.UserCardAdapter;
+import cse110.com.meetsb.Model.UserCardMode;
 
 public class SwipeActivity extends AppCompatActivity {
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
-    private int i;
 
-    public void openProfile(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-    }
+    private ArrayList<UserCardMode> al;
+    private UserCardAdapter arrayAdapter;
+    private SwipeFlingAdapterView flingContainer;
+    private int i;
+    private List<List<String>> imageList;
+    private ImageView btnDislike, btnLike, btnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
 
+        imageList = new ArrayList<>();
+        for (int i = 0; i < imageUrls.length; i++) {
+            List<String> s = new ArrayList<>();
+            s.add(imageUrls[i]);
+            imageList.add(s);
+        }
+
         al = new ArrayList<>();
-        al.add("Tony");
-        al.add("Still Tony");
-        al.add("Another Tony");
-        al.add("Tony Again");
-        al.add("Double Tony");
-        al.add("Tony The tiger");
-        al.add("Tony Tan");
-        al.add("Tony老师");
+        al.add(new UserCardMode("Still Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Another Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Gary Again", 21, imageList.get(1)));
+        al.add(new UserCardMode("Double Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Professor Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Gary Gary", 21, imageList.get(1)));
+        al.add(new UserCardMode("Gary 教授", 21, imageList.get(1)));
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.buddyName, al );
+        arrayAdapter = new UserCardAdapter(this, R.layout.item, R.id.buddyName, al);
 
-        final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-
+        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -56,18 +62,22 @@ public class SwipeActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                Toast.makeText(SwipeActivity.this, "Dislike me! How dare are you!", Toast.LENGTH_SHORT).show();
+                makeToast(SwipeActivity.this, "Dislike Gary! How dare are you!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(SwipeActivity.this, "You made one of the best decision in your lifetime ;)", Toast.LENGTH_SHORT).show();
+                //Do something on the right!
+                makeToast(SwipeActivity.this, "You made one of the best decision in your lifetime ;)");
             }
 
             @Override
+            /**
+             * what to do when list is about to be empty
+             */
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                al.add("No More Tony ".concat(String.valueOf(i)));
+                al.add(new UserCardMode("No More Gary", 21, imageList.get(itemsInAdapter % imageUrls.length - 1)));
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
@@ -75,23 +85,65 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(float scrollProgressPercent) {
+                try {
                     View view = flingContainer.getSelectedView();
-                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                    view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                    view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
 
-        // Optionally add an OnItemClickListener
+        // add an OnItemClickListener to define what to do after item being clicked
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(SwipeActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                makeToast(SwipeActivity.this, "You Clicked Gary!!");
+                startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
+            }
+        });
+
+        btnDislike = (ImageView) findViewById(R.id.left);
+        btnLike = (ImageView) findViewById(R.id.right);
+        btnProfile  = (ImageView) findViewById(R.id.info);
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeToast(SwipeActivity.this, "Professionalism Time!");
+            }
+        });
+        btnDislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                left();
+            }
+        });
+        btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                right();
             }
         });
 
     }
+    static void makeToast(Context ctx, String s) {
+        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+    }
 
+    public void right() {
+        flingContainer.getTopCardListener().selectRight();
+    }
 
+    public void left() {
+        flingContainer.getTopCardListener().selectLeft();
+    }
 
+    public final String[] imageUrls = new String[]{
+            "http://i.imgur.com/P7Z6Ogv.png",
+            "http://i.imgur.com/P7Z6Ogv.png"
+    };
 }
