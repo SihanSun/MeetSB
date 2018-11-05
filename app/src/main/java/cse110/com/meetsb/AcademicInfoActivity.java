@@ -1,5 +1,6 @@
 package cse110.com.meetsb;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,9 @@ public class AcademicInfoActivity extends AppCompatActivity {
     String userName = null;
     String gender = null;
     String description = null;
-    String imageString = null;
+    String filePathStr = null;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class AcademicInfoActivity extends AppCompatActivity {
         userName = getIntent().getStringExtra("USERNAME");
         gender = getIntent().getStringExtra("GENDER");
         description = getIntent().getStringExtra("DESCRIPTION");
-        imageString = getIntent().getStringExtra("IMAGE");
+        filePathStr = getIntent().getStringExtra("IMAGE");
 
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,11 +74,12 @@ public class AcademicInfoActivity extends AppCompatActivity {
             gpaString = "Not available";
         }
 
+
         Intent intent = new Intent(AcademicInfoActivity.this, ClassInfoActivity.class);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("GENDER",gender);
         intent.putExtra("DESCRIPTION",description);
-        intent.putExtra("IMAGE", imageString);
+        intent.putExtra("IMAGE", filePathStr);
         intent.putExtra("MAJOR", major);
         intent.putExtra("GPA", gpaString);
         startActivity(intent);

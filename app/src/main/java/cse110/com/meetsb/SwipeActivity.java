@@ -102,7 +102,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(SwipeActivity.this, "You Clicked Gary!!");
-                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+                startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
             }
         });
 

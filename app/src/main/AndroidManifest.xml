@@ -28,6 +28,7 @@
         </activity>
         <activity android:name=".SignupActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
         <activity android:name=".ConfirmActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".SigninActivity"
@@ -46,6 +47,11 @@
 
         </activity>
         <activity android:name=".ClassInfoActivity" >
+
+        </activity>
+
+        <activity android:name=".OtherUserActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
     </application>

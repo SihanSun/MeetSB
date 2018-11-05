@@ -1,8 +1,14 @@
 package cse110.com.meetsb;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,12 +20,16 @@ import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +42,7 @@ public class ClassInfoActivity extends AppCompatActivity {
     Button submit;
 
     String userName;
-    String imageString;
+    String filePathStr;
     String gender;
     String description;
     String gpaString;
@@ -46,6 +56,9 @@ public class ClassInfoActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     ArrayAdapter<String> adapter;
+
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +93,10 @@ public class ClassInfoActivity extends AppCompatActivity {
         gender = getIntent().getStringExtra("GENDER");
         gpaString = getIntent().getStringExtra("GPA");
         major = getIntent().getStringExtra("MAJOR");
-        imageString = getIntent().getStringExtra("IMAGE");
+        filePathStr = getIntent().getStringExtra("IMAGE");
 
-
+        //set progress bar
+        progressDialog = new ProgressDialog(this);
         //set button
         submit = (Button) findViewById(R.id.class_info_button_submit) ;
         submit.setOnClickListener(new View.OnClickListener() {
@@ -108,18 +122,41 @@ public class ClassInfoActivity extends AppCompatActivity {
         newUser.getAcademicInformation().setGpa(gpaString);
         newUser.getAcademicInformation().setMajor(major);
 
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
 
         String userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference.child("USER").child(userId).setValue(newUser);
 
+        StorageReference childRef = storageRef.child("IMAGE").child(userId);
 
+        //convert filePathString to Uri
+        Uri filePath = Uri.parse(filePathStr);
+        //uploading the image
+        UploadTask uploadTask = childRef.putFile(filePath);
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                progressDialog.dismiss();
+                Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(ClassInfoActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Intent intent = new Intent(this, SwipeActivity.class);
         finish();
         startActivity(intent);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

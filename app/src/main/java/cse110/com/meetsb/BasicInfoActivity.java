@@ -36,7 +36,6 @@ public class BasicInfoActivity extends AppCompatActivity {
     Spinner gender;
     ImageView imageView;
     Uri filePath;
-    String imageString;
 
     //Firebase
     FirebaseStorage storage;
@@ -55,7 +54,6 @@ public class BasicInfoActivity extends AppCompatActivity {
         continueBtn = (Button) findViewById(R.id.basic_info_button_continue);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        imageString = null;
 
         //set on click listener for continue button
         continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,9 +93,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
                 byte [] b=baos.toByteArray();
 
-                //store the bitmap string to the image String
-                imageString = Base64.encodeToString(b, Base64.DEFAULT);
-
                 //Setting image to ImageView
                 imageView.setImageBitmap(bitmap);
             } catch (Exception e) {
@@ -111,7 +106,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         String genderOption = gender.getSelectedItem().toString();
         String description = descriptionInput.getText().toString();
 
-        if(imageString == null) {
+        if(filePath == null) {
             Toast.makeText(this, "Please upload your picture.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -132,7 +127,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         intent.putExtra("USERNAME", userName);
         intent.putExtra("GENDER",genderOption);
         intent.putExtra("DESCRIPTION",genderOption);
-        intent.putExtra("IMAGE", filePath);
+        intent.putExtra("IMAGE", filePath.toString());
         startActivity(intent);
 
     }
