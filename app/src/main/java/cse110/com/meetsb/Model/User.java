@@ -9,8 +9,7 @@ import cse110.com.meetsb.AcademicInfoActivity;
 
 public class User {
 
-    public static class PersonalInformation {
-        private List<String> profilePictures;
+    public class PersonalInformation {
 
         private String gender;
 
@@ -22,9 +21,7 @@ public class User {
 
         public void setUserName(String userName) { this.userName = userName; }
 
-        public List<String> getProfilePictures() { return profilePictures; }
 
-        public void setProfilePictures( List<String> profilePictures) { this.profilePictures = profilePictures; }
 
         public String getGender() { return gender; }
 
@@ -35,7 +32,7 @@ public class User {
         public void setDescription(String description) { this.description = description; }
     }
 
-    public static class AcademicInformation {
+    public class AcademicInformation {
         private String gpa;
 
         private String major;
