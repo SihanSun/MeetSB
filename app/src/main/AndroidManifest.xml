@@ -22,17 +22,22 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity android:name=".ProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SettingActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".SignupActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".ConfirmActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SigninActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,18 +45,22 @@
             </intent-filter>
         </activity>
         <activity android:name=".BasicInfoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".AcademicInfoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
-        <activity android:name=".ClassInfoActivity" >
+        <activity android:name=".ClassInfoActivity"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
 
         <activity android:name=".OtherUserActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
     </application>
