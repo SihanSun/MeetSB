@@ -12,15 +12,11 @@ public class User {
     public static class PersonalInformation {
         private List<String> profilePictures;
 
-        private String Gender;
+        private String gender;
 
         private String description;
 
         private String userName;
-
-        private int graduation_Year;
-
-        public int getGraduation_Year() { return graduation_Year; }
 
         public String getUserName() { return userName; }
 
@@ -30,9 +26,9 @@ public class User {
 
         public void setProfilePictures( List<String> profilePictures) { this.profilePictures = profilePictures; }
 
-        public String getGender() { return Gender; }
+        public String getGender() { return gender; }
 
-        public void setGender(String gender) { Gender = gender; }
+        public void setGender(String gender) { gender = gender; }
 
         public String getDescription() { return description; }
 
@@ -45,6 +41,12 @@ public class User {
         private String major;
 
         private List<String> courseTaking;
+
+        private int graduationYear;
+
+        public int getGraduationYear() { return graduationYear; }
+
+        public void setGraduationYear(int graduationYear) { this.graduationYear = graduationYear; }
 
         public String getMajor() { return major; }
 
@@ -59,41 +61,6 @@ public class User {
         public void setCourseTaking(List<String> courseTaking) { this.courseTaking = courseTaking; }
     }
 
-    public static class SwipeInformation {
-        //should store user id
-        private List<String> matchedList;
-
-        private HashMap<String, HashSet<WeightUser>> likesData;
-
-        private HashMap<String, HashSet<WeightUser>> swipeData;
-
-        public List<String> getMatchedList() { return matchedList; }
-
-        public void setMatchedList(List<String> matchedList) { this.matchedList = matchedList; }
-
-        public HashMap<String, HashSet<WeightUser>> getLikesData() { return likesData; }
-
-        public void setLikesData(HashMap<String, HashSet<WeightUser>> likesData) { this.likesData = likesData; }
-
-        public HashMap<String, HashSet<WeightUser>> getSwipeData() { return swipeData; }
-
-        public void setSwipeData(HashMap<String, HashSet<WeightUser>> swipeData) { this.swipeData = swipeData; }
-    }
-
-    class WeightUser {
-        private String userId;
-
-        int weight = 0;
-
-        public String getUserId() { return userId; }
-
-        public void setUserId(String userId) { this.userId = userId; }
-
-        public int getWeight() { return weight; }
-
-        public void setWeight(int weight) { this.weight = weight; }
-    }
-
     public User() {
         PersonalInformation personalInformation = new PersonalInformation();
         this.personalInformation = personalInformation;
@@ -102,20 +69,12 @@ public class User {
         academicInformation.courseTaking = new ArrayList<>();
         this.academicInformation = academicInformation;
 
-        SwipeInformation swipeInformation = new SwipeInformation();
-        swipeInformation.likesData = new HashMap<>();
-        swipeInformation.matchedList = new ArrayList<>();
-        swipeInformation.swipeData = new HashMap<>();
-        this.setSwipeInformation(swipeInformation);
     }
 
 
     private PersonalInformation personalInformation;
 
     private AcademicInformation academicInformation;
-
-    private SwipeInformation swipeInformation;
-
 
     public PersonalInformation getPersonalInformation() { return this.personalInformation; }
 
@@ -125,8 +84,5 @@ public class User {
 
     public void setAcademicInformation(AcademicInformation academicInformation) { this.academicInformation = academicInformation; }
 
-    public SwipeInformation getSwipeInformation() { return this.swipeInformation; }
-
-    public void setSwipeInformation(SwipeInformation swipeInformation) { this.swipeInformation = swipeInformation; }
 }
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <ImageView
+        android:id="@+id/other_user_imageView_avatar_"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="61dp"
+        android:background="@drawable/profilepic" />
+
+    <TextView
+        android:id="@+id/other_user_textView_name"
+        android:layout_width="141dp"
+        android:layout_height="23dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="Zhongyu Chen"
+        android:gravity="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/other_user_textView_email"
+        android:layout_width="224dp"
+        android:layout_height="23dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp"
+        tools:text="kikiman@ultraman.edu" />
+
+    <TextView
+        android:id="@+id/other_user_textView_major"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:text="Compute Science"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/other_user_textView_gpa"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="5.8"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/other_user_textView_description"
+        android:layout_width="271dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="144dp"
+        android:lines="4"
+        android:maxLines="4"
+        android:text="所有的感官都要變遲鈍茶飯不思 呆呆的凝望著只有耳朵不聽話了非要我聽那首最愛的老歌"
+        android:gravity="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

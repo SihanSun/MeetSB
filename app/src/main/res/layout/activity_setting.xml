@@ -4,88 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".SettingActivity">
 
-    <ImageButton
-        android:id="@+id/setting_imageButton_photo"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/setting_imageView_avatar"
+        android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/tony_teacher" />
 
     <EditText
         android:id="@+id/setting_editText_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/small_dark_box"
         android:ems="10"
-        android:hint="Enter Username"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:text="Lychee Meimei"
+        android:textColor="#fff"
+        android:textColorHint="#fff" />
+
+    <EditText
+        android:id="@+id/setting_editText_GPA"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:background="@drawable/small_dark_box"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:text="2.3"
+        android:textColor="#fff"
+        android:textColorHint="#fff" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/setting_multilineText_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Description"
-            android:inputType="textMultiLine" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/setting_editText_GPA"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:ems="10"
-            android:hint="GPA"
-            android:inputType="textPersonName"
-            android:text="" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="300dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <Spinner
             android:id="@+id/setting_spinner_major"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_width="288dp"
+            android:layout_height="42dp"
             android:layout_weight="1"
             android:entries="@array/major_array"
             android:prompt="@string/major_prompt" />
 
         <Spinner
-            android:id="@+id/setting_spineer_gender"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:id="@+id/setting_spinner_gender"
+            android:layout_width="288dp"
+            android:layout_height="42dp"
             android:layout_weight="1"
             android:entries="@array/gender_array"
             android:prompt="@string/gender_prompt" />
 
-        <Spinner
-            android:id="@+id/setting_spinner_class"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:entries="@array/class_array"
-            android:prompt="@string/class_prompt" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/setting_editText_description"
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:background="@drawable/big_dark_box"
+        android:ems="10"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="Hi~ I’m Lizhi. My name is Lychee. I’m a 4th year CS student. Let’s be SB!"
+        android:textColor="#fff"
+        android:textColorHint="#fff" />
 
     <Button
         android:id="@+id/setting_button_submit"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="SUBMIT"
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/continue_btn"
         android:textColor="#B2B1B3"
         android:textSize="30sp" />
 
