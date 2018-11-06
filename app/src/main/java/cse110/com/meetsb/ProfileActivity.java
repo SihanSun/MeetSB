@@ -49,6 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
         gpaTextView = (TextView) findViewById(R.id.profile_textView_GPA);
         majorTextView = (TextView) findViewById(R.id.profile_textView_major);
         descriptoinTextView = (TextView) findViewById(R.id.profile_textView_description);
+
+        getPersonalInfo();
     }
 
     public void openSetting() {
@@ -77,8 +79,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-
 
         Intent intent = new Intent(this, SwipeActivity.class);
         finish();
