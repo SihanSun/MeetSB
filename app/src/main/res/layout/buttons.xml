@@ -9,9 +9,9 @@
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:id="@+id/buttons_button_chat"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
@@ -20,7 +20,7 @@
         android:background="@drawable/chat_btn" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttons_button_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -30,7 +30,7 @@
         android:background="@drawable/home_buttons_like" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttons_button_dislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -41,9 +41,9 @@
         android:background="@drawable/home_buttons_dislike" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:id="@+id/buttons_button_profile"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

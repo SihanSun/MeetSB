@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.content.Intent;
@@ -21,7 +22,7 @@ public class SwipeActivity extends AppCompatActivity {
     private SwipeFlingAdapterView flingContainer;
     private int i;
     private List<List<String>> imageList;
-    private ImageView btnDislike, btnLike, btnProfile;
+    private Button btnDislike, btnLike, btnProfile, btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class SwipeActivity extends AppCompatActivity {
         al.add(new UserCardMode("Gary Gary", 21, imageList.get(1)));
         al.add(new UserCardMode("Gary 教授", 21, imageList.get(1)));
 
-        arrayAdapter = new UserCardAdapter(this, R.layout.item, R.id.buddyName, al);
+        arrayAdapter = new UserCardAdapter(this, R.layout.item, R.id.item_textView_user, al);
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
@@ -102,18 +103,19 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(SwipeActivity.this, "You Clicked Gary!!");
-                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+                startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
             }
         });
 
-        btnDislike = (ImageView) findViewById(R.id.left);
-        btnLike = (ImageView) findViewById(R.id.right);
-        btnProfile  = (ImageView) findViewById(R.id.info);
+        btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
+        btnLike = (Button) findViewById(R.id.buttons_button_like);
+        btnProfile  = (Button) findViewById(R.id.buttons_button_profile);
+        btnChat = (Button) findViewById(R.id.buttons_button_chat);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(SwipeActivity.this, "Professionalism Time!");
+                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +128,12 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 right();
+            }
+        });
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
             }
         });
 
