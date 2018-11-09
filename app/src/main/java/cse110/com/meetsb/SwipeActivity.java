@@ -138,13 +138,13 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
-        // Hide swipe cards
-        flingContainer.setVisibility(View.INVISIBLE);
-        // Set up loading animation
-        ImageView iv_loading = (ImageView) findViewById(R.id.iv_loading);
-        AnimationDrawable loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
-        // Start loading animation
-        loadingDrawable.start();
+//        // Hide swipe cards
+//        flingContainer.setVisibility(View.INVISIBLE);
+//        // Set up loading animation
+//        ImageView iv_loading = (ImageView) findViewById(R.id.iv_loading);
+//        AnimationDrawable loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
+//        // Start loading animation
+//        loadingDrawable.start();
 
     }
     static void makeToast(Context ctx, String s) {
