@@ -12,15 +12,15 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/match_list_toobar_title"
         android:layout_width="match_parent"
-        android:layout_height="91dp"
+        android:layout_height="67dp"
         android:layout_weight="0"
         android:background="@color/colorYellow"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Your SBs"
+        app:title="My SBs"
         app:titleMarginStart="160dp"
-        app:titleTextColor="@color/colorPrimaryDark"
-        app:titleTextAppearance="@style/Toolbar.TitleText"/>
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextColor="@color/colorPrimaryDark" />
 
     <ListView
         android:id="@+id/match_list_listView_friends"
