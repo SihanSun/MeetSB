@@ -1,6 +1,7 @@
 package cse110.com.meetsb;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,6 +137,14 @@ public class SwipeActivity extends AppCompatActivity {
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
             }
         });
+
+        // Hide swipe cards
+        flingContainer.setVisibility(View.INVISIBLE);
+        // Set up loading animation
+        ImageView iv_loading = (ImageView) findViewById(R.id.iv_loading);
+        AnimationDrawable loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
+        // Start loading animation
+        loadingDrawable.start();
 
     }
     static void makeToast(Context ctx, String s) {
