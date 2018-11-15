@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 public class MatchListActivity extends AppCompatActivity {
 
-    int[] IMAGES = {R.drawable.profilepic};
-    String[] NAMES = {"Chen Zhongyu"};
-    String[] Messages = {"你好啊"};
+    int[] IMAGES = {R.drawable.profilepic, R.drawable.profilepic};
+    String[] NAMES = {"Chen Zhongyu", "Lychee"};
+    String[] Messages = {"Hello", "Wanna get laid"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
