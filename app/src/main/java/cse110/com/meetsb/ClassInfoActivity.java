@@ -41,6 +41,7 @@ public class ClassInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_info);
+
         ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
         ArrayList<String> arrayClass = new ArrayList<>();
         arrayClass.addAll(Arrays.asList(getResources().getStringArray(R.array.class_array)));

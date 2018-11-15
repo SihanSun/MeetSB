@@ -31,6 +31,8 @@ public class BasicInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_info);
 
+
+
         continueBtn = (Button) findViewById(R.id.basic_info_button_continue);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

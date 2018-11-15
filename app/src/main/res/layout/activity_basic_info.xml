@@ -38,12 +38,12 @@
 
     <Spinner
         android:id="@+id/basic_info_spinner_gender"
+        style="@android:style/Widget.Spinner"
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/small_transparent_box"
-        android:entries="@array/gender_array"
-        android:prompt="@string/gender_prompt" />
+        android:entries="@array/gender_array" />
 
     <EditText
         android:id="@+id/basic_info_multilineText_description"

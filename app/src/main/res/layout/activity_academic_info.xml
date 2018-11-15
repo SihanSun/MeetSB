@@ -9,16 +9,6 @@
     android:orientation="vertical"
     tools:context=".AcademicInfoActivity">
 
-    <TextView
-        android:id="@+id/academic_info_textView_title"
-        android:layout_width="207dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="150dp"
-        android:text="Academic Info"
-        android:textAlignment="center"
-        android:textColor="#fff"
-        android:textSize="30sp" />
-
     <Spinner
         android:id="@+id/academic_info_spinner_major"
         android:layout_width="288dp"
@@ -30,6 +20,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:prompt="@string/major_prompt"
+        android:textSize = "18sp"
         />
 
     <EditText

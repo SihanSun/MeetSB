@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.content.Intent;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -24,11 +26,30 @@ public class SwipeActivity extends AppCompatActivity {
     private int i;
     private List<List<String>> imageList;
     private Button btnDislike, btnLike, btnProfile, btnChat;
+    private String course[];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+
+        //Class list Drop down
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        course = new String[] {
+                "CSE110",
+                "CSE105",
+                "CSE150",
+                "CSE101"
+        };
+
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,course
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
 
         imageList = new ArrayList<>();
         for (int i = 0; i < imageUrls.length; i++) {
@@ -139,12 +160,12 @@ public class SwipeActivity extends AppCompatActivity {
         });
 
         // Hide swipe cards
-        flingContainer.setVisibility(View.INVISIBLE);
+        //flingContainer.setVisibility(View.INVISIBLE);
         // Set up loading animation
-        ImageView iv_loading = (ImageView) findViewById(R.id.iv_loading);
-        AnimationDrawable loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
+        //ImageView iv_loading = (ImageView) findViewById(R.id.iv_loading);
+        //AnimationDrawable loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
         // Start loading animation
-        loadingDrawable.start();
+        //loadingDrawable.start();
 
     }
     static void makeToast(Context ctx, String s) {
