@@ -151,7 +151,7 @@ public class SwipeActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
 
                 //get the courses that the user is taking and get the default course
-                courseTaking = user.getAcademicInformation().getCourseTaking();
+                courseTaking = user.getCourseTaking();
                 currentCourse = courseTaking.get(0);
                 progressDialog.setMessage("25% done...");
 
@@ -243,8 +243,8 @@ public class SwipeActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //get the user
                     User user = dataSnapshot.getValue(User.class);
-                    String name = user.getPersonalInformation().getUserName();
-                    int year = user.getAcademicInformation().getGraduationYear();
+                    String name = user.getUserName();
+                    int year = user.getGraduationYear();
                     List<String> image = imageList.get(1);
 
                     //check if current user has already liked this user

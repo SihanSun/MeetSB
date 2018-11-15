@@ -7,7 +7,7 @@ import java.util.List;
 
 import cse110.com.meetsb.AcademicInfoActivity;
 
-public class User2 {
+public class User {
 
     private List<String> profilePictures;
 
@@ -57,7 +57,7 @@ public class User2 {
 
     public void setCourseTaking(List<String> courseTaking) { this.courseTaking = courseTaking; }
 
-    public User2(){
+    public User(){
         courseTaking = new ArrayList<>();
     }
 

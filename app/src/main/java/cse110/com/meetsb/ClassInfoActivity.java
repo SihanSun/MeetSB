@@ -2,13 +2,10 @@ package cse110.com.meetsb;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +26,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -115,12 +111,12 @@ public class ClassInfoActivity extends AppCompatActivity {
     private void submitInfo() {
         //set the new user
         User newUser = new User();
-        newUser.getPersonalInformation().setUserName(userName);
-        newUser.getPersonalInformation().setDescription(description);
-        newUser.getPersonalInformation().setGender(gender);
-        newUser.getAcademicInformation().getCourseTaking().add("CSE110");
-        newUser.getAcademicInformation().setGpa(gpaString);
-        newUser.getAcademicInformation().setMajor(major);
+        newUser.setUserName(userName);
+        newUser.setDescription(description);
+        newUser.setGender(gender);
+        newUser.getCourseTaking().add("CSE110");
+        newUser.setGpa(gpaString);
+        newUser.setMajor(major);
 
         progressDialog.setMessage("Uploading...");
         progressDialog.show();

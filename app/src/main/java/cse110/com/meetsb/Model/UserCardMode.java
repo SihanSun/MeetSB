@@ -2,8 +2,6 @@ package cse110.com.meetsb.Model;
 
 import java.util.List;
 
-import cse110.com.meetsb.Model.User;
-
 
 public class UserCardMode {
     private String name;
@@ -11,9 +9,9 @@ public class UserCardMode {
     private List<String> images;
 
     public UserCardMode( User student ) {
-        this.name = student.getPersonalInformation().getUserName();
-        this.year = student.getAcademicInformation().getGraduationYear();
-        this.images = student.getPersonalInformation().getProfilePictures();
+        this.name = student.getUserName();
+        this.year = student.getGraduationYear();
+        this.images = student.getProfilePictures();
     }
     public UserCardMode(String name, int year, List<String> images) {
         this.name = name;

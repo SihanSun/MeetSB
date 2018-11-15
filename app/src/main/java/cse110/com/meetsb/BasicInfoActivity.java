@@ -126,7 +126,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AcademicInfoActivity.class);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("GENDER",genderOption);
-        intent.putExtra("DESCRIPTION",genderOption);
+        intent.putExtra("DESCRIPTION",description);
         intent.putExtra("IMAGE", filePath.toString());
         startActivity(intent);
 
