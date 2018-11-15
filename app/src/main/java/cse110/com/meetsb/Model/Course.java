@@ -8,30 +8,57 @@ import java.util.Map;
 
 public class Course {
 
-    private Map<String, List<String>> courseStudentMap;
+    private Map<String, Integer> studentOffsetMap;
+
+    private List<String> studentsInTheCourse;
+
+    public List<String> getStudentsInTheCourse() {
+        return this.studentsInTheCourse;
+    }
 
     public Course() {
-        courseStudentMap = new HashMap<>();
+        studentOffsetMap = new HashMap<>();
+        studentsInTheCourse = new ArrayList<>();
     }
 
-    public void addCourse(String courseId) {
-        if(!courseStudentMap.containsKey(courseId)) {
-            courseStudentMap.put(courseId, new ArrayList<String>());
-        }
-    }
-
-    public List<String> getStudentList(String courseId) {
-        if(courseStudentMap.containsKey(courseId)) {
-            return courseStudentMap.get(courseId);
-        } else {
+    public List<String> getStudentList(String UID, int size) {
+        if(size <= 0) {
             return null;
         }
-    }
 
-    public void addStudent(String courseId, String userId) {
-        if(!courseStudentMap.containsKey(courseId)) {
-            courseStudentMap.put(courseId, new ArrayList<String>());
+        //get the current offset
+        if(!studentOffsetMap.containsKey(UID) ) {
+            //if the student has not in the list before, give offset 0 to the student
+            //and add the student to the list of students taking this course.
+            studentOffsetMap.put(UID, 0);
+            studentsInTheCourse.add(UID);
         }
-        courseStudentMap.get(courseId).add(userId);
+        int offset = studentOffsetMap.get(UID);
+
+        //check whether the user has already consumed all the list
+        int studentSize = studentsInTheCourse.size();
+        if(offset == studentSize) {
+            return null;
+        }
+
+        //read students in the list
+        List<String> result = new ArrayList<>();
+        int count = 0;
+        while(count < size) {
+            while(offset != studentSize && count != size) {
+                result.add(studentsInTheCourse.get(offset));
+                offset++;
+                count++;
+            }
+            if(count < size) {
+                offset = 0;
+            }
+        }
+
+        //update the map
+        studentOffsetMap.put(UID, offset);
+
+        //return the list
+        return result;
     }
 }
