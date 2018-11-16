@@ -21,7 +21,7 @@ public class User {
 
     private String major;
 
-    private List<String> courseTaking;
+    private HashMap<String, Integer> courseTakingOffsetMap;
 
     private int graduationYear;
 
@@ -53,12 +53,12 @@ public class User {
 
     public void setGpa(String gpa) { this.gpa = gpa; }
 
-    public List<String> getCourseTaking() { return courseTaking; }
+    public HashMap<String, Integer> getCourseTakingOffsetMap() { return courseTakingOffsetMap; }
 
-    public void setCourseTaking(List<String> courseTaking) { this.courseTaking = courseTaking; }
+    public void setCourseTakingOffsetMap(HashMap<String, Integer> courseTakingOffsetMap) { this.courseTakingOffsetMap = courseTakingOffsetMap; }
 
     public User(){
-        courseTaking = new ArrayList<>();
+        courseTakingOffsetMap = new HashMap<>();
     }
 
 }
