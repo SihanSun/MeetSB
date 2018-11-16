@@ -24,8 +24,8 @@
         android:id="@+id/profile_imageView_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        app:srcCompat="@drawable/tony_teacher" />
+        android:layout_marginTop="30dp"/>
+        <!-- app:srcCompat="@drawable/tony_teacher"  /> -->
 
     <TextView
         android:id="@+id/profile_textView_userName"

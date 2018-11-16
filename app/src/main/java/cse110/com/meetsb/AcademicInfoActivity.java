@@ -1,5 +1,6 @@
 package cse110.com.meetsb;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,13 @@ public class AcademicInfoActivity extends AppCompatActivity {
     Spinner majorSpinner;
     EditText gpaEditText;
 
+    String userName = null;
+    String gender = null;
+    String description = null;
+    String filePathStr = null;
+
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,36 +38,50 @@ public class AcademicInfoActivity extends AppCompatActivity {
         gpaEditText = (EditText) findViewById(R.id.academic_info_editText_GPA);
         continueBtn = (Button) findViewById(R.id.academic_info_button_continue);
 
+        //get all the intent extras;
+        userName = getIntent().getStringExtra("USERNAME");
+        gender = getIntent().getStringExtra("GENDER");
+        description = getIntent().getStringExtra("DESCRIPTION");
+        filePathStr = getIntent().getStringExtra("IMAGE");
 
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = getIntent().getStringExtra("USERNAME");
-
-                String major = majorSpinner.getSelectedItem().toString();
-
-                //verify GPA
-                String gpaString = gpaEditText.getText().toString();
-                if(gpaString == null
-                        || gpaString == "") {
-                    String gpa = "N/A";
-                } else {
-                    try {
-                        Double.parseDouble(gpaString);
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Please enter valid GPA or leave it empty.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                // TODO::
-                Intent intent = new Intent(AcademicInfoActivity.this, ClassInfoActivity.class);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("MAJOR", major);
-                intent.putExtra("GPA", gpaString);
-                finish();
-                startActivity(intent);
+               submitInfo();
             }
         });
+    }
+
+    void submitInfo() {
+        String major = majorSpinner.getSelectedItem().toString();
+
+        //verify GPA
+        String gpaString = gpaEditText.getText().toString();
+        if(!gpaString.isEmpty()) {
+            double gpa;
+            try {
+                gpa = Double.parseDouble(gpaString);
+            } catch (Exception e) {
+                Toast.makeText(this, "Please enter valid GPA", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(gpa < 0 || gpa > 4) {
+                Toast.makeText(this, "Please enter valid GPA", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            gpaString = "Not available";
+        }
+
+
+        Intent intent = new Intent(AcademicInfoActivity.this, ClassInfoActivity.class);
+        intent.putExtra("USERNAME", userName);
+        intent.putExtra("GENDER",gender);
+        intent.putExtra("DESCRIPTION",description);
+        intent.putExtra("IMAGE", filePathStr);
+        intent.putExtra("MAJOR", major);
+        intent.putExtra("GPA", gpaString);
+        startActivity(intent);
     }
 }

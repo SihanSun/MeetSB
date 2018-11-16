@@ -40,6 +40,8 @@ public class ClassInfoActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapter2;
+    ArrayList<String> selectClass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class ClassInfoActivity extends AppCompatActivity {
 
         ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
         final ArrayList<String> arrayClass = new ArrayList<>();
-        final ArrayList<String> selectClass = new ArrayList<>();
+        selectClass = new ArrayList<>();
         arrayClass.addAll(Arrays.asList(getResources().getStringArray(R.array.class_array)));
         adapter = new ArrayAdapter<>(ClassInfoActivity.this,
                 android.R.layout.simple_list_item_1,
@@ -62,6 +64,7 @@ public class ClassInfoActivity extends AppCompatActivity {
                     selectClass.add(arrayClass.get(i));
             }
         });
+
         ListView sl = (ListView)findViewById(R.id.class_info_listview_selectlist);
         adapter2 = new ArrayAdapter<>(ClassInfoActivity.this,
                 android.R.layout.simple_list_item_1,selectClass);
@@ -93,12 +96,17 @@ public class ClassInfoActivity extends AppCompatActivity {
 
     private void submitClassInfo() {
         User newUser = new User();
-        newUser.getPersonalInformation().setUserName(userName);
-        newUser.getPersonalInformation().setDescription("I am teacher tony");
-        newUser.getPersonalInformation().setGender("undecided");
-        newUser.getAcademicInformation().getCourseTaking().add("CSE110");
-        newUser.getAcademicInformation().setGpa(gpaString);
-        newUser.getAcademicInformation().setMajor(major);
+        newUser.setUserName(userName);
+        newUser.setDescription("I am teacher tony");
+        newUser.setGender("undecided");
+        //newUser.getAcademicInformation().getCourseTaking().add("CSE110");
+        newUser.setGpa(gpaString);
+        newUser.setMajor(major);
+        String toast= "";
+        for(String className : selectClass) {
+            toast += className + " ";
+        }
+        Toast.makeText(this, toast,Toast.LENGTH_SHORT).show();
 
 
 
