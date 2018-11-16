@@ -12,13 +12,19 @@ public class Course {
 
     private List<String> studentsInTheCourse;
 
-    public List<String> getStudentsInTheCourse() {
-        return this.studentsInTheCourse;
-    }
-
     public Course() {
         studentOffsetMap = new HashMap<>();
         studentsInTheCourse = new ArrayList<>();
+    }
+
+    public Map<String, Integer> getStudentOffsetMap() { return studentOffsetMap; }
+
+    public void setStudentOffsetMap(Map<String, Integer> studentOffsetMap) { this.studentOffsetMap = studentOffsetMap; }
+
+    public void setStudentsInTheCourse(List<String> studentsInTheCourse) { this.studentsInTheCourse = studentsInTheCourse; }
+
+    public List<String> getStudentsInTheCourse() {
+        return this.studentsInTheCourse;
     }
 
     public List<String> getStudentList(String UID, int size) {
@@ -45,13 +51,12 @@ public class Course {
         List<String> result = new ArrayList<>();
         int count = 0;
         while(count < size) {
-            while(offset != studentSize && count != size) {
+            if(offset < studentSize) {
                 result.add(studentsInTheCourse.get(offset));
                 offset++;
                 count++;
-            }
-            if(count < size) {
-                offset = 0;
+            } else {
+                break;
             }
         }
 

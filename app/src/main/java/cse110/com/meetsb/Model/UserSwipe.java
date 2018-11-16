@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class UserSwipe {
-    HashMap<String, HashSet<String>> liked;
+    HashMap<String, Integer> liked;
 
     List<String> matchList;
 
@@ -15,9 +15,9 @@ public class UserSwipe {
         matchList = new ArrayList<>();
     }
 
-    public HashMap<String, HashSet<String>> getLiked() { return liked; }
+    public HashMap<String, Integer> getLiked() { return liked; }
 
-    public void setLiked(HashMap<String, HashSet<String>> liked) { this.liked = liked; }
+    public void setLiked(HashMap<String, Integer> liked) { this.liked = liked; }
 
     public List<String> getMatchList() { return matchList; }
 

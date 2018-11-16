@@ -61,5 +61,4 @@ public class User {
         courseTaking = new ArrayList<>();
     }
 
-
 }
