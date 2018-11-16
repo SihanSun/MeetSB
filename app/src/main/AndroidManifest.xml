@@ -48,19 +48,18 @@
         <activity
             android:name=".BasicInfoActivity"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".AcademicInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".ClassInfoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".AcademicInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".ClassInfoActivity">
-
         </activity>
         <activity android:name=".MatchListActivity"
             android:theme="@style/AppTheme.NoActionBar">

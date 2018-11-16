@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,27 +9,21 @@
 
 
     <ListView
-        android:id="@+id/class_info_listview_addedClass"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginLeft="54dp"
-        android:layout_marginTop="102dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
-        android:layout_weight="0" />
-
-    <ListView
         android:id="@+id/class_info_listview_classlist"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
-        android:layout_weight="0" />
+        android:layout_weight="0">
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/class_info_listview_selectlist"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_weight="0">
+
+    </ListView>
 
     <Button
         android:id="@+id/class_info_button_submit"
@@ -37,8 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:layout_marginBottom="45dp"
         android:text="Submit" />
 
 
-</RelativeLayout>
+</LinearLayout>

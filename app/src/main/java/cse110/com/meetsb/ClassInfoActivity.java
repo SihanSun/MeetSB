@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,30 +33,39 @@ public class ClassInfoActivity extends AppCompatActivity {
     String userName;
     String gpaString;
     String major;
+    ArrayList<String> course = new ArrayList<>();
     List<String> courseTaking = new ArrayList<>();
 
     FirebaseAuth firebaseAuth;
 
     ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapter2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_info);
 
         ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
-        ArrayList<String> arrayClass = new ArrayList<>();
+        final ArrayList<String> arrayClass = new ArrayList<>();
+        final ArrayList<String> selectClass = new ArrayList<>();
         arrayClass.addAll(Arrays.asList(getResources().getStringArray(R.array.class_array)));
         adapter = new ArrayAdapter<>(ClassInfoActivity.this,
                 android.R.layout.simple_list_item_1,
                 arrayClass);
+
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 view.setSelected(true);
+                if(!selectClass.contains(arrayClass.get(i)))
+                    selectClass.add(arrayClass.get(i));
             }
         });
+        ListView sl = (ListView)findViewById(R.id.class_info_listview_selectlist);
+        adapter2 = new ArrayAdapter<>(ClassInfoActivity.this,
+                android.R.layout.simple_list_item_1,selectClass);
+        sl.setAdapter(adapter2);
 
         //get extras
         userName = getIntent().getStringExtra("USERNAME");
