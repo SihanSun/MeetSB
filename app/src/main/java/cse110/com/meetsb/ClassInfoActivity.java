@@ -197,9 +197,9 @@ public class ClassInfoActivity extends AppCompatActivity {
         }
 
 //        //Toast.makeText(this, "result is " + testString, Toast.LENGTH_LONG).show();
-//        Intent intent = new Intent(this, SwipeActivity.class);
-//        finish();
-//        startActivity(intent);
+        Intent intent = new Intent(this, SwipeActivity.class);
+        finish();
+        startActivity(intent);
     }
 
 

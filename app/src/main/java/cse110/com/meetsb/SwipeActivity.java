@@ -35,26 +35,6 @@ import cse110.com.meetsb.Model.UserSwipe;
 
 public class SwipeActivity extends AppCompatActivity {
 
-    private class refreshCardHelper implements Runnable {
-
-        @Override
-        public void run() {
-            while( !stopThread ) {
-                try {
-                    Thread.sleep(5000);
-                } catch (Exception e) {
-                    System.out.println("Failed to sleep");
-                }
-                if(userCard != null && userCard.size() == 0) {
-                    beginFlash();
-                    refreshUserCard();
-                } else {
-                    endFlash();
-                }
-            }
-        }
-    }
-
     final int refreshSize = 5;
 
     private ArrayList<UserCardMode> userCard;
@@ -68,6 +48,7 @@ public class SwipeActivity extends AppCompatActivity {
     //animation
     ImageView iv_loading;
     AnimationDrawable loadingDrawable;
+    boolean annimatioOn;
 
     //preparation flag
     boolean ready;
@@ -96,10 +77,6 @@ public class SwipeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
-
-        //set flag
-        ready = false;
-        stopThread = false;
 
         //create a progress dialog instance pointing to this activity
         progressDialog = new ProgressDialog(this);
@@ -186,20 +163,78 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
+        //start animation
+        setUpAnnimation();
+        beginFlash();
+
         //set up course information, swipe information, and the list
         setUp();
     }
 
-    private void beginFlash() {
-        //begin the flash
-        flingContainer.setVisibility(View.INVISIBLE);
+    /*
+        Annmimation Controller
+     */
+
+    private void setUpAnnimation() {
+        annimatioOn = false;
         iv_loading = (ImageView) findViewById(R.id.iv_loading);
         loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
+    }
+    private void beginFlash() {
+        if(annimatioOn) {
+            return;
+        }
+        //begin the flash
+        flingContainer.setVisibility(View.INVISIBLE);
         loadingDrawable.start();
+        annimatioOn = true;
     }
 
     private void endFlash() {
+        if(!annimatioOn) {
+            return;
+        }
+        flingContainer.setVisibility(View.VISIBLE);
         loadingDrawable.stop();
+        annimatioOn = false;
+    }
+
+    /*
+        Thread Controller
+     */
+    private void startThread() {
+        stopThread = false;
+        Runnable refreshHelper = new Runnable() {
+            @Override
+            public void run() {
+                while( !stopThread ) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        System.out.println("Failed to sleep");
+                    }
+                    if(userCard != null && userCard.size() == 0) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                beginFlash();
+                            }
+                        });
+                        refreshUserCard();
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                endFlash();
+                            }
+                        });
+                    }
+                }
+                endFlash();
+            }
+        };
+        Thread refreshThread = new Thread(refreshHelper);
+        refreshThread.start();
     }
 
     protected void onDestroy() {
@@ -221,12 +256,13 @@ public class SwipeActivity extends AppCompatActivity {
 
                 //get the courses that the user is taking and get the default course
                 for(String courseName : user.getCourseTakingOffsetMap().keySet()) {
+                    if(courseTaking == null) {
+                        courseTaking = new ArrayList<>();
+                    }
                     courseTaking.add(courseName);
                 }
 
                 currentCourse = courseTaking.get(0);
-                //Toast.makeText(SwipeActivity.this, "successfully get course taking", Toast.LENGTH_SHORT).show();
-                //set courseObject
                 setUserSwipe();
             }
 
@@ -296,10 +332,8 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
-        //refreshUserCard
-        refreshUserCard();
-        ready = true;
-        flingContainer.setVisibility(View.VISIBLE);
+        //begin the careRefreshThread
+        startThread();
     }
 
     private void refreshUserCard() {
