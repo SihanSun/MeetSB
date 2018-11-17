@@ -50,8 +50,8 @@ public class SwipeActivity extends AppCompatActivity {
     AnimationDrawable loadingDrawable;
     boolean annimatioOn;
 
-    //preparation flag
-    boolean ready;
+    //retrieving finish flag
+    boolean finishRefresh;
 
     //course information
     User user;
@@ -210,6 +210,7 @@ public class SwipeActivity extends AppCompatActivity {
      */
     private void startThread() {
         stopThread = false;
+        finishRefresh = true;
         Runnable refreshHelper = new Runnable() {
             @Override
             public void run() {
@@ -345,6 +346,10 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     private void refreshUserCard() {
+        if(!finishRefresh) {
+            return;
+        }
+        finishRefresh = false;
         //update the user
         databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
 
@@ -368,9 +373,6 @@ public class SwipeActivity extends AppCompatActivity {
                     offset++;
                 }
 
-//                //update the user's offset
-//                user.getCourseTakingOffsetMap().put(currentCourse, offset);
-
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
                     final String otherUserUid = userUidToBeLoaded.get(i);
@@ -390,6 +392,7 @@ public class SwipeActivity extends AppCompatActivity {
                         }
                     });
                 }
+                finishRefresh = true;
             }
 
             @Override
