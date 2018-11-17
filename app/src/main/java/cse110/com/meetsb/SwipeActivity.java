@@ -35,6 +35,28 @@ import cse110.com.meetsb.Model.UserSwipe;
 
 public class SwipeActivity extends AppCompatActivity {
 
+    private class refreshCardHelper implements Runnable {
+
+        @Override
+        public void run() {
+            while( !stopThread ) {
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    System.out.println("Failed to sleep");
+                }
+                if(userCard != null && userCard.size() == 0) {
+                    beginFlash();
+                    refreshUserCard();
+                } else {
+                    endFlash();
+                }
+            }
+        }
+    }
+
+    final int refreshSize = 5;
+
     private ArrayList<UserCardMode> userCard;
     private UserCardAdapter arrayAdapter;
     private SwipeFlingAdapterView flingContainer;
@@ -51,11 +73,9 @@ public class SwipeActivity extends AppCompatActivity {
     boolean ready;
 
     //course information
-    String currentCourse;
+    User user;
     List<String> courseTaking;
-
-    //course class
-    Course courseObject;
+    String currentCourse;
 
     //user swipe information
     UserSwipe userSwipe;
@@ -68,6 +88,9 @@ public class SwipeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
+    //thread flag
+    boolean stopThread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -76,6 +99,7 @@ public class SwipeActivity extends AppCompatActivity {
 
         //set flag
         ready = false;
+        stopThread = false;
 
         //create a progress dialog instance pointing to this activity
         progressDialog = new ProgressDialog(this);
@@ -87,21 +111,6 @@ public class SwipeActivity extends AppCompatActivity {
 
         //get the user's UID
         String uid = firebaseAuth.getCurrentUser().getUid();
-
-        //create fake data
-        User fakeUser = new User();
-        List<String> fakeCourseTaking = new ArrayList<>();
-        fakeCourseTaking.add("CSE110Gary");
-        fakeUser.setCourseTaking(fakeCourseTaking);
-        databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(fakeUser);
-        Course CSE110Gary = new Course();
-        CSE110Gary.getStudentsInTheCourse().add("fwW0k5QoYqOwngMj48SqIX0yVTB2");
-        CSE110Gary.getStudentsInTheCourse().add("jNQ8Ucd9qFaM05bbqSvEGLUo87Q2");
-        CSE110Gary.getStudentsInTheCourse().add("rDdmCrJ46VOGK7RksMuunUB8W2K2");
-        databaseReference.child("COURSE").child("CSE110Gary").setValue(CSE110Gary);
-        UserSwipe fakeUserSwipe = new UserSwipe();
-        fakeUserSwipe.getLiked().put("Alvin Liu", 1);
-        databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(fakeUserSwipe);
 
         //catch all the btns
         btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
@@ -152,11 +161,6 @@ public class SwipeActivity extends AppCompatActivity {
              * what to do when list is about to be empty
              */
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                if(!ready) {
-                    return;
-                } else {
-                    refreshUserCard();
-                }
                 //makeToast(SwipeActivity.this, "refreshing!!!!");
             }
 
@@ -182,15 +186,26 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
+        //set up course information, swipe information, and the list
+        setUp();
+    }
+
+    private void beginFlash() {
         //begin the flash
         flingContainer.setVisibility(View.INVISIBLE);
         iv_loading = (ImageView) findViewById(R.id.iv_loading);
         loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
         loadingDrawable.start();
-
-        //set up course information, swipe information, and the list
-        setUp();
     }
+
+    private void endFlash() {
+        loadingDrawable.stop();
+    }
+
+    protected void onDestroy() {
+        stopThread=true;
+        super.onDestroy();
+    };
 
     private void setUp() {
         setCourseTaking();
@@ -202,46 +217,23 @@ public class SwipeActivity extends AppCompatActivity {
         databaseReference.child("USER").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                user = dataSnapshot.getValue(User.class);
 
                 //get the courses that the user is taking and get the default course
-                courseTaking = user.getCourseTaking();
+                for(String courseName : user.getCourseTakingOffsetMap().keySet()) {
+                    courseTaking.add(courseName);
+                }
+
                 currentCourse = courseTaking.get(0);
-                Toast.makeText(SwipeActivity.this, "successfully get course taking", Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(SwipeActivity.this, "successfully get course taking", Toast.LENGTH_SHORT).show();
                 //set courseObject
-                setCourseObject();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                flingContainer.setVisibility(View.VISIBLE);
-                loadingDrawable.stop();
-                makeToast(SwipeActivity.this, "Failed to get user information");
-            }
-        });
-    }
-
-    private void setCourseObject() {
-
-        //get the list of students who are taking that course
-        databaseReference.child("COURSE").child(currentCourse).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //set the courseObject
-                courseObject = dataSnapshot.getValue(Course.class);
-
-                //get userSwipe
                 setUserSwipe();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                loadingDrawable.stop();
                 flingContainer.setVisibility(View.VISIBLE);
-                //make a toast
-                Toast.makeText(SwipeActivity.this, "Failed to set courseObject, please check your internet",
-                        Toast.LENGTH_SHORT).show();
+                makeToast(SwipeActivity.this, "Failed to get user information");
             }
         });
     }
@@ -264,7 +256,6 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                loadingDrawable.stop();
                 flingContainer.setVisibility(View.VISIBLE);
                 //make a toast
                 Toast.makeText(SwipeActivity.this, "Failed to refresh user swipe card", Toast.LENGTH_SHORT).show();
@@ -283,13 +274,19 @@ public class SwipeActivity extends AppCompatActivity {
         btnDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                left();
+                if(userCard == null || userCard.size() == 0) {
+                    return;
+                }
+                flingContainer.getTopCardListener().selectLeft();
             }
         });
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                right();
+                if(userCard == null || userCard.size() == 0) {
+                    return;
+                }
+                flingContainer.getTopCardListener().selectRight();
             }
         });
         btnChat.setOnClickListener(new View.OnClickListener() {
@@ -299,50 +296,74 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
+        //refreshUserCard
         refreshUserCard();
         ready = true;
         flingContainer.setVisibility(View.VISIBLE);
     }
 
     private void refreshUserCard() {
-        //get user uid
-        String uid = firebaseAuth.getCurrentUser().getUid();
+        //update the user
+        databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
 
-        //update the course student offset map
-        databaseReference.child("COURSE").child(currentCourse).setValue(courseObject);
+        //update student uid list
+        databaseReference.child("COURSE").child(currentCourse).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Course course = dataSnapshot.getValue(Course.class);
+                List<String> uidList = course.getStudentsInTheCourse();
 
-        //query courseObject to get list of users
-        List<String> uidList = courseObject.getStudentList(uid, 10);
-        if(uidList == null || uidList.size() == 0) {
-            return;
-        }
-        //for each uid, query the database to get the result
-        for(String otherUserUid : uidList) {
-            //if current user has already liked this user before of is the user, ignore this user
-            if(userSwipe.getLiked().containsKey(otherUserUid) || otherUserUid.equals(uid)) {
-                continue;
+                //get current offset
+                int offset = user.getCourseTakingOffsetMap().get(currentCourse);
+
+                //get next refreshSize of user UID
+                List<String> userUidToBeLoaded = new ArrayList<>();
+                for(int count = 0 ; count < refreshSize ; count++) {
+                    if(offset == uidList.size()) {
+                        break;
+                    }
+                    userUidToBeLoaded.add(uidList.get(offset));
+                    offset++;
+                }
+
+                //update the user's offset
+                user.getCourseTakingOffsetMap().put(currentCourse, offset);
+
+                //update card view
+                for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
+                    final String otherUserUid = userUidToBeLoaded.get(i);
+                    if(otherUserUid.equals(firebaseAuth.getCurrentUser().getUid())) {
+                        continue;
+                    }
+                    databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User otherUser = dataSnapshot.getValue(User.class);
+                            addUserCard(otherUser);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
 
-            databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    //get the user
-                    User user = dataSnapshot.getValue(User.class);
-                    String name = user.getUserName();
-                    int year = user.getGraduationYear();
-                    List<String> image = imageList.get(1);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                stopThread = true;
+            }
+        });
 
-                    //check if current user has already liked this user
-                    userCard.add(new UserCardMode(name, year, image));
-                    arrayAdapter.notifyDataSetChanged();
-                }
+    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
+    private synchronized void addUserCard(User user){
+        String name = user.getUserName();
+        int year = user.getGraduationYear();
+        List<String> image = imageList.get(1);
+        userCard.add(new UserCardMode(name, year, image));
+        arrayAdapter.notifyDataSetChanged();
     }
 
     /*
@@ -353,26 +374,11 @@ public class SwipeActivity extends AppCompatActivity {
                                 if yes, add both user to each other's match list and prompt a toast.
      */
     private void swipeRight(final String uid) {
-    //TODO
+        //TODO
     }
 
     static void makeToast(Context ctx, String s) {
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
-    }
-
-    public void right() {
-        if(userCard == null || userCard.size() == 0) {
-            return;
-        }
-        flingContainer.getTopCardListener().selectRight();
-    }
-
-    public void left() {
-
-        if(userCard == null || userCard.size() == 0) {
-            return;
-        }
-        flingContainer.getTopCardListener().selectLeft();
     }
 
     public final String[] imageUrls = new String[]{
