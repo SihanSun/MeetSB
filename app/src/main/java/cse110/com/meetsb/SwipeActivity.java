@@ -119,9 +119,7 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
+                updateUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
                 makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
@@ -129,6 +127,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 //Do something on the right!
+                updateUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
                 makeToast(SwipeActivity.this, "Like"  + userCardMode.getName());
             }
@@ -174,7 +173,6 @@ public class SwipeActivity extends AppCompatActivity {
     /*
         Annmimation Controller
      */
-
     private void setUpAnnimation() {
         annimatioOn = false;
         iv_loading = (ImageView) findViewById(R.id.iv_loading);
@@ -200,6 +198,14 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     /*
+        User Offset Controller
+     */
+    private void updateUserOffset() {
+        int currentOffset = user.getCourseTakingOffsetMap().get(currentCourse);
+        user.getCourseTakingOffsetMap().put(currentCourse, currentOffset+1);
+    }
+
+    /*
         Thread Controller
      */
     private void startThread() {
@@ -209,17 +215,19 @@ public class SwipeActivity extends AppCompatActivity {
             public void run() {
                 while( !stopThread ) {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(500);
                     } catch (Exception e) {
                         System.out.println("Failed to sleep");
                     }
-                    if(userCard != null && userCard.size() == 0) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                beginFlash();
-                            }
-                        });
+                    if(userCard != null && userCard.size() <= 1) {
+                        if(userCard.size() == 0) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    beginFlash();
+                                }
+                            });
+                        }
                         refreshUserCard();
                     } else {
                         runOnUiThread(new Runnable() {
@@ -360,8 +368,8 @@ public class SwipeActivity extends AppCompatActivity {
                     offset++;
                 }
 
-                //update the user's offset
-                user.getCourseTakingOffsetMap().put(currentCourse, offset);
+//                //update the user's offset
+//                user.getCourseTakingOffsetMap().put(currentCourse, offset);
 
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
@@ -386,7 +394,7 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                stopThread = true;
+
             }
         });
 
