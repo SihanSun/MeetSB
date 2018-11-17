@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/search_class"
-        android:title="Search My Class"
+    <item
+        android:id="@+id/search_class"
         android:icon="@android:drawable/ic_menu_search"
+        android:title="Search My Class"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always|collapseActionView"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+        app:showAsAction="always|collapseActionView" />
 </menu>

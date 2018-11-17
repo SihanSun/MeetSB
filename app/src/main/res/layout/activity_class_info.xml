@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".ClassInfoActivity">
 
@@ -13,14 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
-        android:layout_weight="0">
+        android:layout_weight="0"
+        android:visibility="visible">
 
     </ListView>
 
     <ListView
         android:id="@+id/class_info_listview_selectlist"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_width="300dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="50dp"
         android:layout_weight="0"
         android:background="#D8D8D8"
         android:textSize="15sp">
@@ -34,8 +37,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="45dp"
-        android:text="Submit" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/continue_btn" />
 
 
 </LinearLayout>

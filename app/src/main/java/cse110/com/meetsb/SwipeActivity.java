@@ -76,121 +76,121 @@ public class SwipeActivity extends AppCompatActivity {
 
         //set flag
         ready = false;
-//
-//        //create a progress dialog instance pointing to this activity
-//        progressDialog = new ProgressDialog(this);
-//
-//        //initialize the Firebase Relevant
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        databaseReference = firebaseDatabase.getReference();
-//
-//        //get the user's UID
-//        String uid = firebaseAuth.getCurrentUser().getUid();
-//
-//        //create fake data
-//        User fakeUser = new User();
-//        List<String> fakeCourseTaking = new ArrayList<>();
-//        fakeCourseTaking.add("CSE110Gary");
-//        //fakeUser.setCourseTaking(fakeCourseTaking);
-//        databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(fakeUser);
-//        Course CSE110Gary = new Course();
-//        CSE110Gary.getStudentsInTheCourse().add("fwW0k5QoYqOwngMj48SqIX0yVTB2");
-//        CSE110Gary.getStudentsInTheCourse().add("jNQ8Ucd9qFaM05bbqSvEGLUo87Q2");
-//        CSE110Gary.getStudentsInTheCourse().add("rDdmCrJ46VOGK7RksMuunUB8W2K2");
-//        databaseReference.child("COURSE").child("CSE110Gary").setValue(CSE110Gary);
-//        UserSwipe fakeUserSwipe = new UserSwipe();
-//        fakeUserSwipe.getLiked().put("Alvin Liu", 1);
-//        databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(fakeUserSwipe);
-//
-//        //catch all the btns
-//        btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
-//        btnLike = (Button) findViewById(R.id.buttons_button_like);
-//        btnProfile  = (Button) findViewById(R.id.buttons_button_profile);
-//        btnChat = (Button) findViewById(R.id.buttons_button_chat);
-//
-//        //initialize the imageList of size ten
-//        imageList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            List<String> s = new ArrayList<>();
-//            s.add(imageUrls[0]);
-//            imageList.add(s);
-//        }
-//
-//        //set the swipe view
-//        this.flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-//        this.userCard = new ArrayList<>();
-//        this.arrayAdapter = new UserCardAdapter(SwipeActivity.this, R.layout.item, R.id.item_textView_user, userCard);
-//        this.flingContainer.setAdapter(arrayAdapter);
-//        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
-//            @Override
-//            public void removeFirstObjectInAdapter() {
-//                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-//                Log.d("LIST", "removed object!");
-//                userCard.remove(0);
-//                arrayAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onLeftCardExit(Object dataObject) {
-//                //Do something on the left!
-//                //You also have access to the original object.
-//                //If you want to use it just cast it (String) dataObject
-//                UserCardMode userCardMode = (UserCardMode) dataObject;
-//                makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
-//            }
-//
-//            @Override
-//            public void onRightCardExit(Object dataObject) {
-//                //Do something on the right!
-//                UserCardMode userCardMode = (UserCardMode) dataObject;
-//                makeToast(SwipeActivity.this, "Like"  + userCardMode.getName());
-//            }
-//
-//            @Override
-//            /**
-//             * what to do when list is about to be empty
-//             */
-//            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-//                if(!ready) {
-//                    return;
-//                } else {
-//                    refreshUserCard();
-//                }
-//                //makeToast(SwipeActivity.this, "refreshing!!!!");
-//            }
-//
-//            @Override
-//            public void onScroll(float scrollProgressPercent) {
-//                try {
-//                    View view = flingContainer.getSelectedView();
-//                    view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-//                    view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//
-//        // add an OnItemClickListener to define what to do after item being clicked
-//        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClicked(int itemPosition, Object dataObject) {
-//                makeToast(SwipeActivity.this, "You Clicked Gary!!");
-//                startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
-//            }
-//        });
-//
-//        //begin the flash
-//        flingContainer.setVisibility(View.INVISIBLE);
-//        iv_loading = (ImageView) findViewById(R.id.iv_loading);
-//        loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
-//        loadingDrawable.start();
-//
-//        //set up course information, swipe information, and the list
-//        setUp();
-//
+
+        //create a progress dialog instance pointing to this activity
+        progressDialog = new ProgressDialog(this);
+
+        //initialize the Firebase Relevant
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+
+        //get the user's UID
+        String uid = firebaseAuth.getCurrentUser().getUid();
+
+        //create fake data
+        User fakeUser = new User();
+        List<String> fakeCourseTaking = new ArrayList<>();
+        fakeCourseTaking.add("CSE110Gary");
+        //fakeUser.setCourseTaking(fakeCourseTaking);
+        databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(fakeUser);
+        Course CSE110Gary = new Course();
+        CSE110Gary.getStudentsInTheCourse().add("fwW0k5QoYqOwngMj48SqIX0yVTB2");
+        CSE110Gary.getStudentsInTheCourse().add("jNQ8Ucd9qFaM05bbqSvEGLUo87Q2");
+        CSE110Gary.getStudentsInTheCourse().add("rDdmCrJ46VOGK7RksMuunUB8W2K2");
+        databaseReference.child("COURSE").child("CSE110Gary").setValue(CSE110Gary);
+        UserSwipe fakeUserSwipe = new UserSwipe();
+        fakeUserSwipe.getLiked().put("Alvin Liu", 1);
+        databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(fakeUserSwipe);
+
+        //catch all the btns
+        btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
+        btnLike = (Button) findViewById(R.id.buttons_button_like);
+        btnProfile  = (Button) findViewById(R.id.buttons_button_profile);
+        btnChat = (Button) findViewById(R.id.buttons_button_chat);
+
+        //initialize the imageList of size ten
+        imageList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            List<String> s = new ArrayList<>();
+            s.add(imageUrls[0]);
+            imageList.add(s);
+        }
+
+        //set the swipe view
+        this.flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+        this.userCard = new ArrayList<>();
+        this.arrayAdapter = new UserCardAdapter(SwipeActivity.this, R.layout.item, R.id.item_textView_user, userCard);
+        this.flingContainer.setAdapter(arrayAdapter);
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                // this is the simplest way to delete an object from the Adapter (/AdapterView)
+                Log.d("LIST", "removed object!");
+                userCard.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLeftCardExit(Object dataObject) {
+                //Do something on the left!
+                //You also have access to the original object.
+                //If you want to use it just cast it (String) dataObject
+                UserCardMode userCardMode = (UserCardMode) dataObject;
+                makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
+            }
+
+            @Override
+            public void onRightCardExit(Object dataObject) {
+                //Do something on the right!
+                UserCardMode userCardMode = (UserCardMode) dataObject;
+                makeToast(SwipeActivity.this, "Like"  + userCardMode.getName());
+            }
+
+            @Override
+            /**
+             * what to do when list is about to be empty
+             */
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                if(!ready) {
+                    return;
+                } else {
+                    refreshUserCard();
+                }
+                //makeToast(SwipeActivity.this, "refreshing!!!!");
+            }
+
+            @Override
+            public void onScroll(float scrollProgressPercent) {
+                try {
+                    View view = flingContainer.getSelectedView();
+                    view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                    view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        // add an OnItemClickListener to define what to do after item being clicked
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int itemPosition, Object dataObject) {
+                makeToast(SwipeActivity.this, "You Clicked Gary!!");
+                startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
+            }
+        });
+
+        //begin the flash
+        flingContainer.setVisibility(View.INVISIBLE);
+        iv_loading = (ImageView) findViewById(R.id.iv_loading);
+        loadingDrawable = (AnimationDrawable) iv_loading.getDrawable();
+        loadingDrawable.start();
+
+        //set up course information, swipe information, and the list
+        setUp();
+
     }
 
     private void setUp() {

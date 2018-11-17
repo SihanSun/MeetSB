@@ -61,6 +61,7 @@ public class ClassInfoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 view.setSelected(true);
                 if(!selectClass.contains(arrayClass.get(i)))
+
                     selectClass.add(arrayClass.get(i));
             }
         });
@@ -102,6 +103,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         //newUser.getAcademicInformation().getCourseTaking().add("CSE110");
         newUser.setGpa(gpaString);
         newUser.setMajor(major);
+
         String toast= "";
         for(String className : selectClass) {
             toast += className + " ";
@@ -127,6 +129,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         inflater.inflate(R.menu.search_menu,menu);
         MenuItem item = menu.findItem(R.id.search_class);
         SearchView searchView = (SearchView)item.getActionView();
+        searchView.setIconified(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
