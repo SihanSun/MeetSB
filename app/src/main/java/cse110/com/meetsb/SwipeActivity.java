@@ -119,7 +119,6 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                updateUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
                 makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
@@ -127,7 +126,6 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 //Do something on the right!
-                updateUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
                 makeToast(SwipeActivity.this, "Like"  + userCardMode.getName());
             }
@@ -216,7 +214,7 @@ public class SwipeActivity extends AppCompatActivity {
             public void run() {
                 while( !stopThread ) {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (Exception e) {
                         System.out.println("Failed to sleep");
                     }
@@ -366,12 +364,15 @@ public class SwipeActivity extends AppCompatActivity {
                 //get next refreshSize of user UID
                 List<String> userUidToBeLoaded = new ArrayList<>();
                 for(int count = 0 ; count < refreshSize ; count++) {
-                    if(offset == uidList.size()) {
+                    if(offset >= uidList.size()) {
                         break;
                     }
                     userUidToBeLoaded.add(uidList.get(offset));
                     offset++;
                 }
+
+                //update user offset
+                user.getCourseTakingOffsetMap().put(currentCourse, offset);
 
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
