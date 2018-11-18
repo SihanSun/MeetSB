@@ -120,8 +120,6 @@ public class BasicInfoActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please introduce yourself.", Toast.LENGTH_SHORT).show();
             return;
         }
-        Toast.makeText(this, "DESCRIPTION IS " + description, Toast.LENGTH_SHORT).show();
-
 
         Intent intent = new Intent(this, AcademicInfoActivity.class);
         intent.putExtra("USERNAME", userName);

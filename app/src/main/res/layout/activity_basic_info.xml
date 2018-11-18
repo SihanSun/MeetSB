@@ -16,13 +16,13 @@
         android:gravity="center"
         android:text="Basic Info"
         android:textColor="#fff"
-        android:textSize="30sp" />
+        android:textSize="36sp" />
 
     <ImageView
         android:id="@+id/basic_info_imageView_avatar"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/profile_pic" />
 
     <EditText
@@ -43,7 +43,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/small_transparent_box"
         android:entries="@array/gender_array"
-        android:prompt="@string/gender_prompt" />
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp" />
 
     <EditText
         android:id="@+id/basic_info_multilineText_description"
@@ -57,15 +58,16 @@
         android:inputType="textMultiLine"
         android:paddingLeft="20dp"
         android:paddingTop="15dp"
-        android:paddingRight="20dp"
+        android:paddingRight="10dp"
         android:textColor="#fff" />
 
     <Button
         android:id="@+id/basic_info_button_continue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="?android:textAppearanceSmall"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
         android:background="@drawable/continue_btn" />
 </LinearLayout>

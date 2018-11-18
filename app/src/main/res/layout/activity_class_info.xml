@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_3"
     android:orientation="vertical"
     tools:context=".ClassInfoActivity">
 
@@ -11,7 +12,7 @@
     <ListView
         android:id="@+id/class_info_listview_addedClass"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -19,26 +20,29 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="54dp"
         android:layout_marginLeft="54dp"
-        android:layout_marginTop="102dp"
+        android:layout_marginTop="240dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:background="@drawable/big_transparent_box" />
 
     <ListView
         android:id="@+id/class_info_listview_classlist"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:background="@android:color/background_light" />
 
     <Button
         android:id="@+id/class_info_button_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="?android:textAppearanceSmall"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:text="Submit" />
+        android:layout_marginBottom="85dp"
+        android:background="@drawable/continue_btn" />
 
 
 </RelativeLayout>
