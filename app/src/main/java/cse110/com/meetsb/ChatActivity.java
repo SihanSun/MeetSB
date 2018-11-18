@@ -66,7 +66,28 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                
+                if (messageId.indexOf(dataSnapshot.getKey()) == -1) {
+                    if(lastMessage.equals(dataSnapshot.getKey())){
+                        moreMessage = false;
+                        lastMessage = "";
+                        messageAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                    else{
+                        Message message = dataSnapshot.getValue(Message.class);
+                        messageId.add(position, dataSnapshot.getKey());
+                        messageList.add(position, message);
+                        moreMessage = false;
+                        if(position == 1){
+                            lastMessage = dataSnapshot.getKey();
+                        }
+                        messageAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+                if(!moreMessage){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -89,6 +110,20 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         };
+        Query query = databaseReference.orderByKey().endAt(lastMessage).limitToLast(showItem);
+        query.addChildEventListener(childEventListener);
+        if(moreMessage){
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable(){
+
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(getApplicationContext(),"OK", Toast.LENGTH_SHORT).show();
+                }
+            };
+            handler.postDelayed(runnable, 2000);
+        }
     }
 
     @Override
