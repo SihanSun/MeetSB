@@ -1,57 +1,52 @@
 package cse110.com.meetsb.Model;
 
-public class Chat {
-    private String id;
-    private User user;
-    private String message;
-    private String timeStamp;
+import java.io.Serializable;
+
+public class Chat implements Serializable{
+    private String userId;
+    private String lastmessage;
+    private String time;
+    private String username;
 
     public Chat(){}
 
-    public Chat(User user, String message, String timeStamp){
-        this.user = user;
-        this.message = message;
-        this.timeStamp = timeStamp;
+    public Chat(String userId, String lastmessage, String time, String username) {
+        this.userId = userId;
+        this.lastmessage = lastmessage;
+        this.time = time;
+        this.username = username;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public User getUser() {
-        return user;
+    public String getLastmessage() {
+        return lastmessage;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLastmessage(String lastmessage) {
+        this.lastmessage = lastmessage;
     }
 
-    public String getMessage() {
-        return message;
+    public String getTime() {
+        return time;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "Chat{" +
-                "user=" + user +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", message='" + message + '\'' +
-                '}';
-    }
 }
