@@ -214,7 +214,7 @@ public class SwipeActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         System.out.println("Failed to sleep");
                     }
-                    if(userCard != null && userCard.size() <= 1) {
+                    if(userCard != null && userCard.size() == 0) {
                         if(userCard.size() == 0) {
                             runOnUiThread(new Runnable() {
                                 @Override
