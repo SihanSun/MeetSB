@@ -50,9 +50,6 @@ public class SwipeActivity extends AppCompatActivity {
     AnimationDrawable loadingDrawable;
     boolean annimatioOn;
 
-    //retrieving finish flag
-    boolean finishRefresh;
-
     //course information
     User user;
     List<String> courseTaking;
@@ -208,7 +205,6 @@ public class SwipeActivity extends AppCompatActivity {
      */
     private void startThread() {
         stopThread = false;
-        finishRefresh = true;
         Runnable refreshHelper = new Runnable() {
             @Override
             public void run() {
@@ -344,10 +340,6 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     private void refreshUserCard() {
-        if(!finishRefresh) {
-            return;
-        }
-        finishRefresh = false;
         //update the user
         databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
 
@@ -358,21 +350,7 @@ public class SwipeActivity extends AppCompatActivity {
                 Course course = dataSnapshot.getValue(Course.class);
                 List<String> uidList = course.getStudentsInTheCourse();
 
-                //get current offset
-                int offset = user.getCourseTakingOffsetMap().get(currentCourse);
-
-                //get next refreshSize of user UID
-                List<String> userUidToBeLoaded = new ArrayList<>();
-                for(int count = 0 ; count < refreshSize ; count++) {
-                    if(offset >= uidList.size()) {
-                        break;
-                    }
-                    userUidToBeLoaded.add(uidList.get(offset));
-                    offset++;
-                }
-
-                //update user offset
-                user.getCourseTakingOffsetMap().put(currentCourse, offset);
+                List<String> userUidToBeLoaded = readAndUpdate(uidList);
 
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
@@ -393,7 +371,6 @@ public class SwipeActivity extends AppCompatActivity {
                         }
                     });
                 }
-                finishRefresh = true;
             }
 
             @Override
@@ -402,6 +379,25 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private synchronized List<String> readAndUpdate(List<String> uidList) {
+        //get current offset
+        int offset = user.getCourseTakingOffsetMap().get(currentCourse);
+
+        //get next refreshSize of user UID
+        List<String> userUidToBeLoaded = new ArrayList<>();
+        for(int count = 0 ; count < refreshSize ; count++) {
+            if(offset >= uidList.size()) {
+                break;
+            }
+            userUidToBeLoaded.add(uidList.get(offset));
+            offset++;
+        }
+
+        //update user offset
+        user.getCourseTakingOffsetMap().put(currentCourse, offset);
+        return userUidToBeLoaded;
     }
 
     private synchronized void addUserCard(User user){
