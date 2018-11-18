@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.lorentzos.swipecards:library:1.0.8@aar'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.firebaseui:firebase-ui:4.2.1'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
