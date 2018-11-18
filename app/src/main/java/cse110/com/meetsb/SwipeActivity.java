@@ -3,6 +3,7 @@ package cse110.com.meetsb;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import android.content.Intent;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +69,8 @@ public class SwipeActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
 
     //thread flag
     boolean stopThread;
@@ -82,6 +88,8 @@ public class SwipeActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = firebaseDatabase.getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         //get the user's UID
         String uid = firebaseAuth.getCurrentUser().getUid();
@@ -361,8 +369,16 @@ public class SwipeActivity extends AppCompatActivity {
                     databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            User otherUser = dataSnapshot.getValue(User.class);
-                            addUserCard(otherUser);
+                            final User otherUser = dataSnapshot.getValue(User.class);
+
+                            //get other user's image
+                            storageReference.child("IMAGE").child(otherUserUid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageUri = uri.toString();
+                                    addUserCard(otherUser, imageUri);
+                                }
+                            });
                         }
 
                         @Override
@@ -400,10 +416,11 @@ public class SwipeActivity extends AppCompatActivity {
         return userUidToBeLoaded;
     }
 
-    private synchronized void addUserCard(User user){
+    private synchronized void addUserCard(User user, String imageUri){
         String name = user.getUserName();
         int year = user.getGraduationYear();
-        List<String> image = imageList.get(1);
+        List<String> image = new ArrayList<>();
+        image.add(imageUri);
         userCard.add(new UserCardMode(name, year, image));
         arrayAdapter.notifyDataSetChanged();
     }
