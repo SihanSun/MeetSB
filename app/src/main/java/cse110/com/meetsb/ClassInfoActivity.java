@@ -76,7 +76,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
 
         //set list view
-        ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
+        final ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
         final ArrayList<String> arrayClass = new ArrayList<>();
         arrayClass.addAll(Arrays.asList(getResources().getStringArray(R.array.class_array)));
         selectClass = new ArrayList<String>();
@@ -89,8 +89,9 @@ public class ClassInfoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //courseTaking.add(view.toString());
-                if (!selectClass.contains(arrayClass.get(i))) {
-                    selectClass.add(arrayClass.get(i));
+                String item = (lv.getItemAtPosition(i)).toString();
+                if (!selectClass.contains(item)) {
+                    selectClass.add(item);
                     ListView sl = (ListView)findViewById(R.id.class_info_listview_addedClass);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
                             android.R.layout.simple_list_item_1, selectClass);
