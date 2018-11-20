@@ -54,6 +54,9 @@ public class SwipeActivity extends AppCompatActivity {
     AnimationDrawable loadingDrawable;
     boolean annimatioOn;
 
+    //user uid
+    String userUID;
+
     //course information
     User user;
     List<String> courseTaking;
@@ -92,21 +95,13 @@ public class SwipeActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
 
         //get the user's UID
-        String uid = firebaseAuth.getCurrentUser().getUid();
+        userUID = firebaseAuth.getCurrentUser().getUid();
 
         //catch all the btns
         btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
         btnLike = (Button) findViewById(R.id.buttons_button_like);
         btnProfile  = (Button) findViewById(R.id.buttons_button_profile);
         btnChat = (Button) findViewById(R.id.buttons_button_chat);
-
-        //initialize the imageList of size ten
-        imageList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            List<String> s = new ArrayList<>();
-            s.add(imageUrls[0]);
-            imageList.add(s);
-        }
 
         //set the swipe view
         this.flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
@@ -201,14 +196,6 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     /*
-        User Offset Controller
-     */
-    private void updateUserOffset() {
-        int currentOffset = user.getCourseTakingOffsetMap().get(currentCourse);
-        user.getCourseTakingOffsetMap().put(currentCourse, currentOffset+1);
-    }
-
-    /*
         Thread Controller
      */
     private void startThread() {
@@ -218,7 +205,7 @@ public class SwipeActivity extends AppCompatActivity {
             public void run() {
                 while( !stopThread ) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(300);
                     } catch (Exception e) {
                         System.out.println("Failed to sleep");
                     }
@@ -253,6 +240,9 @@ public class SwipeActivity extends AppCompatActivity {
         super.onDestroy();
     };
 
+    /*
+        Setup Contoller during initialization
+     */
     private void setUp() {
         setCourseTaking();
     }
@@ -272,7 +262,6 @@ public class SwipeActivity extends AppCompatActivity {
                     }
                     courseTaking.add(courseName);
                 }
-
                 currentCourse = courseTaking.get(0);
                 setUserSwipe();
             }
@@ -296,6 +285,11 @@ public class SwipeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //get the user swipe information
                 userSwipe = dataSnapshot.getValue(UserSwipe.class);
+
+                if(userSwipe == null) {
+                    userSwipe = new UserSwipe();
+                    databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(userSwipe);
+                }
 
                 //set swipe card
                 setSwipeCard();
@@ -347,6 +341,9 @@ public class SwipeActivity extends AppCompatActivity {
         startThread();
     }
 
+    /*
+        Refresh Card Controller
+     */
     private void refreshUserCard() {
         //update the user
         databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
@@ -358,7 +355,7 @@ public class SwipeActivity extends AppCompatActivity {
                 Course course = dataSnapshot.getValue(Course.class);
                 List<String> uidList = course.getStudentsInTheCourse();
 
-                List<String> userUidToBeLoaded = readAndUpdate(uidList);
+                List<String> userUidToBeLoaded = readAndUpdateLocalOffset(uidList);
 
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
@@ -376,28 +373,24 @@ public class SwipeActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String imageUri = uri.toString();
-                                    addUserCard(otherUser, imageUri);
+                                    addUserCard(otherUser, imageUri, otherUserUid);
                                 }
                             });
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
+                        public void onCancelled(@NonNull DatabaseError databaseError) { }
                     });
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
     }
 
-    private synchronized List<String> readAndUpdate(List<String> uidList) {
+    private synchronized List<String> readAndUpdateLocalOffset(List<String> uidList) {
         //get current offset
         int offset = user.getCourseTakingOffsetMap().get(currentCourse);
 
@@ -416,12 +409,12 @@ public class SwipeActivity extends AppCompatActivity {
         return userUidToBeLoaded;
     }
 
-    private synchronized void addUserCard(User user, String imageUri){
+    private synchronized void addUserCard(User user, String imageUri, String uid){
         String name = user.getUserName();
         int year = user.getGraduationYear();
         List<String> image = new ArrayList<>();
         image.add(imageUri);
-        userCard.add(new UserCardMode(name, year, image));
+        userCard.add(new UserCardMode(name, year, image, uid));
         arrayAdapter.notifyDataSetChanged();
     }
 
@@ -430,18 +423,52 @@ public class SwipeActivity extends AppCompatActivity {
         pre-condition: the user swipe right on a user
         post-condition: 1. add the uid to user's like list in userSwipe
                         2. check if the other user also likes current user
-                                if yes, add both user to each other's match list and prompt a toast.
+                                if yes, add both user to both user's match list and prompt a toast.
      */
-    private void swipeRight(final String uid) {
+    private void swipeRight(final String otherUid) {
         //TODO
+        //add user to current user swipe like list
+        userSwipe.getLiked().put(otherUid, otherUid);
+
+        //update userSwipe in database
+        databaseReference.child("USERSWIPE").child(userUID).setValue(userSwipe);
+
+        //check if other also likes current user
+        databaseReference.child("USERSWIPE").child(otherUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserSwipe otherUserSwipe = dataSnapshot.getValue(UserSwipe.class);
+
+                //maybe at this point other user's swipe has not be set up yet
+                if(otherUserSwipe != null) {
+
+                    //check if you are in other's liked history
+                    if(otherUserSwipe.getLiked().containsKey(userUID)) {
+                        //add other to your matchList
+                        userSwipe.getMatchList().put(otherUid, otherUid);
+
+                        //add you to the other's match list
+                        String key = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
+                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(key).setValue(userUID);
+
+                        //add other to your match list
+                        userSwipe.getMatchList().put(key, otherUid);
+
+                        //update your userSwipe
+                        databaseReference.child("USERSWIPE").child(userUID).setValue(userSwipe);
+
+                        //make a toast
+                        Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
     }
 
     static void makeToast(Context ctx, String s) {
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
     }
-
-    public final String[] imageUrls = new String[]{
-            "http://i.imgur.com/P7Z6Ogv.png",
-            "http://i.imgur.com/P7Z6Ogv.png"
-    };
 }

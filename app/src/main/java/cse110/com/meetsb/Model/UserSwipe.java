@@ -6,20 +6,20 @@ import java.util.HashSet;
 import java.util.List;
 
 public class UserSwipe {
-    HashMap<String, Integer> liked;
+    HashMap<String, String> liked;
 
-    List<String> matchList;
+    HashMap<String, String> matchList;
 
     public UserSwipe() {
         liked = new HashMap<>();
-        matchList = new ArrayList<>();
+        matchList = new HashMap<>();
     }
 
-    public HashMap<String, Integer> getLiked() { return liked; }
+    public HashMap<String, String> getLiked() { return liked; }
 
-    public void setLiked(HashMap<String, Integer> liked) { this.liked = liked; }
+    public void setLiked(HashMap<String, String> liked) { this.liked = liked; }
 
-    public List<String> getMatchList() { return matchList; }
+    public HashMap<String, String> getMatchList() { return matchList; }
 
-    public void setMatchList(List<String> matchList) { this.matchList = matchList; }
+    public void setMatchList(HashMap<String, String> matchList) { this.matchList = matchList; }
 }

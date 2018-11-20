@@ -6,6 +6,7 @@ import java.util.List;
 public class UserCardMode {
     private String name;
     private int year;
+    private String uid;
     private List<String> images;
 
     public UserCardMode( User student ) {
@@ -13,10 +14,11 @@ public class UserCardMode {
         this.year = student.getGraduationYear();
         this.images = student.getProfilePictures();
     }
-    public UserCardMode(String name, int year, List<String> images) {
+    public UserCardMode(String name, int year, List<String> images, String uid) {
         this.name = name;
         this.year = year;
         this.images = images;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -42,4 +44,8 @@ public class UserCardMode {
     public List<String> getImages() {
         return images;
     }
+
+    public String getUid() { return uid; }
+
+    public void setUid(String uid) { this.uid = uid; }
 }
