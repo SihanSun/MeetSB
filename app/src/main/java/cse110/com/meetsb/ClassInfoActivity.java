@@ -159,7 +159,31 @@ public class ClassInfoActivity extends AppCompatActivity {
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //update the course
+                for(int i = 0 ; i < selectClass.size() ; i++) {
+                    final String courseName = selectClass.get(i);
+                    databaseReference.child("COURSE").child(courseName).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Course tempCourse = dataSnapshot.getValue(Course.class);
+                            if(tempCourse == null) {
+                                tempCourse = new Course();
+                            }
+                            tempCourse.getStudentsInTheCourse().add(firebaseAuth.getCurrentUser().getUid());
+                            databaseReference.child("COURSE").child(courseName).setValue(tempCourse);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
                 progressDialog.dismiss();
+                Intent intent = new Intent(ClassInfoActivity.this, SwipeActivity.class);
+                finish();
+                startActivity(intent);
+
                 //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -170,37 +194,6 @@ public class ClassInfoActivity extends AppCompatActivity {
             }
         });
 
-        //update the course
-        for(int i = 0 ; i < selectClass.size() ; i++) {
-            final String courseName = selectClass.get(i);
-            databaseReference.child("COURSE").child(courseName).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Course tempCourse = dataSnapshot.getValue(Course.class);
-                    if(tempCourse == null) {
-                        tempCourse = new Course();
-                    }
-                    tempCourse.getStudentsInTheCourse().add(firebaseAuth.getCurrentUser().getUid());
-                    databaseReference.child("COURSE").child(courseName).setValue(tempCourse);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-        progressDialog.dismiss();
-        String testString = "";
-        for(int i = 0 ; i < selectClass.size() ; i++) {
-            testString += selectClass.get(i);
-        }
-
-//        //Toast.makeText(this, "result is " + testString, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, SwipeActivity.class);
-        finish();
-        startActivity(intent);
     }
 
 
