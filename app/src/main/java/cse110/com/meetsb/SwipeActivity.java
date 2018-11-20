@@ -127,6 +127,8 @@ public class SwipeActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 //Do something on the right!
                 UserCardMode userCardMode = (UserCardMode) dataObject;
+                String otherUID = userCardMode.getUid();
+                swipeRight(otherUID);
                 makeToast(SwipeActivity.this, "Like"  + userCardMode.getName());
             }
 
