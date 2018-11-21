@@ -219,11 +219,13 @@ public class SwipeActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             UserSwipe tempUserSwipe = dataSnapshot.getValue(UserSwipe.class);
-                            HashMap<String, String> tempMap = tempUserSwipe.getMatchList();
-                            if(tempMap != null && userSwipe.getMatchList().size() < tempMap.size()) {
-                                userSwipe.setMatchList(tempMap);
-                                //make a toast
-                                Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                            if(tempUserSwipe != null) {
+                                HashMap<String, String> tempMap = tempUserSwipe.getMatchList();
+                                if(tempMap != null && userSwipe.getMatchList().size() < tempMap.size()) {
+                                    userSwipe.setMatchList(tempMap);
+                                    //make a toast
+                                    Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
 
