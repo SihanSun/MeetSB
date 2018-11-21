@@ -23,7 +23,8 @@
         android:id="@+id/profile_imageView_avatar"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp" />
         <!-- app:srcCompat="@drawable/tony_teacher"  /> -->
 
     <LinearLayout

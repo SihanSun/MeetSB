@@ -42,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView emailText;
     TextView majorText;
     TextView gpaText;
+    TextView genderText;
     TextView descriptionsText;
     ImageView profilePictureImageView;
 
@@ -65,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         emailText = findViewById(R.id.profile_textView_email);
         majorText = findViewById(R.id.profile_textView_major);
         gpaText = findViewById(R.id.profile_textView_GPA);
+        genderText = findViewById(R.id.profile_textView_gender);
         descriptionsText = findViewById(R.id.profile_textView_description);
         profilePictureImageView = findViewById(R.id.profile_imageView_avatar);
 
@@ -102,11 +104,13 @@ public class ProfileActivity extends AppCompatActivity {
                 String userName = user.getUserName();
                 String major = user.getMajor();
                 String gpa = user.getGpa();
+                String gender = user.getGender();
                 String description = user.getDescription();
 
                 userNameText.setText(userName);
                 majorText.setText(major);
                 gpaText.setText(gpa);
+                genderText.setText(gender);
                 descriptionsText.setText(description);
             }
 
