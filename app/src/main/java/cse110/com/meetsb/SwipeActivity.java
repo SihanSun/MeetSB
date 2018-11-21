@@ -220,7 +220,7 @@ public class SwipeActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             HashMap<String, String> matchMap = dataSnapshot.getValue(HashMap.class);
-                            if(userSwipe.getMatchList().size() < matchMap.size()) {
+                            if(matchMap != null && userSwipe.getMatchList().size() < matchMap.size()) {
                                 userSwipe.setMatchList(matchMap);
                                 //make a toast
                                 Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
