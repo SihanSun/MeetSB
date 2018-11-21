@@ -215,13 +215,13 @@ public class SwipeActivity extends AppCompatActivity {
                     //update the matchList
                     databaseReference.child("USERSWIPE")
                             .child(userUID)
-                            .child("matchList")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            HashMap<String, String> matchMap = dataSnapshot.getValue(HashMap.class);
-                            if(matchMap != null && userSwipe.getMatchList().size() < matchMap.size()) {
-                                userSwipe.setMatchList(matchMap);
+                            UserSwipe tempUserSwipe = dataSnapshot.getValue(UserSwipe.class);
+                            HashMap<String, String> tempMap = tempUserSwipe.getMatchList();
+                            if(tempMap != null && userSwipe.getMatchList().size() < tempMap.size()) {
+                                userSwipe.setMatchList(tempMap);
                                 //make a toast
                                 Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
                             }
