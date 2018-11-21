@@ -211,6 +211,28 @@ public class SwipeActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         System.out.println("Failed to sleep");
                     }
+
+                    //update the matchList
+                    databaseReference.child("USERSWIPE")
+                            .child(userUID)
+                            .child("matchList")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            HashMap<String, String> matchMap = dataSnapshot.getValue(HashMap.class);
+                            if(userSwipe.getMatchList().size() < matchMap.size()) {
+                                userSwipe.setMatchList(matchMap);
+                                //make a toast
+                                Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                     if(userCard != null && userCard.size() == 0) {
                         if(userCard.size() == 0) {
                             runOnUiThread(new Runnable() {
@@ -433,7 +455,7 @@ public class SwipeActivity extends AppCompatActivity {
         userSwipe.getLiked().put(otherUid, otherUid);
 
         //update userSwipe in database
-        databaseReference.child("USERSWIPE").child(userUID).setValue(userSwipe);
+        databaseReference.child("USERSWIPE").child(userUID).child("liked").setValue(userSwipe.getLiked());
 
         //check if other also likes current user
         databaseReference.child("USERSWIPE").child(otherUid).addListenerForSingleValueEvent(new ValueEventListener() {
