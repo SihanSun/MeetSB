@@ -41,6 +41,7 @@ public class SwipeActivity extends AppCompatActivity {
 
     final int refreshSize = 5;
 
+    UserCardMode preUserCard;
     private ArrayList<UserCardMode> userCard;
     private UserCardAdapter arrayAdapter;
     private SwipeFlingAdapterView flingContainer;
@@ -120,6 +121,8 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onLeftCardExit(Object dataObject) {
                 UserCardMode userCardMode = (UserCardMode) dataObject;
+                preUserCard = new UserCardMode(userCardMode.getName(), userCardMode.getYear(), userCardMode.getImages(), userCardMode.getUid());
+
                 makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
 
@@ -335,7 +338,8 @@ public class SwipeActivity extends AppCompatActivity {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+                revert();
+//                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {
@@ -362,6 +366,8 @@ public class SwipeActivity extends AppCompatActivity {
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
             }
         });
+
+        preUserCard = null;
 
         //begin the careRefreshThread
         startThread();
@@ -492,6 +498,22 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+    }
+
+    private synchronized void revert() {
+        if(preUserCard == null) {
+            Toast.makeText(this, "No pre user!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        UserCardMode tempCardMode = new UserCardMode(preUserCard.getName(), preUserCard.getYear(), preUserCard.getImages(), preUserCard.getUid());
+        userCard.add(0, tempCardMode);
+
+        this.arrayAdapter = new UserCardAdapter(SwipeActivity.this, R.layout.item, R.id.item_textView_user,new ArrayList<UserCardMode>());
+        this.arrayAdapter = new UserCardAdapter(SwipeActivity.this, R.layout.item, R.id.item_textView_user,userCard);
+        this.flingContainer.setAdapter(arrayAdapter);
+
+        preUserCard = null;
     }
 
     static void makeToast(Context ctx, String s) {
