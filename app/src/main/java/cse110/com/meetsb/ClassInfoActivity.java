@@ -183,6 +183,7 @@ public class ClassInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(ClassInfoActivity.this, SwipeActivity.class);
                 finish();
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                 //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
             }

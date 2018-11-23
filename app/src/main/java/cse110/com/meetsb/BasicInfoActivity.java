@@ -127,6 +127,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         intent.putExtra("DESCRIPTION",description);
         intent.putExtra("IMAGE", filePath.toString());
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
     }
 

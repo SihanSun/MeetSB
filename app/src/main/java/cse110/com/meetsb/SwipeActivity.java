@@ -336,6 +336,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {
@@ -360,6 +361,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 

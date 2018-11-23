@@ -83,5 +83,6 @@ public class AcademicInfoActivity extends AppCompatActivity {
         intent.putExtra("MAJOR", major);
         intent.putExtra("GPA", gpaString);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

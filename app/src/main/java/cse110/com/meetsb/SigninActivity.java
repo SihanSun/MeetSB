@@ -61,6 +61,11 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
     private void userSignIn() {
 
@@ -105,7 +110,8 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void jumpToSignUpPage() {
-        finish();
+        //finish();
         startActivity(new Intent(this, SignupActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

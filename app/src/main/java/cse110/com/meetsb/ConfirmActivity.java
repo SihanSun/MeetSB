@@ -27,6 +27,7 @@ public class ConfirmActivity extends AppCompatActivity {
     void verifyEmail() {
         finish();
         startActivity(new Intent(ConfirmActivity.this, BasicInfoActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void openSetting(View view) {

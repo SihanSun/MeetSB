@@ -67,9 +67,16 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this, SigninActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
 
@@ -112,8 +119,8 @@ public class SignupActivity extends AppCompatActivity {
                                                 "安排上了",
                                                 Toast.LENGTH_SHORT).show();
                                         progressDialog.dismiss();
-                                        finish();
                                         startActivity(new Intent(SignupActivity.this, ConfirmActivity.class));
+                                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {
                                         Toast.makeText(SignupActivity.this,
                                                 task.getException().getMessage(),
