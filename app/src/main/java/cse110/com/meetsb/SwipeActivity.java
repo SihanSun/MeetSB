@@ -155,6 +155,7 @@ public class SwipeActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
         });
 
         // add an OnItemClickListener to define what to do after item being clicked
@@ -163,6 +164,39 @@ public class SwipeActivity extends AppCompatActivity {
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(SwipeActivity.this, "You Clicked Gary!!");
                 startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
+            }
+        });
+
+        //set the button
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                revert();
+//                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+            }
+        });
+        btnDislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userCard == null || userCard.size() == 0) {
+                    return;
+                }
+                flingContainer.getTopCardListener().selectLeft();
+            }
+        });
+        btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userCard == null || userCard.size() == 0) {
+                    return;
+                }
+                flingContainer.getTopCardListener().selectRight();
+            }
+        });
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
             }
         });
 
@@ -274,13 +308,9 @@ public class SwipeActivity extends AppCompatActivity {
         Setup Contoller during initialization
      */
     private void setUp() {
-        setCourseTaking();
-    }
 
-    private void setCourseTaking() {
-        String uid = firebaseAuth.getCurrentUser().getUid();
-
-        databaseReference.child("USER").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        //setup user and course
+        databaseReference.child("USER").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
@@ -293,7 +323,32 @@ public class SwipeActivity extends AppCompatActivity {
                     courseTaking.add(courseName);
                 }
                 currentCourse = courseTaking.get(0);
-                setUserSwipe();
+
+                //get the userSwipe
+                databaseReference.child("USERSWIPE").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //get the user swipe information
+                        userSwipe = dataSnapshot.getValue(UserSwipe.class);
+
+                        if(userSwipe == null) {
+                            userSwipe = new UserSwipe();
+                            databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(userSwipe);
+                        }
+
+                        preUserCard = null;
+
+                        //begin the careRefreshThread
+                        startThread();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        flingContainer.setVisibility(View.VISIBLE);
+                        //make a toast
+                        Toast.makeText(SwipeActivity.this, "Failed to refresh user swipe card", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -302,76 +357,6 @@ public class SwipeActivity extends AppCompatActivity {
                 makeToast(SwipeActivity.this, "Failed to get user information");
             }
         });
-    }
-
-    private void setUserSwipe() {
-
-        //get current user's uid
-        String uid = firebaseAuth.getCurrentUser().getUid();
-
-        //get the userSwipe information of current user
-        databaseReference.child("USERSWIPE").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //get the user swipe information
-                userSwipe = dataSnapshot.getValue(UserSwipe.class);
-
-                if(userSwipe == null) {
-                    userSwipe = new UserSwipe();
-                    databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(userSwipe);
-                }
-
-                //set swipe card
-                setSwipeCard();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                flingContainer.setVisibility(View.VISIBLE);
-                //make a toast
-                Toast.makeText(SwipeActivity.this, "Failed to refresh user swipe card", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setSwipeCard() {
-        //set click listenr for swipe card
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                revert();
-//                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
-            }
-        });
-        btnDislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(userCard == null || userCard.size() == 0) {
-                    return;
-                }
-                flingContainer.getTopCardListener().selectLeft();
-            }
-        });
-        btnLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(userCard == null || userCard.size() == 0) {
-                    return;
-                }
-                flingContainer.getTopCardListener().selectRight();
-            }
-        });
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
-            }
-        });
-
-        preUserCard = null;
-
-        //begin the careRefreshThread
-        startThread();
     }
 
     /*
@@ -427,8 +412,8 @@ public class SwipeActivity extends AppCompatActivity {
                                     String imageUri = uri.toString();
                                     List<String> image = new ArrayList<>();
                                     image.add(imageUri);
-                                    String name = user.getUserName();
-                                    int year = user.getGraduationYear();
+                                    String name = otherUser.getUserName();
+                                    int year = otherUser.getGraduationYear();
                                     userCard.add(new UserCardMode(name, year, image, otherUserUid));
                                     arrayAdapter.notifyDataSetChanged();
                                     refreshCount++;
@@ -456,7 +441,6 @@ public class SwipeActivity extends AppCompatActivity {
                                 if yes, add both user to both user's match list and prompt a toast.
      */
     private void swipeRight(final String otherUid) {
-        //TODO
         //add user to current user swipe like list
         userSwipe.getLiked().put(otherUid, otherUid);
 
