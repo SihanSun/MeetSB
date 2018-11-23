@@ -40,6 +40,7 @@ import cse110.com.meetsb.Model.UserSwipe;
 public class SwipeActivity extends AppCompatActivity {
 
     final int refreshSize = 5;
+    int refreshCount = 5;
 
     UserCardMode preUserCard;
     private ArrayList<UserCardMode> userCard;
@@ -377,6 +378,11 @@ public class SwipeActivity extends AppCompatActivity {
         Refresh Card Controller
      */
     private void refreshUserCard() {
+        if(refreshCount < refreshSize) {
+            return;
+        }
+        refreshCount = 0;
+
         //update the user
         databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
 
@@ -387,7 +393,21 @@ public class SwipeActivity extends AppCompatActivity {
                 Course course = dataSnapshot.getValue(Course.class);
                 List<String> uidList = course.getStudentsInTheCourse();
 
-                List<String> userUidToBeLoaded = readAndUpdateLocalOffset(uidList);
+                //get current offset
+                int offset = user.getCourseTakingOffsetMap().get(currentCourse);
+
+                //get next refreshSize of user UID
+                List<String> userUidToBeLoaded = new ArrayList<>();
+                for(int count = 0 ; count < refreshSize ; count++) {
+                    if(offset >= uidList.size()) {
+                        break;
+                    }
+                    userUidToBeLoaded.add(uidList.get(offset));
+                    offset++;
+                }
+
+                //update user offset
+                user.getCourseTakingOffsetMap().put(currentCourse, offset);
 
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
@@ -405,7 +425,13 @@ public class SwipeActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String imageUri = uri.toString();
-                                    addUserCard(otherUser, imageUri, otherUserUid);
+                                    List<String> image = new ArrayList<>();
+                                    image.add(imageUri);
+                                    String name = user.getUserName();
+                                    int year = user.getGraduationYear();
+                                    userCard.add(new UserCardMode(name, year, image, otherUserUid));
+                                    arrayAdapter.notifyDataSetChanged();
+                                    refreshCount++;
                                 }
                             });
                         }
@@ -420,34 +446,6 @@ public class SwipeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-    }
-
-    private synchronized List<String> readAndUpdateLocalOffset(List<String> uidList) {
-        //get current offset
-        int offset = user.getCourseTakingOffsetMap().get(currentCourse);
-
-        //get next refreshSize of user UID
-        List<String> userUidToBeLoaded = new ArrayList<>();
-        for(int count = 0 ; count < refreshSize ; count++) {
-            if(offset >= uidList.size()) {
-                break;
-            }
-            userUidToBeLoaded.add(uidList.get(offset));
-            offset++;
-        }
-
-        //update user offset
-        user.getCourseTakingOffsetMap().put(currentCourse, offset);
-        return userUidToBeLoaded;
-    }
-
-    private synchronized void addUserCard(User user, String imageUri, String uid){
-        String name = user.getUserName();
-        int year = user.getGraduationYear();
-        List<String> image = new ArrayList<>();
-        image.add(imageUri);
-        userCard.add(new UserCardMode(name, year, image, uid));
-        arrayAdapter.notifyDataSetChanged();
     }
 
     /*
@@ -506,12 +504,26 @@ public class SwipeActivity extends AppCompatActivity {
             return;
         }
 
-        UserCardMode tempCardMode = new UserCardMode(preUserCard.getName(), preUserCard.getYear(), preUserCard.getImages(), preUserCard.getUid());
-        userCard.add(0, tempCardMode);
+        int userCardSize = userCard.size();
 
-        this.arrayAdapter = new UserCardAdapter(SwipeActivity.this, R.layout.item, R.id.item_textView_user,new ArrayList<UserCardMode>());
-        this.arrayAdapter = new UserCardAdapter(SwipeActivity.this, R.layout.item, R.id.item_textView_user,userCard);
-        this.flingContainer.setAdapter(arrayAdapter);
+        UserCardMode tempCardMode = new UserCardMode(preUserCard.getName(), preUserCard.getYear(), preUserCard.getImages(), preUserCard.getUid());
+        userCard.add(tempCardMode);
+
+        for(int i = 0 ; i < userCardSize ; i++) {
+            UserCardMode tempMode = userCard.get(i);
+            userCard.add(new UserCardMode(tempMode.getName(), tempMode.getYear(), tempMode.getImages(), tempMode.getUid()));
+        }
+
+        for(int i = 0 ; i < userCardSize ; i++) {
+            flingContainer.getTopCardListener().selectLeft();
+        }
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
 
         preUserCard = null;
     }
