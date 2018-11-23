@@ -171,8 +171,7 @@ public class SwipeActivity extends AppCompatActivity {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                revert();
-//                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {
