@@ -2,6 +2,8 @@ package cse110.com.meetsb;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -139,6 +141,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void openSetting() {
-        startActivity(new Intent(ProfileActivity.this, SettingActivity.class));
+
+        Intent intent = new Intent(ProfileActivity.this, SettingActivity.class);
+        intent.putExtra("USERNAME", userNameText.getText().toString());
+        intent.putExtra("GENDER",genderText.getText().toString());
+        intent.putExtra("DESCRIPTION",descriptionsText.getText().toString());
+        intent.putExtra("MAJOR", majorText.getText().toString());
+        intent.putExtra("GPA", gpaText.getText().toString());
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
