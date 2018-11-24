@@ -20,7 +20,7 @@
         android:id="@+id/confirm_textView_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="300dp"
         android:text="The email verification has been sent"
         android:textColor="@android:color/white"
         android:textSize="20sp"
@@ -29,21 +29,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/confirm_button_resend"
+            style="?android:textAppearanceSmall"
             android:layout_width="119dp"
             android:layout_height="42dp"
             android:background="@drawable/resend_btn" />
 
         <Button
             android:id="@+id/confirm_button_verify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            style="?android:textAppearanceSmall"
+            android:layout_width="119dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="100dp"
             android:background="@drawable/small_continue_btn" />
     </LinearLayout>
 

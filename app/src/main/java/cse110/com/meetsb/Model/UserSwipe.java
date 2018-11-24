@@ -6,43 +6,20 @@ import java.util.HashSet;
 import java.util.List;
 
 public class UserSwipe {
+    HashMap<String, String> liked;
 
-    class WeightUser {
-        private String userId;
-
-        int weight = 0;
-
-        public String getUserId() { return userId; }
-
-        public void setUserId(String userId) { this.userId = userId; }
-
-        public int getWeight() { return weight; }
-
-        public void setWeight(int weight) { this.weight = weight; }
-    }
+    HashMap<String, String> matchList;
 
     public UserSwipe() {
-        this.likesData = new HashMap<>();
-        this.matchedList = new ArrayList<>();
-        this.swipeData = new HashMap<>();
+        liked = new HashMap<>();
+        matchList = new HashMap<>();
     }
 
-    //should store user id
-    private List<String> matchedList;
+    public HashMap<String, String> getLiked() { return liked; }
 
-    private HashMap<String, HashMap<String, Integer>> likesData;
+    public void setLiked(HashMap<String, String> liked) { this.liked = liked; }
 
-    private HashMap<String, HashMap<String, Integer>> swipeData;
+    public HashMap<String, String> getMatchList() { return matchList; }
 
-    public List<String> getMatchedList() { return matchedList; }
-
-    public void setMatchedList(List<String> matchedList) { this.matchedList = matchedList; }
-
-    public HashMap<String, HashMap<String, Integer>> getLikesData() { return likesData; }
-
-    public void setLikesData(HashMap<String, HashMap<String, Integer>> likesData) { this.likesData = likesData; }
-
-    public HashMap<String, HashMap<String, Integer>> getSwipeData() { return swipeData; }
-
-    public void setSwipeData(HashMap<String, HashMap<String, Integer>> swipeData) { this.swipeData = swipeData; }
+    public void setMatchList(HashMap<String, String> matchList) { this.matchList = matchList; }
 }

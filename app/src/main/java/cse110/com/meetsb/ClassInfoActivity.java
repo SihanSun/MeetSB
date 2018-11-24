@@ -1,6 +1,9 @@
 package cse110.com.meetsb;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,14 +17,26 @@ import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
+import cse110.com.meetsb.Model.Course;
 import cse110.com.meetsb.Model.User;
 
 
@@ -30,20 +45,41 @@ public class ClassInfoActivity extends AppCompatActivity {
     Button submit;
 
     String userName;
+    String filePathStr;
+    String gender;
+    String description;
     String gpaString;
     String major;
     List<String> courseTaking = new ArrayList<>();
 
+    FirebaseStorage storage;
+    StorageReference storageRef;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
 
     ArrayAdapter<String> adapter;
+    ArrayList<String> selectClass;
+
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_info);
-        ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
-        ArrayList<String> arrayClass = new ArrayList<>();
+
+        //set firebase storage
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+
+        //set list view
+        final ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
+        final ArrayList<String> arrayClass = new ArrayList<>();
         arrayClass.addAll(Arrays.asList(getResources().getStringArray(R.array.class_array)));
+        selectClass = new ArrayList<String>();
         adapter = new ArrayAdapter<>(ClassInfoActivity.this,
                 android.R.layout.simple_list_item_1,
                 arrayClass);
@@ -52,49 +88,114 @@ public class ClassInfoActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                view.setSelected(true);
+                //courseTaking.add(view.toString());
+                String item = (lv.getItemAtPosition(i)).toString();
+                if (!selectClass.contains(item)) {
+                    selectClass.add(item);
+                    ListView sl = (ListView)findViewById(R.id.class_info_listview_addedClass);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
+                            android.R.layout.simple_list_item_1, selectClass);
+                    sl.setAdapter(adapter);
+                }
             }
         });
 
         //get extras
         userName = getIntent().getStringExtra("USERNAME");
+        description = getIntent().getStringExtra("DESCRIPTION");
+        gender = getIntent().getStringExtra("GENDER");
         gpaString = getIntent().getStringExtra("GPA");
         major = getIntent().getStringExtra("MAJOR");
+        filePathStr = getIntent().getStringExtra("IMAGE");
 
+        //set progress bar
+        progressDialog = new ProgressDialog(this);
         //set button
         submit = (Button) findViewById(R.id.class_info_button_submit) ;
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submitClassInfo();
+                submitInfo();
             }
         });
 
-        //set firebase
-        firebaseAuth = FirebaseAuth.getInstance();
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.class_array,
+                R.layout.activity_class_info);
     }
 
-    private void submitClassInfo() {
+    private void submitInfo() {
+
+        if(selectClass.size() == 0) {
+            Toast.makeText(this, "Please select class!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
+
+        //set the new user
         User newUser = new User();
-        newUser.getPersonalInformation().setUserName(userName);
-        newUser.getPersonalInformation().setDescription("I am teacher tony");
-        newUser.getPersonalInformation().setGender("undecided");
-        newUser.getAcademicInformation().getCourseTaking().add("CSE110");
-        newUser.getAcademicInformation().setGpa(gpaString);
-        newUser.getAcademicInformation().setMajor(major);
-
-
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference();
-
+        newUser.setUserName(userName);
+        newUser.setDescription(description);
+        newUser.setGender(gender);
+        HashMap<String, Integer> classOffsetMap = new HashMap<>();
+        for(int i = 0 ; i < selectClass.size() ; i++) {
+            classOffsetMap.put(selectClass.get(i), 0);
+        }
+        newUser.setCourseTakingOffsetMap(classOffsetMap);
+        newUser.setGpa(gpaString);
+        newUser.setMajor(major);
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference.child("USERTABLE").child(userId).setValue(newUser);
+        databaseReference.child("USER").child(userId).setValue(newUser);
 
-        Intent intent = new Intent(this, SwipeActivity.class);
-        finish();
-        startActivity(intent);
+        //upload image
+        StorageReference childRef = storageRef.child("IMAGE").child(userId);
+        Uri filePath = Uri.parse(filePathStr);
+        //uploading the image
+        UploadTask uploadTask = childRef.putFile(filePath);
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //update the course
+                for(int i = 0 ; i < selectClass.size() ; i++) {
+                    final String courseName = selectClass.get(i);
+                    databaseReference.child("COURSE").child(courseName).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Course tempCourse = dataSnapshot.getValue(Course.class);
+                            if(tempCourse == null) {
+                                tempCourse = new Course();
+                            }
+                            tempCourse.getStudentsInTheCourse().add(firebaseAuth.getCurrentUser().getUid());
+                            databaseReference.child("COURSE").child(courseName).setValue(tempCourse);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                progressDialog.dismiss();
+                Intent intent = new Intent(ClassInfoActivity.this, SwipeActivity.class);
+                finish();
+                startActivity(intent);
+
+                //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                //Toast.makeText(ClassInfoActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -41,10 +41,10 @@ public class UserCardAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item, parent, false);
             holder = new UserCardAdapter.ViewHolder();
-            holder.mCardImageView = (ImageView) convertView.findViewById(R.id.buddyName);
-            holder.mCardName = (TextView) convertView.findViewById(R.id.card_name);
-            holder.mCardImageNum = (TextView) convertView.findViewById(R.id.card_image_num);
-            holder.mCardYear = (TextView) convertView.findViewById(R.id.card_year);
+            holder.mCardImageView = (ImageView) convertView.findViewById(R.id.item_imageView_profilePic);
+            holder.mCardName = (TextView) convertView.findViewById(R.id.item_textView_user);
+//            holder.mCardImageNum = (TextView) convertView.findViewById(R.id.card_image_num);
+//            holder.mCardYear = (TextView) convertView.findViewById(R.id.card_year);
             convertView.setTag(holder);
         } else {
             holder = (UserCardAdapter.ViewHolder) convertView.getTag();
@@ -53,7 +53,6 @@ public class UserCardAdapter extends BaseAdapter {
                 .load(mCardList.get(position).getImages().get(0))
                 .into(holder.mCardImageView);
         holder.mCardName.setText(mCardList.get(position).getName());
-        holder.mCardYear.setText(String.valueOf(mCardList.get(position).getYear()));
         return convertView;
     }
 

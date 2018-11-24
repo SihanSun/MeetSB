@@ -8,30 +8,15 @@ import java.util.Map;
 
 public class Course {
 
-    private Map<String, List<String>> courseStudentMap;
+    private List<String> studentsInTheCourse;
 
     public Course() {
-        courseStudentMap = new HashMap<>();
+        studentsInTheCourse = new ArrayList<>();
     }
 
-    public void addCourse(String courseId) {
-        if(!courseStudentMap.containsKey(courseId)) {
-            courseStudentMap.put(courseId, new ArrayList<String>());
-        }
-    }
+    public void setStudentsInTheCourse(List<String> studentsInTheCourse) { this.studentsInTheCourse = studentsInTheCourse; }
 
-    public List<String> getStudentList(String courseId) {
-        if(courseStudentMap.containsKey(courseId)) {
-            return courseStudentMap.get(courseId);
-        } else {
-            return null;
-        }
-    }
-
-    public void addStudent(String courseId, String userId) {
-        if(!courseStudentMap.containsKey(courseId)) {
-            courseStudentMap.put(courseId, new ArrayList<String>());
-        }
-        courseStudentMap.get(courseId).add(userId);
+    public List<String> getStudentsInTheCourse() {
+        return this.studentsInTheCourse;
     }
 }
