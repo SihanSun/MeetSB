@@ -130,7 +130,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_chat);
-        recyclerView = (RecyclerView) findViewById(R.id.message_view);
+        recyclerView = (RecyclerView) findViewById(R.id.messages_view);
         editText = (EditText) findViewById(R.id.footer_bar).findViewById(R.id.editText);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setRefreshing(true);
