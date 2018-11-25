@@ -1,6 +1,7 @@
 package cse110.com.meetsb;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -23,12 +24,18 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+
+import cse110.com.meetsb.Model.Course;
 
 public class SettingActivity extends AppCompatActivity {
     Button submit;
@@ -45,12 +52,16 @@ public class SettingActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
     Uri filePath;
 
+    ProgressDialog progressDialog;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        progressDialog = new ProgressDialog(this);
 
         profilePictureImageView = findViewById(R.id.setting_imageView_avatar);
         userNameEditText = findViewById(R.id.setting_editText_username);
@@ -125,6 +136,8 @@ public class SettingActivity extends AppCompatActivity {
         String gpa = gpaEditText.getText().toString();
         String description = descriptionEditText.getText().toString();
 
+
+
         if(userName.isEmpty()){
             Toast.makeText(getApplicationContext(),"Please enter your username", Toast.LENGTH_SHORT).show();
             return;
@@ -151,14 +164,33 @@ public class SettingActivity extends AppCompatActivity {
         else
             gpa = "Not Available";
 
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
+
         userRef.child("userName").setValue(userName);
         userRef.child("major").setValue(major);
         userRef.child("gender").setValue(gender);
         userRef.child("gpa").setValue(gpa);
         userRef.child("description").setValue(description);
 
+        UploadTask uploadTask = storageRef.putFile(filePath);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                progressDialog.dismiss();
+                startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SettingActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
 
-        startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+
     }
 
     private boolean checkIfAlreadyHavePermission() {
@@ -191,6 +223,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
+        super.finish();
         startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 

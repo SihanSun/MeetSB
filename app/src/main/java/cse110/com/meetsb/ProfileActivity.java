@@ -137,6 +137,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void finish(){
         super.finish();
+        startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 

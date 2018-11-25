@@ -172,6 +172,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +197,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -353,7 +355,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 flingContainer.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
+
                 //make a toast
                 Toast.makeText(SwipeActivity.this, "Failed to refresh user swipe card", Toast.LENGTH_SHORT).show();
             }
@@ -392,9 +394,6 @@ public class SwipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-=======
-                makeToast(SwipeActivity.this, "Failed to get user information");
->>>>>>> 395afa77fdbb0f547665becd161da88f32300a11
             }
         });
     }
