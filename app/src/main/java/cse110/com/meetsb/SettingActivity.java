@@ -148,21 +148,22 @@ public class SettingActivity extends AppCompatActivity {
             return;
         }
 
-        if(!gpa.isEmpty()){
-            double gpaDouble;
-            try{
-                gpaDouble = Double.parseDouble(gpa);
-            } catch(Exception e) {
-                Toast.makeText(getApplicationContext(), "Please enter a valid GPA", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if(gpaDouble < 0 || gpaDouble > 4){
-                Toast.makeText(getApplicationContext(), "Please enter a valid GPA", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if(!gpa.equals("Not available")) {
+            if (!gpa.isEmpty()) {
+                double gpaDouble;
+                try {
+                    gpaDouble = Double.parseDouble(gpa);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Please enter a valid GPA", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (gpaDouble < 0 || gpaDouble > 4) {
+                    Toast.makeText(getApplicationContext(), "Please enter a valid GPA", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } else
+                gpa = "Not available";
         }
-        else
-            gpa = "Not available";
 
         progressDialog.setMessage("Uploading...");
         progressDialog.show();
