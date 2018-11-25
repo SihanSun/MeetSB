@@ -53,9 +53,6 @@ public class SignupActivity extends AppCompatActivity {
         //passwordConfirmed = (EditText) findViewById(R.id.signUp_editText_passwordConfirm);
 
         //TODO
-        //if(firebaseAuth.getCurrentUser() != null) {
-
-        //}
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +63,7 @@ public class SignupActivity extends AppCompatActivity {
         returnToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(SignupActivity.this, SigninActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
@@ -99,7 +97,6 @@ public class SignupActivity extends AppCompatActivity {
         //检查ucsd 邮箱
         //TODO
 
-
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Working on it...");
         progressDialog.show();
@@ -115,10 +112,8 @@ public class SignupActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(SignupActivity.this,
-                                                "安排上了",
-                                                Toast.LENGTH_SHORT).show();
                                         progressDialog.dismiss();
+                                        finish();
                                         startActivity(new Intent(SignupActivity.this, ConfirmActivity.class));
                                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {

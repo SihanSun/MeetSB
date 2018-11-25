@@ -53,13 +53,19 @@ public class SigninActivity extends AppCompatActivity {
                 userSignIn();
             }
         });
-
         returnToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 jumpToSignUpPage();
             }
         });
+
+        //check if the user has already
+        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
+            jumpToSwipePage();
+        }
+
+
     }
     @Override
     public void finish() {
