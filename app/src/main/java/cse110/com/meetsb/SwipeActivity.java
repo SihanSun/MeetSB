@@ -500,9 +500,6 @@ public class SwipeActivity extends AppCompatActivity {
                         String key = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
                         databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(key).setValue(userUID);
 
-                        //add other to your match list
-                        userSwipe.getMatchList().put(key, otherUid);
-
                         //update your userSwipe
                         databaseReference.child("USERSWIPE").child(userUID).setValue(userSwipe);
 
