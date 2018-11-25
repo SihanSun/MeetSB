@@ -13,8 +13,7 @@
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:layout_gravity="center"
-        android:layout_marginTop="61dp"
-        android:background="@drawable/profilepic" />
+        android:layout_marginTop="61dp"/>
 
     <TextView
         android:id="@+id/other_user_textView_name"
@@ -27,18 +26,6 @@
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="20sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/other_user_textView_email"
-        android:layout_width="224dp"
-        android:layout_height="23dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="20sp"
-        tools:text="kikiman@ultraman.edu" />
 
     <TextView
         android:id="@+id/other_user_textView_major"
