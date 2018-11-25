@@ -107,6 +107,7 @@ public class MatchListActivity extends AppCompatActivity {
                 UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
                 HashMap<String, String> hashMap = userSwipe.getMatchList();
                 if(hashMap != null) {
+                    // populate matchList
                     for(String key : hashMap.keySet()) {
                         matchList.add(hashMap.get(key));
                     }
@@ -181,7 +182,8 @@ public class MatchListActivity extends AppCompatActivity {
             ImageView imageView = (ImageView)view.findViewById(R.id.imageView2);
             TextView textView_name = (TextView)view.findViewById(R.id.textView2);
             TextView textView_message = (TextView)view.findViewById(R.id.textView3);
-            imageView.setImageURI(imageList.get(i));
+            //imageView.setImageURI(imageList.get(i));
+            Glide.with(getApplicationContext()).load(imageList.get(i).toString()).into(imageView);
             textView_name.setText(nameList.get(i));
             textView_message.setText("hello from the other side");
             return view;
