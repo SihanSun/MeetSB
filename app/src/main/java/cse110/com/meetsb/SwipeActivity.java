@@ -44,6 +44,8 @@ public class SwipeActivity extends AppCompatActivity {
     int readOffset;
     int userOffset = -1;
 
+    private long backPressedTime;
+
     private ArrayList<UserCardMode> userCard;
     private UserCardAdapter arrayAdapter;
     private SwipeFlingAdapterView flingContainer;
@@ -556,4 +558,24 @@ public class SwipeActivity extends AppCompatActivity {
     static void makeToast(Context ctx, String s) {
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+
+
+        if(backPressedTime + 2000 > System.currentTimeMillis()){
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            System.exit(0);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
+    }
+
 }

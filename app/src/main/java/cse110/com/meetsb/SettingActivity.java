@@ -162,7 +162,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
         else
-            gpa = "Not Available";
+            gpa = "Not available";
 
         progressDialog.setMessage("Uploading...");
         progressDialog.show();
@@ -173,23 +173,31 @@ public class SettingActivity extends AppCompatActivity {
         userRef.child("gpa").setValue(gpa);
         userRef.child("description").setValue(description);
 
-        UploadTask uploadTask = storageRef.putFile(filePath);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                progressDialog.dismiss();
-                startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SettingActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
-                return;
-            }
-        });
-
+        if(filePath != null) {
+            UploadTask uploadTask = storageRef.putFile(filePath);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+                    finish();
+                    startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(SettingActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            });
+        }
+        else {
+            progressDialog.dismiss();
+            finish();
+            startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
 
     }
 

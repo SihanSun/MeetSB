@@ -36,10 +36,13 @@ import cse110.com.meetsb.Model.User;
 
 public class ProfileActivity extends AppCompatActivity {
     Button editButton;
+    Button signOutButton;
     FirebaseAuth auth;
     DatabaseReference ref;
     FirebaseStorage storage;
     StorageReference storageRef;
+    private FirebaseAuth.AuthStateListener authListener;
+
     TextView userNameText;
     TextView emailText;
     TextView majorText;
@@ -47,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView genderText;
     TextView descriptionsText;
     ImageView profilePictureImageView;
+
 
     @GlideModule
     public class MyAppGlideModule extends AppGlideModule {
@@ -125,11 +129,22 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         editButton = findViewById(R.id.profile_button_backToSetting);
+        signOutButton = findViewById(R.id.profile_button_signOut);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSetting();
+            }
+        });
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                Intent intent = new Intent(ProfileActivity.this, SigninActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
             }
         });
     }
