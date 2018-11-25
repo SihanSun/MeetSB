@@ -52,13 +52,18 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     void verifyEmail() {
-        if(firebaseAuth.getCurrentUser().isEmailVerified()) {
-            finish();
-            startActivity(new Intent(ConfirmActivity.this, BasicInfoActivity.class));
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        } else {
-            Toast.makeText(ConfirmActivity.this, "Please verify your email first!", Toast.LENGTH_SHORT).show();
-        }
+        firebaseAuth.getCurrentUser().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if(firebaseAuth.getCurrentUser().isEmailVerified()) {
+                    finish();
+                    startActivity(new Intent(ConfirmActivity.this, BasicInfoActivity.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Toast.makeText(ConfirmActivity.this, "Please verify your email first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 
