@@ -70,6 +70,11 @@ public class MatchListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_list);
 
+        //User List
+        imageList = new ArrayList<>();
+        nameList = new ArrayList<>();
+        messageList = new ArrayList<>();
+
         //set the listView
         lv = (ListView) findViewById(R.id.match_list_listView_friends);
         final CustomAdapter customAdapter = new CustomAdapter();
@@ -94,11 +99,6 @@ public class MatchListActivity extends AppCompatActivity {
 
         //set matchList
         matchList = new ArrayList<>();
-
-        //User List
-        imageList = new ArrayList<>();
-        nameList = new ArrayList<>();
-        messageList = new ArrayList<>();
 
         //get the matchList
         databaseReference.child("USERSWIPE").child(currentUserUID).addListenerForSingleValueEvent(new ValueEventListener() {

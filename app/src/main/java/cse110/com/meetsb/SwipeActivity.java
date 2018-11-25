@@ -40,9 +40,10 @@ import cse110.com.meetsb.Model.UserSwipe;
 public class SwipeActivity extends AppCompatActivity {
 
     final int refreshSize = 5;
-    int refreshCount = 5;
+    int offset;
+    int readOffset;
+    int userOffset = -1;
 
-    UserCardMode preUserCard;
     private ArrayList<UserCardMode> userCard;
     private UserCardAdapter arrayAdapter;
     private SwipeFlingAdapterView flingContainer;
@@ -121,8 +122,8 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
+                increaseUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
-                preUserCard = new UserCardMode(userCardMode.getName(), userCardMode.getYear(), userCardMode.getImages(), userCardMode.getUid());
 
                 makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
@@ -130,6 +131,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onRightCardExit(Object dataObject) {
                 //Do something on the right!
+                increaseUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
                 String otherUID = userCardMode.getUid();
                 swipeRight(otherUID);
@@ -315,7 +317,6 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-
                 //get the courses that the user is taking and get the default course
                 for(String courseName : user.getCourseTakingOffsetMap().keySet()) {
                     if(courseTaking == null) {
@@ -324,6 +325,9 @@ public class SwipeActivity extends AppCompatActivity {
                     courseTaking.add(courseName);
                 }
                 currentCourse = courseTaking.get(0);
+
+                offset = user.getCourseTakingOffsetMap().get(currentCourse);
+                readOffset = offset;
 
                 //get the userSwipe
                 databaseReference.child("USERSWIPE").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -336,8 +340,6 @@ public class SwipeActivity extends AppCompatActivity {
                             userSwipe = new UserSwipe();
                             databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(userSwipe);
                         }
-
-                        preUserCard = null;
 
                         //begin the careRefreshThread
                         startThread();
@@ -401,14 +403,7 @@ public class SwipeActivity extends AppCompatActivity {
     /*
         Refresh Card Controller
      */
-    private void refreshUserCard() {
-        if(refreshCount < refreshSize) {
-            return;
-        }
-        refreshCount = 0;
-
-        //update the user
-        databaseReference.child("USER").child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
+    private synchronized void refreshUserCard() {
 
         //update student uid list
         databaseReference.child("COURSE").child(currentCourse).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -417,21 +412,18 @@ public class SwipeActivity extends AppCompatActivity {
                 Course course = dataSnapshot.getValue(Course.class);
                 List<String> uidList = course.getStudentsInTheCourse();
 
-                //get current offset
-                int offset = user.getCourseTakingOffsetMap().get(currentCourse);
-
                 //get next refreshSize of user UID
                 List<String> userUidToBeLoaded = new ArrayList<>();
                 for(int count = 0 ; count < refreshSize ; count++) {
                     if(offset >= uidList.size()) {
                         break;
                     }
+                    if(uidList.get(offset).equals(userUID)) {
+                        userOffset = offset;
+                    }
                     userUidToBeLoaded.add(uidList.get(offset));
                     offset++;
                 }
-
-                //update user offset
-                user.getCourseTakingOffsetMap().put(currentCourse, offset);
 
                 //update card view
                 for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
@@ -455,7 +447,6 @@ public class SwipeActivity extends AppCompatActivity {
                                     int year = otherUser.getGraduationYear();
                                     userCard.add(new UserCardMode(name, year, image, otherUserUid));
                                     arrayAdapter.notifyDataSetChanged();
-                                    refreshCount++;
                                 }
                             });
                         }
@@ -481,6 +472,7 @@ public class SwipeActivity extends AppCompatActivity {
      */
     private void swipeRight(final String otherUid) {
         //add user to current user swipe like list
+
         userSwipe.getLiked().put(otherUid, otherUid);
 
         //update userSwipe in database
@@ -521,34 +513,43 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-    private synchronized void revert() {
-        if(preUserCard == null) {
-            Toast.makeText(this, "No pre user!", Toast.LENGTH_SHORT).show();
-            return;
+//    private synchronized void revert() {
+//        if(preUserCard == null) {
+//            Toast.makeText(this, "No pre user!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        int userCardSize = userCard.size();
+//
+//        UserCardMode tempCardMode = new UserCardMode(preUserCard.getName(), preUserCard.getYear(), preUserCard.getImages(), preUserCard.getUid());
+//        userCard.add(tempCardMode);
+//
+//        for(int i = 0 ; i < userCardSize ; i++) {
+//            UserCardMode tempMode = userCard.get(i);
+//            userCard.add(new UserCardMode(tempMode.getName(), tempMode.getYear(), tempMode.getImages(), tempMode.getUid()));
+//        }
+//
+//        for(int i = 0 ; i < userCardSize ; i++) {
+//            flingContainer.getTopCardListener().selectLeft();
+//        }
+//
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                arrayAdapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//        preUserCard = null;
+//    }
+
+    private synchronized void increaseUserOffset() {
+        if(readOffset == readOffset+1) {
+            readOffset += 2;
+        } else {
+            readOffset += 1;
         }
-
-        int userCardSize = userCard.size();
-
-        UserCardMode tempCardMode = new UserCardMode(preUserCard.getName(), preUserCard.getYear(), preUserCard.getImages(), preUserCard.getUid());
-        userCard.add(tempCardMode);
-
-        for(int i = 0 ; i < userCardSize ; i++) {
-            UserCardMode tempMode = userCard.get(i);
-            userCard.add(new UserCardMode(tempMode.getName(), tempMode.getYear(), tempMode.getImages(), tempMode.getUid()));
-        }
-
-        for(int i = 0 ; i < userCardSize ; i++) {
-            flingContainer.getTopCardListener().selectLeft();
-        }
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                arrayAdapter.notifyDataSetChanged();
-            }
-        });
-
-        preUserCard = null;
+        databaseReference.child("USER").child(userUID).child("courseTakingOffsetMap").child(currentCourse).setValue(readOffset);
     }
 
     static void makeToast(Context ctx, String s) {
