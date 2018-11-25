@@ -182,8 +182,8 @@ public class MatchListActivity extends AppCompatActivity {
             TextView textView_name = (TextView)view.findViewById(R.id.textView2);
             TextView textView_message = (TextView)view.findViewById(R.id.textView3);
             imageView.setImageURI(imageList.get(i));
-            textView_name.setText(nameList.get(0));
-            textView_message.setText(Messages[0]);
+            textView_name.setText(nameList.get(i));
+            textView_message.setText("hello from the other side");
             return view;
         }
     }

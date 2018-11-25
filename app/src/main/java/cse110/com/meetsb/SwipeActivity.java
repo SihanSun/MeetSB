@@ -545,7 +545,7 @@ public class SwipeActivity extends AppCompatActivity {
 //    }
 
     private synchronized void increaseUserOffset() {
-        if(readOffset == readOffset+1) {
+        if(readOffset == readOffset) {
             readOffset += 2;
         } else {
             readOffset += 1;
