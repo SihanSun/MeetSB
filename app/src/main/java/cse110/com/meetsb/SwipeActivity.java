@@ -163,7 +163,11 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(SwipeActivity.this, "You Clicked Gary!!");
-                startActivity(new Intent(SwipeActivity.this, OtherUserActivity.class));
+                UserCardMode tempCardMode = (UserCardMode) dataObject;
+                String otherUserUid = tempCardMode.getUid();
+                Intent intent = new Intent(SwipeActivity.this, OtherUserActivity.class);
+                intent.putExtra("otherUser", otherUserUid);
+                startActivity(intent);
             }
         });
 
