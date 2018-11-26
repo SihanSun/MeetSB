@@ -62,6 +62,7 @@ public class MatchListActivity extends AppCompatActivity {
 
     //uid
     String currentUserUID;
+    Uri myImage;
 
     //matchList
     List<String> matchList;

@@ -1,5 +1,7 @@
 package cse110.com.meetsb.Model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class Chat implements Serializable{

@@ -2,6 +2,7 @@ package cse110.com.meetsb;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.net.InternetDomainName;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,14 +27,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 import cse110.com.meetsb.Model.Chat;
 import cse110.com.meetsb.Model.Message;
 import cse110.com.meetsb.Model.MessageAdapter;
+import cse110.com.meetsb.Model.MessageType;
 import cse110.com.meetsb.Model.User;
 
 
@@ -47,6 +52,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     boolean moreMessage = true;
     User user;
     Chat chat;
+    private Uri myImage;
+    private Uri yourImage;
+    private MessageType me = MessageType.me;
+    private MessageType you = MessageType.you;
 
     String otherUID;
 
@@ -54,6 +63,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private MessageAdapter messageAdapter;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
 
     private LinkedList<Message> messageList = new LinkedList<Message>();
     private LinkedList<String> messageId = new LinkedList<String>();
@@ -65,7 +76,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadMoreData(){
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -149,6 +160,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.scrollToPosition(messageList.size() - 1);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        String currentUserUID = firebaseAuth.getCurrentUser().getUid();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         if(saveInstanceState == null){
             Intent intent = this.getIntent();
@@ -156,6 +170,20 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             chat = (Chat) bundle.getSerializable("chat");
             user = new User();
             String userId = chat.getUserId();
+
+
+            storageReference.child("IMAGE").child(currentUserUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    myImage = uri;
+                }
+            });
+            storageReference.child("IMAGE").child(otherUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    yourImage = uri;
+                }
+            });
         }
         loadData();
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener(){
@@ -180,7 +208,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void loadData() {
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -236,10 +264,19 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void SendMessage(View view){
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
-        Message message = new Message(userId, userId, editText.getText().toString(), ServerValue.TIMESTAMP, false);
-        String key = databaseReference.push().getKey();
-        databaseReference.child(key).setValue(message);
+
+        //push my message into my message field
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
+        Message Mymessage = new Message(userId, userId, editText.getText().toString(), ServerValue.TIMESTAMP, false, me);
+        String Mykey = databaseReference.push().getKey();
+        databaseReference.child(Mykey).setValue(Mymessage);
+
+        //push my message into your message field
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(otherUID).child(userId);
+        Message Yourmessage = new Message(otherUID, otherUID, editText.getText().toString(), ServerValue.TIMESTAMP, false, you);
+        String Yourkey = databaseReference.push().getKey();
+        databaseReference.child(Yourkey).setValue(Yourmessage);
+
         editText.setText("");
         recyclerView.scrollToPosition(messageList.size() - 1);
         Toast.makeText(this, "Send successfully", Toast.LENGTH_SHORT);
