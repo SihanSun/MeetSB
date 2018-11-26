@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -152,8 +153,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             Bundle bundle = intent.getExtras();
             chat = (Chat) bundle.getSerializable("chat");
             user = new User();
-            getSupportActionBar().setTitle(chat.getUserId());
-            Toast.makeText(this, chat.getUserId(), Toast.LENGTH_SHORT).show();
+            String userId = chat.getUserId();
+//            ActionBar actionBar = getSupportActionBar();
+//            actionBar.setTitle(userId);
+//            Toast.makeText(this, chat.getUserId(), Toast.LENGTH_SHORT).show();
         }
         loadData();
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener(){
@@ -234,7 +237,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void SendMessage(View view){
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         Message message = new Message(userId, userId, editText.getText().toString(), "", ServerValue.TIMESTAMP, false);
         String key = databaseReference.push().getKey();
         databaseReference.child(key).setValue(message);
