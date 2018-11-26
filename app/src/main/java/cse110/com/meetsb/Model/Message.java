@@ -6,16 +6,15 @@ public class Message implements Serializable{
     private String id;
     private String userId;
     private String text;
-    private String image_url;
     private Object time;
     private Boolean seen;
-    private String nodeKey;
 
-    public Message(String id, String userId, String text, String image_url, Object time, Boolean seen) {
+    public Message(){}
+
+    public Message(String id, String userId, String text, Object time, Boolean seen) {
         this.id = id;
         this.userId = userId;
         this.text = text;
-        this.image_url = image_url;
         this.time = time;
         this.seen = seen;
     }
@@ -44,14 +43,6 @@ public class Message implements Serializable{
         this.text = text;
     }
 
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
     public Object getTime() {
         return time;
     }
@@ -68,16 +59,8 @@ public class Message implements Serializable{
         this.seen = seen;
     }
 
-    public String getNodeKey() {
-        return nodeKey;
-    }
-
-    public void setNodeKey(String nodeKey) {
-        this.nodeKey = nodeKey;
-    }
-
     @Override
     public String toString() {
-        return " messages -> "+this.getText()+"  :-> imageurl "+this.getImage_url()+"\n";
+        return " messages -> "+this.getText()+"\n";
     }
 }

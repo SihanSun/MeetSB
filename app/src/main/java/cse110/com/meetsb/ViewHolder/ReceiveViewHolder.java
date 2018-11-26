@@ -15,8 +15,8 @@ public class ReceiveViewHolder extends RecyclerView.ViewHolder {
     TextView showTime;
     public ReceiveViewHolder(@NonNull View itemView) {
         super(itemView);
-        //my_message=(TextView)itemView.findViewById(R.id.their_message_body);
-        //showTime=(TextView)itemView.findViewById(R.id.time_show);
+        my_message=(TextView)itemView.findViewById(R.id.your_message_body);
+        showTime=(TextView)itemView.findViewById(R.id.time_show);
         my_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

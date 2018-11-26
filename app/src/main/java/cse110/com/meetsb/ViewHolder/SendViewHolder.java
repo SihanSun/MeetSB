@@ -15,8 +15,8 @@ public class SendViewHolder extends RecyclerView.ViewHolder{
     TextView showTime;
     public SendViewHolder(@NonNull View itemView) {
         super(itemView);
-        //my_message=(TextView)itemView.findViewById(R.id.my_message_body);
-        //showTime=(TextView)itemView.findViewById(R.id.time_show);
+        my_message=(TextView)itemView.findViewById(R.id.my_message_body);
+        showTime=(TextView)itemView.findViewById(R.id.time_show);
         my_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -188,9 +187,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                messageId.add(dataSnapshot.getKey());
                 Message message = dataSnapshot.getValue(Message.class);
                 messageList.add(message);
-                messageId.add(dataSnapshot.getKey());
                 position ++;
                 if(position == 1){
                     lastMessage = dataSnapshot.getKey();
@@ -241,7 +240,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
-        Message message = new Message(userId, userId, editText.getText().toString(), "", ServerValue.TIMESTAMP, false);
+        Message message = new Message(userId, userId, editText.getText().toString(), ServerValue.TIMESTAMP, false);
         String key = databaseReference.push().getKey();
         databaseReference.child(key).setValue(message);
         editText.setText("");
