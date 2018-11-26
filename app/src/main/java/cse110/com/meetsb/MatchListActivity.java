@@ -37,8 +37,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cse110.com.meetsb.Model.Chat;
 import cse110.com.meetsb.Model.UserCardMode;
 import cse110.com.meetsb.Model.UserSwipe;
+import io.grpc.Server;
 
 public class MatchListActivity extends AppCompatActivity {
     List<Uri> imageList;
@@ -84,8 +86,12 @@ public class MatchListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Chat chat = new Chat(matchList.get(i), "hi", Long.toString(System.currentTimeMillis()),nameList.get(i));
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Chat", chat);
                 Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
                 intent.putExtra("UID", matchList.get(i));
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
