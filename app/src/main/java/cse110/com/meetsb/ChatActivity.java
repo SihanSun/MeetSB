@@ -156,9 +156,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             chat = (Chat) bundle.getSerializable("chat");
             user = new User();
             String userId = chat.getUserId();
-//            ActionBar actionBar = getSupportActionBar();
-//            actionBar.setTitle(userId);
-//            Toast.makeText(this, chat.getUserId(), Toast.LENGTH_SHORT).show();
         }
         loadData();
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener(){

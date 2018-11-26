@@ -16,8 +16,8 @@ import cse110.com.meetsb.ViewHolder.SendViewHolder;
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final LinkedList<Message> messageList;
     private final Context context;
-    private final int SEND_VIEW = 1;
-    private final int RECEIVE_VIEW = 2;
+    private final int SEND_VIEW = 0;
+    private final int RECEIVE_VIEW = 1;
 
     public MessageAdapter(Context context, LinkedList<Message> messageList){
         this.context = context;
