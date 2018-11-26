@@ -30,12 +30,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View receiveView = LayoutInflater.from(context).inflate(R.layout.your_message, parent, false);
 
         if(viewType == SEND_VIEW){
-            SendViewHolder sendViewHolder = new SendViewHolder(sendView);
+            SendViewHolder sendViewHolder = new SendViewHolder(sendView, context);
             return sendViewHolder;
         }
 
         else {
-            ReceiveViewHolder receiveViewHolder = new ReceiveViewHolder(receiveView);
+            ReceiveViewHolder receiveViewHolder = new ReceiveViewHolder(receiveView, context);
             return receiveViewHolder;
         }
     }

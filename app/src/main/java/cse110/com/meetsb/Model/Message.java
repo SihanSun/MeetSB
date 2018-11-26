@@ -3,6 +3,7 @@ import android.media.Image;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.net.URI;
 
 public class Message implements Serializable{
     private String id;
@@ -11,18 +12,26 @@ public class Message implements Serializable{
     private Object time;
     private Boolean seen;
     private MessageType messageType;
+    private String profileImage;
 
     public Message(){}
 
-    public Message(String id, String userId, String text, Object time, Boolean seen, MessageType messageType) {
+    public Message(String id, String userId, String text, Object time, Boolean seen, MessageType messageType, String profileImage) {
         this.id = id;
         this.userId = userId;
         this.text = text;
         this.time = time;
         this.seen = seen;
         this.messageType = messageType;
+        this.profileImage = profileImage;
+    }
+    public String getProfileImage() {
+        return profileImage;
     }
 
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
     public MessageType getMessageType() {
         return messageType;
     }

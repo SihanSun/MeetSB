@@ -5,22 +5,24 @@
     android:layout_margin="10dp"
     android:id="@+id/my"
     android:clipToPadding="false">
+
     <android.support.v7.widget.LinearLayoutCompat
-        android:orientation="vertical"
-        android:layout_alignParentRight="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
         <TextView
-            android:visibility="gone"
             android:id="@+id/time_show"
-            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:textStyle="italic"
-            android:textSize="15sp"
             android:text="13:47 AM"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/your"
@@ -31,13 +33,12 @@
             android:paddingRight="60dp"
             android:paddingVertical="10dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/moesetwine"
-                app:civ_border_color="@color/colorPrimary" />
+                android:src="@drawable/moesetwine" />
 
             <TextView
                 android:id="@+id/your_message_body"
