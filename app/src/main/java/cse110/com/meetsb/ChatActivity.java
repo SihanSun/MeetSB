@@ -63,7 +63,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadMoreData(){
-        firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -147,6 +146,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.scrollToPosition(messageList.size() - 1);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         if(saveInstanceState == null){
             Intent intent = this.getIntent();
