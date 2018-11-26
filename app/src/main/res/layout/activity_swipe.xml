@@ -9,10 +9,11 @@
     <ImageView
         android:id="@+id/iv_loading"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="350dp"
         android:layout_gravity="center"
         android:src="@drawable/loading" />
 
+    <include layout="@layout/class_bar"/>
     <include layout="@layout/buttons" />
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
