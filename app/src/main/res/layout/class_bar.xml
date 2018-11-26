@@ -28,6 +28,17 @@
         android:layout_marginLeft="25dp"
         android:background="@drawable/chat_btn" />
 
+    <Button
+        android:id="@+id/classInfo_button_add"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="66dp"
+        android:layout_marginLeft="60dp"
+        android:layout_toEndOf="@+id/classInfo_button_chat"
+        android:layout_toRightOf="@+id/classInfo_button_chat"
+        android:background="@drawable/ic_playlist_add_black_24dp" />
+
     <Spinner
         android:id="@+id/classInfo_spinner_class"
         style="@style/Widget.AppCompat.Spinner"
