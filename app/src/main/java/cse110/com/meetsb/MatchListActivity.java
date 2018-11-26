@@ -2,6 +2,7 @@ package cse110.com.meetsb;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -83,7 +84,9 @@ public class MatchListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
+                intent.putExtra("UID", matchList.get(i));
+                startActivity(intent);
             }
         });
 

@@ -46,6 +46,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     User user;
     Chat chat;
 
+    String otherUID;
+
     private static String lastMessage = "";
     private MessageAdapter messageAdapter;
     private FirebaseAuth firebaseAuth;
@@ -62,7 +64,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void loadMoreData(){
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -135,6 +137,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setRefreshing(true);
 
+        //get other user UID
+        otherUID = getIntent().getStringExtra("UID");
+
         linearLayoutManager = new LinearLayoutManager(this);
         messageAdapter = new MessageAdapter(this, messageList);
         recyclerView.setAdapter(messageAdapter);
@@ -173,7 +178,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void loadData() {
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
