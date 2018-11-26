@@ -23,18 +23,15 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity android:name=".MatchListActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:parentActivityName=".SwipeActivity">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity android:name=".ProfileActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".SwipeActivity">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".SettingActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".ProfileActivity">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".SignupActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
