@@ -370,42 +370,6 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-    private void setSwipeCard() {
-        //set click listenr for swipe card
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SwipeActivity.this, ProfileActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-        btnDislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(userCard == null || userCard.size() == 0) {
-                    return;
-                }
-                flingContainer.getTopCardListener().selectLeft();
-            }
-        });
-        btnLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(userCard == null || userCard.size() == 0) {
-                    return;
-                }
-                flingContainer.getTopCardListener().selectRight();
-            }
-        });
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
-    }
-
     /*
         Refresh Card Controller
      */

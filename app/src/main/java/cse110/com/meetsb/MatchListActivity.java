@@ -175,7 +175,7 @@ public class MatchListActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return imageList.size();
+            return nameList.size();
         }
 
         @Override
