@@ -66,7 +66,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadMoreData(){
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -184,7 +184,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void loadData() {
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -240,7 +240,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void SendMessage(View view){
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
         Message message = new Message(userId, userId, editText.getText().toString(), "", ServerValue.TIMESTAMP, false);
         String key = databaseReference.push().getKey();
         databaseReference.child(key).setValue(message);
