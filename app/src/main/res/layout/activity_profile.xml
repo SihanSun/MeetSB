@@ -62,7 +62,6 @@
             android:layout_height="42dp"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Lychee Meimei"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -90,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="sis070@ucsd.edu"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -116,7 +114,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Computer Science"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -142,7 +139,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="2.3"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -169,7 +165,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Male"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -191,10 +186,9 @@
 
         <TextView
             android:id="@+id/profile_textView_description"
-            android:layout_width="180dp"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Hi~ I’m Lizhi. My name is Lychee. I’m a 4th year CS student. Let’s be SB!"
             android:textColor="#fff"
             android:textSize="16sp" />
 

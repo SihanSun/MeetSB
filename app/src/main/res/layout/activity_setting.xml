@@ -24,8 +24,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/tony_teacher" />
+        android:layout_marginTop="40dp" />
 
     <EditText
         android:id="@+id/setting_editText_username"
@@ -36,7 +35,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:text="Lychee Meimei"
         android:textColor="#fff"
         android:textColorHint="#fff" />
 
@@ -50,7 +48,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:text="2.3"
         android:textColor="#fff"
         android:textColorHint="#fff" />
 
@@ -91,7 +88,6 @@
         android:inputType="textMultiLine"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:text="Hi~ I’m Lizhi. My name is Lychee. I’m a 4th year CS student. Let’s be SB!"
         android:textColor="#fff"
         android:textColorHint="#fff" />
 
