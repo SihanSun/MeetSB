@@ -153,8 +153,9 @@ public class ProfileActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//                startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
+//                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
     }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.service.autofill.FieldClassification;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Registry;
@@ -44,9 +46,9 @@ import cse110.com.meetsb.Model.UserSwipe;
 import io.grpc.Server;
 
 public class MatchListActivity extends AppCompatActivity {
-    List<Uri> imageList;
-    List<String> nameList;
-    List<String> messageList;
+    Uri[] imageList;
+    String[] nameList;
+    String [] messageList;
     String[] NAMES = {"Chen Zhongyu", "Lychee"};
     String[] Messages = {"Hello", "Wanna get laid"};
 
@@ -67,6 +69,9 @@ public class MatchListActivity extends AppCompatActivity {
     //matchList
     List<String> matchList;
 
+    //count
+    int count = 0;
+
     //Progress Dialog
     ProgressDialog progressDialog;
 
@@ -80,15 +85,11 @@ public class MatchListActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MatchListActivity.this, SwipeActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                startActivity(new Intent(MatchListActivity.this, SwipeActivity.class));
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                onBackPressed();
             }
         });
-
-        //User List
-        imageList = new ArrayList<>();
-        nameList = new ArrayList<>();
-        messageList = new ArrayList<>();
 
         //set the listView
         lv = (ListView) findViewById(R.id.match_list_listView_friends);
@@ -98,7 +99,7 @@ public class MatchListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Chat chat = new Chat(matchList.get(i), "hi", Long.toString(System.currentTimeMillis()),nameList.get(i));
+                Chat chat = new Chat(matchList.get(i), "hi", Long.toString(System.currentTimeMillis()),nameList[i]);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("chat", chat);
                 Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
@@ -117,6 +118,11 @@ public class MatchListActivity extends AppCompatActivity {
 
         //set UID
         currentUserUID = firebaseAuth.getCurrentUser().getUid();
+
+        //progress dialog
+        progressDialog = new ProgressDialog(MatchListActivity.this);
+        progressDialog.setMessage("Hang on tight...");
+        progressDialog.show();
 
         //set matchList
         matchList = new ArrayList<>();
@@ -137,21 +143,31 @@ public class MatchListActivity extends AppCompatActivity {
                     }
                 }
 
+                //User List
+                int matchListSize = matchList.size();
+
+                imageList = new Uri[matchListSize];
+                nameList = new String[matchListSize];
+                messageList = new String[matchListSize];
+
                 //go over each item in the match list and add it to the list view
-                for(final String otherUID : matchList) {
+                for(int i = 0 ; i < matchList.size() ; i++) {
+                    final String otherUID = matchList.get(i);
+                    final int index = i;
 
                     //get the image
                     storageReference.child("IMAGE").child(otherUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            imageList.add(uri);
+                            imageList[index] = uri;
 
                             //get the name
                             databaseReference.child("USER").child(otherUID).child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String otherUserName = dataSnapshot.getValue(String.class);
-                                    nameList.add(otherUserName);
+                                    nameList[index] = otherUserName;
+                                    count++;
 
                                     //get the message
                                     //TODO
@@ -187,7 +203,14 @@ public class MatchListActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return nameList.size();
+            if(matchList == null) {
+                return 0;
+            } else if (count == matchList.size()) {
+                progressDialog.dismiss();
+                return count;
+            } else {
+                return 0;
+            }
         }
 
         @Override
@@ -207,8 +230,8 @@ public class MatchListActivity extends AppCompatActivity {
             TextView textView_name = (TextView)view.findViewById(R.id.textView2);
             TextView textView_message = (TextView)view.findViewById(R.id.textView3);
             //imageView.setImageURI(imageList.get(i));
-            Glide.with(getApplicationContext()).load(imageList.get(i).toString()).into(imageView);
-            textView_name.setText(nameList.get(i));
+            Glide.with(getApplicationContext()).load(imageList[i].toString()).into(imageView);
+            textView_name.setText(nameList[i]);
             textView_message.setText("hello from the other side");
             return view;
         }
