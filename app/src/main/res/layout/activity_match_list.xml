@@ -9,22 +9,40 @@
     tools:context=".MatchListActivity">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/match_list_toobar_title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_height="wrap_content"
         android:layout_weight="0"
         android:background="@color/colorYellow"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="My SBs"
-        app:titleMarginStart="160dp"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@color/colorPrimaryDark" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/match_list_button_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:background="@drawable/back_button" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/match_list_toobar_title"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_weight="0"
+            android:background="@color/colorYellow"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="My SBs"
+            app:titleMarginStart="115dp"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextColor="@color/colorPrimaryDark" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/match_list_listView_friends"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_weight="1" />
+
 </LinearLayout>

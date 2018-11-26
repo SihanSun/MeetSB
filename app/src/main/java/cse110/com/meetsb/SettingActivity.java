@@ -1,6 +1,7 @@
 package cse110.com.meetsb;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -69,6 +70,7 @@ public class SettingActivity extends AppCompatActivity {
         descriptionEditText = findViewById(R.id.setting_editText_description);
         majorSpinner = findViewById(R.id.setting_spinner_major);
         genderSpinner = findViewById(R.id.setting_spinner_gender);
+
         auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("USER").child(uid);
@@ -119,6 +121,15 @@ public class SettingActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
             }
         });
+
+        Button back = (Button)findViewById(R.id.setting_button_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+            }
+        });
+
     }
 
     private int getIndex(Spinner spinner, String value){
