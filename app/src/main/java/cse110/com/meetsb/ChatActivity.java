@@ -26,7 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import cse110.com.meetsb.Model.Chat;
 import cse110.com.meetsb.Model.Message;
