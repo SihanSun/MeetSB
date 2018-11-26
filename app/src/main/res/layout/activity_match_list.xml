@@ -17,12 +17,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/match_list_button_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0"
-            android:background="@android:drawable/ic_menu_revert" />
+            android:id="@+id/profile_button_back"
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dark_back_btn" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/match_list_toobar_title"
@@ -33,7 +33,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:title="My SBs"
-            app:titleMarginStart="115dp"
+            app:titleMarginStart="118dp"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/colorPrimaryDark" />
     </LinearLayout>

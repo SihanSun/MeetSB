@@ -11,30 +11,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/profile_button_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="left"
-            android:background="@android:drawable/ic_menu_revert" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/back_button" />
 
         <Button
             android:id="@+id/profile_button_ToSetting"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentRight="false"
-            android:background="@android:drawable/ic_menu_edit" />
-
-
+            android:layout_marginLeft="325dp"
+            android:background="@drawable/ic_edit_black_24dp" />
 
 
     </LinearLayout>
@@ -45,7 +38,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="10dp" />
     <!-- app:srcCompat="@drawable/tony_teacher"  /> -->
 
     <LinearLayout
@@ -183,7 +176,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:paddingLeft="50dp"
         android:paddingTop="8dp">
@@ -203,7 +196,7 @@
             android:layout_marginLeft="10dp"
             android:text="Hi~ I’m Lizhi. My name is Lychee. I’m a 4th year CS student. Let’s be SB!"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
