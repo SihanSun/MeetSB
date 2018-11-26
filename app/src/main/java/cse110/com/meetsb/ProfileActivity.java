@@ -79,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-       emailText.setText(auth.getCurrentUser().getEmail());
+        emailText.setText(auth.getCurrentUser().getEmail());
 
         ref = FirebaseDatabase.getInstance().getReference().child("USER").child(auth.getCurrentUser().getUid());
         storage = FirebaseStorage.getInstance();

@@ -9,14 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.content.Intent;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,6 @@ import com.google.firebase.storage.StorageReference;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import cse110.com.meetsb.Model.Course;
@@ -52,6 +52,7 @@ public class SwipeActivity extends AppCompatActivity {
 
 
     private List<List<String>> imageList;
+    private Spinner courseChoosing;
     private Button btnDislike, btnLike, btnProfile, btnChat;
 
     //animation
@@ -105,8 +106,8 @@ public class SwipeActivity extends AppCompatActivity {
         //catch all the btns
         btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
         btnLike = (Button) findViewById(R.id.buttons_button_like);
-        btnProfile  = (Button) findViewById(R.id.buttons_button_profile);
-        btnChat = (Button) findViewById(R.id.buttons_button_chat);
+        btnProfile  = (Button) findViewById(R.id.classInfo_button_profile);
+        btnChat = (Button) findViewById(R.id.classInfo_button_chat);
 
         //set the swipe view
         this.flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
@@ -330,6 +331,9 @@ public class SwipeActivity extends AppCompatActivity {
                     }
                     courseTaking.add(courseName);
                 }
+                courseChoosing = (Spinner)findViewById(R.id.classInfo_spinner_class);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, courseTaking);
+                courseChoosing.setAdapter(adapter);
                 currentCourse = courseTaking.get(0);
 
                 offset = user.getCourseTakingOffsetMap().get(currentCourse);
