@@ -88,7 +88,7 @@ public class MatchListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Chat chat = new Chat(matchList.get(i), "hi", Long.toString(System.currentTimeMillis()),nameList.get(i));
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("Chat", chat);
+                bundle.putSerializable("chat", chat);
                 Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
                 intent.putExtra("UID", matchList.get(i));
                 intent.putExtras(bundle);
