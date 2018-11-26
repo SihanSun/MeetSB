@@ -20,14 +20,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".SwipeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".MatchListActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity android:name=".ProfileActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name=".SettingActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -38,7 +39,12 @@
         </activity>
         <activity android:name=".SignupActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".ConfirmActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"

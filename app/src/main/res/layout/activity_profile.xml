@@ -11,41 +11,37 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="left"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:id="@+id/profile_button_back"
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/back_button" />
 
         <Button
-            android:id="@+id/profile_button_backToSetting"
+            android:id="@+id/profile_button_ToSetting"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="325dp"
             android:background="@drawable/ic_edit_black_24dp" />
-
-
 
 
     </LinearLayout>
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_imageView_avatar"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        app:civ_border_width="1dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="10dp"
+        app:civ_border_color="@color/colorYellow"/>
     <!-- app:srcCompat="@drawable/tony_teacher"  /> -->
 
     <LinearLayout
@@ -69,7 +65,6 @@
             android:layout_height="42dp"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Lychee Meimei"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -97,7 +92,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="sis070@ucsd.edu"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -123,7 +117,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Computer Science"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -149,7 +142,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="2.3"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
@@ -176,14 +168,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Male"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:paddingLeft="50dp"
         android:paddingTop="8dp">
@@ -198,12 +189,11 @@
 
         <TextView
             android:id="@+id/profile_textView_description"
-            android:layout_width="180dp"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Hi~ I’m Lizhi. My name is Lychee. I’m a 4th year CS student. Let’s be SB!"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

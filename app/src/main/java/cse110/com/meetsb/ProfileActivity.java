@@ -37,6 +37,7 @@ import cse110.com.meetsb.Model.User;
 public class ProfileActivity extends AppCompatActivity {
     Button editButton;
     Button signOutButton;
+    Button backButton;
     FirebaseAuth auth;
     DatabaseReference ref;
     FirebaseStorage storage;
@@ -89,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
 //        Glide.with(this /* context */)
 //                .load(storageRef)
 //                .into(profilePictureImageView);
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+      storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 String imageURL = uri.toString();
@@ -128,8 +129,9 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        editButton = findViewById(R.id.profile_button_backToSetting);
+        editButton = findViewById(R.id.profile_button_ToSetting);
         signOutButton = findViewById(R.id.profile_button_signOut);
+        backButton = findViewById(R.id.profile_button_back);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +147,14 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }
