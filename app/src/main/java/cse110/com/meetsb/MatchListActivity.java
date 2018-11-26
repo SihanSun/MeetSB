@@ -114,6 +114,9 @@ public class MatchListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
+                if(userSwipe == null) {
+                    return;
+                }
                 HashMap<String, String> hashMap = userSwipe.getMatchList();
                 if(hashMap != null) {
                     // populate matchList
