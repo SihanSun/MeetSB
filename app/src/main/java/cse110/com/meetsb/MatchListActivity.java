@@ -87,7 +87,7 @@ public class MatchListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Chat chat = new Chat(matchList.get(i), "hi", myImage, imageList.get(i), Long.toString(System.currentTimeMillis()),nameList.get(i));
+                Chat chat = new Chat(matchList.get(i), "hi", Long.toString(System.currentTimeMillis()),nameList.get(i));
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("chat", chat);
                 Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
@@ -155,12 +155,6 @@ public class MatchListActivity extends AppCompatActivity {
                         }
                     });
                 }
-                storageReference.child("IMAGE").child(currentUserUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        myImage = uri;
-                    }
-                });
             }
 
             @Override

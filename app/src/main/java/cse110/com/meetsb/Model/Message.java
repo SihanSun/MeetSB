@@ -10,17 +10,25 @@ public class Message implements Serializable{
     private String text;
     private Object time;
     private Boolean seen;
-    public Uri imageUri;
+    private MessageType messageType;
 
     public Message(){}
 
-    public Message(String id, String userId, Uri imageUri, String text, Object time, Boolean seen) {
+    public Message(String id, String userId, String text, Object time, Boolean seen, MessageType messageType) {
         this.id = id;
         this.userId = userId;
-        this.imageUri = imageUri;
         this.text = text;
         this.time = time;
         this.seen = seen;
+        this.messageType = messageType;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 
     public String getId() {
@@ -61,14 +69,6 @@ public class Message implements Serializable{
 
     public void setSeen(Boolean seen) {
         this.seen = seen;
-    }
-
-    public Uri getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
     }
 
     @Override

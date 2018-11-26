@@ -9,35 +9,14 @@ public class Chat implements Serializable{
     private String lastmessage;
     private String time;
     private String username;
-    private Uri myImage;
-    private Uri yourImage;
 
     public Chat(){}
 
-    public Chat(String userId, String lastmessage,Uri myImage, Uri yourImage, String time, String username) {
+    public Chat(String userId, String lastmessage, String time, String username) {
         this.userId = userId;
         this.lastmessage = lastmessage;
-        this.myImage = myImage;
-        this.yourImage = yourImage;
         this.time = time;
         this.username = username;
-    }
-
-    public Uri getMyImage() {
-        return myImage;
-    }
-
-    public void setMyImage(Uri myImage) {
-        this.myImage = myImage;
-    }
-
-
-    public Uri getYourImage() {
-        return yourImage;
-    }
-
-    public void setYourImage(Uri yourImage) {
-        this.yourImage = yourImage;
     }
 
     public String getUserId() {
