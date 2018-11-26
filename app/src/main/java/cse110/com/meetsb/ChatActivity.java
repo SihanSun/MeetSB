@@ -2,6 +2,7 @@ package cse110.com.meetsb;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -24,11 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 import cse110.com.meetsb.Model.Chat;
 import cse110.com.meetsb.Model.Message;
 import cse110.com.meetsb.Model.MessageAdapter;
@@ -47,6 +46,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     boolean moreMessage = true;
     User user;
     Chat chat;
+    private Uri myImage;
+    private Uri yourImage;
 
     String otherUID;
 
@@ -156,6 +157,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             chat = (Chat) bundle.getSerializable("chat");
             user = new User();
             String userId = chat.getUserId();
+            yourImage = chat.getYourImage();
+            myImage = chat.getMyImage();
         }
         loadData();
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener(){
@@ -237,7 +240,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("message").child(userId).child(otherUID);
-        Message message = new Message(userId, userId, editText.getText().toString(), ServerValue.TIMESTAMP, false);
+        Message message = new Message(userId, userId, myImage, editText.getText().toString(), ServerValue.TIMESTAMP, false);
         String key = databaseReference.push().getKey();
         databaseReference.child(key).setValue(message);
         editText.setText("");
