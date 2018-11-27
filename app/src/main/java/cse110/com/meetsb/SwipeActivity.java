@@ -67,6 +67,8 @@ public class SwipeActivity extends AppCompatActivity {
     User user;
     List<String> courseTaking;
     String currentCourse;
+    int currentCourseIndex;
+    int selectedCourseIndex;
 
     //user swipe information
     UserSwipe userSwipe;
@@ -92,6 +94,13 @@ public class SwipeActivity extends AppCompatActivity {
 
         //create a progress dialog instance pointing to this activity
         progressDialog = new ProgressDialog(this);
+
+        //get the current course selected if applicable
+        selectedCourseIndex = -1;
+        String indexString = getIntent().getStringExtra("courseChoosing");
+        if(indexString != null) {
+            selectedCourseIndex = Integer.parseInt(indexString);
+        }
 
         //initialize the Firebase Relevant
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -334,7 +343,34 @@ public class SwipeActivity extends AppCompatActivity {
                 courseChoosing = (Spinner)findViewById(R.id.classInfo_spinner_class);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, courseTaking);
                 courseChoosing.setAdapter(adapter);
-                currentCourse = courseTaking.get(0);
+
+                if(selectedCourseIndex == -1) {
+                    currentCourse = courseTaking.get(0);
+                    currentCourseIndex = 0;
+                    selectedCourseIndex = 0;
+                } else {
+                    currentCourseIndex = selectedCourseIndex;
+                    currentCourse = courseTaking.get(currentCourseIndex);
+                }
+                courseChoosing.setSelection(selectedCourseIndex);
+                courseChoosing.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectedCourseIndex = i;
+                        if(selectedCourseIndex != currentCourseIndex) {
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            Intent changeCourseIntent = new Intent(SwipeActivity.this, SwipeActivity.class);
+                            changeCourseIntent.putExtra("courseChoosing", Integer.toString(selectedCourseIndex));
+                            finish();
+                            startActivity(changeCourseIntent);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
 
                 offset = user.getCourseTakingOffsetMap().get(currentCourse);
                 readOffset = offset;
