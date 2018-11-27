@@ -273,7 +273,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         //push my message into your message field
         databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(otherUID).child(userId);
-        Message Yourmessage = new Message(otherUID, otherUID, editText.getText().toString(), ServerValue.TIMESTAMP, false, you, yourImage.toString());
+        Message Yourmessage = new Message(otherUID, otherUID, editText.getText().toString(), ServerValue.TIMESTAMP, false, you, myImage.toString());
         String Yourkey = databaseReference.push().getKey();
         databaseReference.child(Yourkey).setValue(Yourmessage);
 
