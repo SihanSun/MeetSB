@@ -148,7 +148,6 @@ public class SwipeActivity extends AppCompatActivity {
             public void onLeftCardExit(Object dataObject) {
                 increaseUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
-
                 makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
 
@@ -484,7 +483,7 @@ public class SwipeActivity extends AppCompatActivity {
         Refresh Card Controller
      */
     private synchronized void refreshUserCard() {
-        if(offset == -1 || userCard.size() >= refreshSize || offset >= studentInThisCourse.size()) {
+        if(currentCourse == null || userCard.size() > 0 || offset >= studentInThisCourse.size()) {
             return;
         }
 
@@ -530,22 +529,15 @@ public class SwipeActivity extends AppCompatActivity {
 
     }
 
-    /*
-        Functionality after swiping right
-        pre-condition: the user swipe right on a user
-        post-condition: 1. add the uid to user's like list in userSwipe
-                        2. check if the other user also likes current user
-                                if yes, add both user to both user's match list and prompt a toast.
-     */
     private void swipeRight(final String otherUid) {
         //add user to current user swipe like list
 
         if(liked.contains(otherUid)) {
             return;
         }
-        liked.add(otherUid);
 
-        //update userSwipe in database
+        //update the liked list
+        liked.add(otherUid);
         String key = databaseReference.child("USERSWIPE").child(userUid).child("liked").push().getKey();
         databaseReference.child("USERSWIPE").child(userUid).child("liked").child(key).setValue(otherUid);
 
@@ -559,23 +551,14 @@ public class SwipeActivity extends AppCompatActivity {
                 if(otherUserSwipe != null) {
 
                     HashMap<String, String> otherLikedList = otherUserSwipe.getLiked();
-                    boolean find = false;
-                    for(String tempKey : otherLikedList.keySet()) {
-                        String tempUid = otherLikedList.get(tempKey);
-                        if(tempUid.equals(userUid)) {
-                            find = true;
-                            break;
-                        }
-                    }
-                    if(find) {
-                        //add you to the other's match list
-                        String key = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
-                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(key).setValue(userUid);
+                    if(otherLikedList.containsKey(userUid)) {
+                        String tempKey = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
+                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(tempKey).setValue(userUid);
 
                         //update your matchList
                         matchSet.add(otherUid);
-                        key = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
-                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(key).setValue(otherUid);
+                        tempKey = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
+                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(tempKey).setValue(otherUid);
                         //make a toast
                         Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
                     }
