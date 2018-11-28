@@ -387,7 +387,7 @@ public class SwipeActivity extends AppCompatActivity {
                         }
                         HashMap<String, String> likedList = userSwipe.getLiked();
                         for(String key : likedList.keySet()) {
-                            String otherUserUid = matchList.get(key);
+                            String otherUserUid = likedList.get(key);
                             liked.add(otherUserUid);
                         }
                     }
@@ -550,17 +550,21 @@ public class SwipeActivity extends AppCompatActivity {
                 if(otherUserSwipe != null) {
 
                     HashMap<String, String> otherLikedList = otherUserSwipe.getLiked();
-                    if(otherLikedList.containsKey(userUid)) {
-                        String tempKey = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
-                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(tempKey).setValue(userUid);
+                    for(String key : otherLikedList.keySet()) {
+                        String tempUid = otherLikedList.get(key);
+                        if(tempUid.equals(userUid)) {
+                            String tempKey = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
+                            databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(tempKey).setValue(userUid);
 
-                        //update your matchList
-                        matchSet.add(otherUid);
-                        tempKey = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
-                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(tempKey).setValue(otherUid);
+                            //update your matchList
+                            matchSet.add(otherUid);
+                            tempKey = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
+                            databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(tempKey).setValue(otherUid);
 
-                        //make a toast
-                        Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                            //make a toast
+                            Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
                     }
                 }
             }
