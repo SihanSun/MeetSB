@@ -21,7 +21,7 @@ public class AddClassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_class);
+        setContentView(R.layout.activity_class_info);
 
         auth = FirebaseAuth.getInstance();
         databaseInstance = FirebaseDatabase.getInstance();
