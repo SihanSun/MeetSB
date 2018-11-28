@@ -491,9 +491,8 @@ public class SwipeActivity extends AppCompatActivity {
             if(offset >= studentInThisCourse.size()) {
                 break;
             }
-            final String otherUserUid = studentInThisCourse.get(i);
-            String uid = studentInThisCourse.get(i);
-            if(uid.equals(userUid)) {
+            final String otherUserUid = studentInThisCourse.get(offset);
+            if(otherUserUid.equals(userUid)) {
                 userOffset = i;
             } else {
                 databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -559,6 +558,7 @@ public class SwipeActivity extends AppCompatActivity {
                         matchSet.add(otherUid);
                         tempKey = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
                         databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(tempKey).setValue(otherUid);
+
                         //make a toast
                         Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
                     }
