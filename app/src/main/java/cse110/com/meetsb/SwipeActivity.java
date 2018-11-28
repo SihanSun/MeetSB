@@ -321,6 +321,12 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
+                if(user == null) {
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
+                    startActivity(intent);
+
+                }
 
                 courseTaking = new ArrayList<>();
                 //get the courses that the user is taking and get the default course
