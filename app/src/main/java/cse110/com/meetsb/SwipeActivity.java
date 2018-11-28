@@ -64,7 +64,7 @@ public class SwipeActivity extends AppCompatActivity {
     boolean annimatioOn;
 
     //user uid
-    String userUID;
+    String userUid;
 
     //course information
     User user;
@@ -75,7 +75,7 @@ public class SwipeActivity extends AppCompatActivity {
     List<String> studentInThisCourse;
 
     //user swipe information
-    UserSwipe userSwipe;
+    HashSet<String> liked;
     HashSet<String> matchSet;
 
     //Progress Bar
@@ -115,10 +115,11 @@ public class SwipeActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
 
         //get the user's UID
-        userUID = firebaseAuth.getCurrentUser().getUid();
+        userUid = firebaseAuth.getCurrentUser().getUid();
 
-        //set the matchList
+        //set the swipe infomation
         matchSet = new HashSet<>();
+        liked = new HashSet<>();
 
         //set the student in the course
         studentInThisCourse = new ArrayList<>();
@@ -317,7 +318,7 @@ public class SwipeActivity extends AppCompatActivity {
     private void setUp() {
 
         //setup user and course
-        databaseReference.child("USER").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("USER").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
@@ -373,7 +374,7 @@ public class SwipeActivity extends AppCompatActivity {
 
                 //update the matchList
 
-                databaseReference.child("USERSWIPE").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
@@ -381,8 +382,14 @@ public class SwipeActivity extends AppCompatActivity {
                             return;
                         }
                         HashMap<String, String> matchList = userSwipe.getMatchList();
-                        for(String otherUserUid : matchList.keySet()) {
+                        for(String key : matchList.keySet()) {
+                            String otherUserUid = matchList.get(key);
                             matchSet.add(otherUserUid);
+                        }
+                        HashMap<String, String> likedList = userSwipe.getLiked();
+                        for(String key : likedList.keySet()) {
+                            String otherUserUid = matchList.get(key);
+                            liked.add(otherUserUid);
                         }
                     }
 
@@ -393,7 +400,7 @@ public class SwipeActivity extends AppCompatActivity {
                 });
 
                 //attch a lister to the match list
-                databaseReference.child("USERSWIPE").child(userUID).child("matchList").addChildEventListener(new ChildEventListener() {
+                databaseReference.child("USERSWIPE").child(userUid).child("matchList").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         String key = dataSnapshot.getKey();
@@ -487,13 +494,17 @@ public class SwipeActivity extends AppCompatActivity {
             }
             final String otherUserUid = studentInThisCourse.get(i);
             String uid = studentInThisCourse.get(i);
-            if(uid.equals(userUID)) {
+            if(uid.equals(userUid)) {
                 userOffset = i;
             } else {
                 databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         final User otherUser = dataSnapshot.getValue(User.class);
+
+                        if(otherUser == null) {
+                            return;
+                        }
 
                         //get other user's image
                         storageReference.child("IMAGE").child(otherUserUid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -529,10 +540,14 @@ public class SwipeActivity extends AppCompatActivity {
     private void swipeRight(final String otherUid) {
         //add user to current user swipe like list
 
-        userSwipe.getLiked().put(otherUid, otherUid);
+        if(liked.contains(otherUid)) {
+            return;
+        }
+        liked.add(otherUid);
 
         //update userSwipe in database
-        databaseReference.child("USERSWIPE").child(userUID).child("liked").setValue(userSwipe.getLiked());
+        String key = databaseReference.child("USERSWIPE").child(userUid).child("liked").push().getKey();
+        databaseReference.child("USERSWIPE").child(userUid).child("liked").child(key).setValue(otherUid);
 
         //check if other also likes current user
         databaseReference.child("USERSWIPE").child(otherUid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -543,18 +558,24 @@ public class SwipeActivity extends AppCompatActivity {
                 //maybe at this point other user's swipe has not be set up yet
                 if(otherUserSwipe != null) {
 
-                    //check if you are in other's liked history
-                    if(otherUserSwipe.getLiked().containsKey(userUID)) {
-                        //add other to your matchList
-                        userSwipe.getMatchList().put(otherUid, otherUid);
-
+                    HashMap<String, String> otherLikedList = otherUserSwipe.getLiked();
+                    boolean find = false;
+                    for(String tempKey : otherLikedList.keySet()) {
+                        String tempUid = otherLikedList.get(tempKey);
+                        if(tempUid.equals(userUid)) {
+                            find = true;
+                            break;
+                        }
+                    }
+                    if(find) {
                         //add you to the other's match list
                         String key = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
-                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(key).setValue(userUID);
+                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(key).setValue(userUid);
 
-                        //update your userSwipe
-                        databaseReference.child("USERSWIPE").child(userUID).setValue(userSwipe);
-
+                        //update your matchList
+                        matchSet.add(otherUid);
+                        key = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
+                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(key).setValue(otherUid);
                         //make a toast
                         Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
                     }
@@ -572,7 +593,7 @@ public class SwipeActivity extends AppCompatActivity {
         } else {
             readOffset += 1;
         }
-        databaseReference.child("USER").child(userUID).child("courseTakingOffsetMap").child(currentCourse).setValue(readOffset);
+        databaseReference.child("USER").child(userUid).child("courseTakingOffsetMap").child(currentCourse).setValue(readOffset);
     }
 
     static void makeToast(Context ctx, String s) {
