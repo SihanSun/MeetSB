@@ -56,7 +56,7 @@ public class SwipeActivity extends AppCompatActivity {
 
     private List<List<String>> imageList;
     private Spinner courseChoosing;
-    private Button btnDislike, btnLike, btnProfile, btnChat;
+    private Button btnDislike, btnLike, btnProfile, btnChat, btnAddClass;
 
     //animation
     ImageView iv_loading;
@@ -129,6 +129,7 @@ public class SwipeActivity extends AppCompatActivity {
         btnLike = (Button) findViewById(R.id.buttons_button_like);
         btnProfile  = (Button) findViewById(R.id.classInfo_button_profile);
         btnChat = (Button) findViewById(R.id.classInfo_button_chat);
+        btnAddClass = (Button) findViewById(R.id.classInfo_button_add);
 
         //set the swipe view
         this.flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
@@ -226,6 +227,15 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+        btnAddClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SwipeActivity.this, ClassInfoActivity.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
