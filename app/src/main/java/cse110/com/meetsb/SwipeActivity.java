@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.content.Intent;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import cse110.com.meetsb.Model.Course;
@@ -61,7 +64,7 @@ public class SwipeActivity extends AppCompatActivity {
     boolean annimatioOn;
 
     //user uid
-    String userUID;
+    String userUid;
 
     //course information
     User user;
@@ -69,9 +72,11 @@ public class SwipeActivity extends AppCompatActivity {
     String currentCourse;
     int currentCourseIndex;
     int selectedCourseIndex;
+    List<String> studentInThisCourse;
 
     //user swipe information
-    UserSwipe userSwipe;
+    HashSet<String> liked;
+    HashSet<String> matchSet;
 
     //Progress Bar
     private ProgressDialog progressDialog;
@@ -110,7 +115,14 @@ public class SwipeActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
 
         //get the user's UID
-        userUID = firebaseAuth.getCurrentUser().getUid();
+        userUid = firebaseAuth.getCurrentUser().getUid();
+
+        //set the swipe infomation
+        matchSet = new HashSet<>();
+        liked = new HashSet<>();
+
+        //set the student in the course
+        studentInThisCourse = new ArrayList<>();
 
         //catch all the btns
         btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
@@ -137,7 +149,6 @@ public class SwipeActivity extends AppCompatActivity {
             public void onLeftCardExit(Object dataObject) {
                 increaseUserOffset();
                 UserCardMode userCardMode = (UserCardMode) dataObject;
-
                 makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
 
@@ -274,33 +285,10 @@ public class SwipeActivity extends AppCompatActivity {
             public void run() {
                 while( !stopThread ) {
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(500);
                     } catch (Exception e) {
                         System.out.println("Failed to sleep");
                     }
-
-                    //update the matchList
-                    databaseReference.child("USERSWIPE")
-                            .child(userUID)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            UserSwipe tempUserSwipe = dataSnapshot.getValue(UserSwipe.class);
-                            if(tempUserSwipe != null) {
-                                HashMap<String, String> tempMap = tempUserSwipe.getMatchList();
-                                if(tempMap != null && userSwipe.getMatchList().size() < tempMap.size()) {
-                                    userSwipe.setMatchList(tempMap);
-                                    //make a toast
-                                    Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
 
                     if(userCard != null && userCard.size() == 0) {
                         if(userCard.size() == 0) {
@@ -339,75 +327,156 @@ public class SwipeActivity extends AppCompatActivity {
     private void setUp() {
 
         //setup user and course
-        databaseReference.child("USER").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("USER").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
+
+                courseTaking = new ArrayList<>();
                 //get the courses that the user is taking and get the default course
                 for(String courseName : user.getCourseTakingOffsetMap().keySet()) {
-                    if(courseTaking == null) {
-                        courseTaking = new ArrayList<>();
-                    }
                     courseTaking.add(courseName);
                 }
+
+                //set the spinner view
                 courseChoosing = (Spinner)findViewById(R.id.classInfo_spinner_class);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, courseTaking);
                 courseChoosing.setAdapter(adapter);
 
-                if(selectedCourseIndex == -1) {
-                    currentCourse = courseTaking.get(0);
-                    currentCourseIndex = 0;
-                    selectedCourseIndex = 0;
+                //set current course
+                if(courseTaking.size() == 0) {
+                    currentCourse = null;
+                    offset = -1;
+                    readOffset = -1;
                 } else {
-                    currentCourseIndex = selectedCourseIndex;
-                    currentCourse = courseTaking.get(currentCourseIndex);
-                }
-                courseChoosing.setSelection(selectedCourseIndex);
-                courseChoosing.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        selectedCourseIndex = i;
-                        if(selectedCourseIndex != currentCourseIndex) {
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            Intent changeCourseIntent = new Intent(SwipeActivity.this, SwipeActivity.class);
-                            changeCourseIntent.putExtra("courseChoosing", Integer.toString(selectedCourseIndex));
-                            finish();
-                            startActivity(changeCourseIntent);
+                    if (selectedCourseIndex == -1) {
+                        currentCourse = courseTaking.get(0);
+                        currentCourseIndex = 0;
+                        selectedCourseIndex = 0;
+                    } else {
+                        currentCourseIndex = selectedCourseIndex;
+                        currentCourse = courseTaking.get(currentCourseIndex);
+                    }
+                    courseChoosing.setSelection(selectedCourseIndex);
+                    courseChoosing.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectedCourseIndex = i;
+                            if(selectedCourseIndex != currentCourseIndex) {
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                Intent changeCourseIntent = new Intent(SwipeActivity.this, SwipeActivity.class);
+                                changeCourseIntent.putExtra("courseChoosing", Integer.toString(selectedCourseIndex));
+                                finish();
+                                startActivity(changeCourseIntent);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-                });
+                        }
+                    });
+                    offset = user.getCourseTakingOffsetMap().get(currentCourse);
+                    readOffset = offset;
+                }
 
-                offset = user.getCourseTakingOffsetMap().get(currentCourse);
-                readOffset = offset;
 
-                //get the userSwipe
-                databaseReference.child("USERSWIPE").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
+                //update the matchList
+
+                databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //get the user swipe information
-                        userSwipe = dataSnapshot.getValue(UserSwipe.class);
-
+                        UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
                         if(userSwipe == null) {
-                            userSwipe = new UserSwipe();
-                            databaseReference.child("USERSWIPE").child(firebaseAuth.getCurrentUser().getUid()).setValue(userSwipe);
+                            return;
                         }
-
-                        //begin the careRefreshThread
-                        startThread();
+                        HashMap<String, String> matchList = userSwipe.getMatchList();
+                        for(String key : matchList.keySet()) {
+                            String otherUserUid = matchList.get(key);
+                            matchSet.add(otherUserUid);
+                        }
+                        HashMap<String, String> likedList = userSwipe.getLiked();
+                        for(String key : likedList.keySet()) {
+                            String otherUserUid = matchList.get(key);
+                            liked.add(otherUserUid);
+                        }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        flingContainer.setVisibility(View.VISIBLE);
-                        //make a toast
-                        Toast.makeText(SwipeActivity.this, "Failed to refresh user swipe card", Toast.LENGTH_SHORT).show();
+
                     }
                 });
+
+                //attch a lister to the match list
+                databaseReference.child("USERSWIPE").child(userUid).child("matchList").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        String key = dataSnapshot.getKey();
+                        String value = dataSnapshot.getValue(String.class);
+                        if(!matchSet.contains(value)) {
+                            Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_LONG).show();
+                        }
+                        matchSet.add(value);
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                //attach a listener for the students in the course (order by key)
+                if(currentCourse != null) {
+                    databaseReference.child("COURSE")
+                            .child(currentCourse)
+                            .child("studentsInTheCourse")
+                            .orderByKey()
+                            .addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            String key = dataSnapshot.getKey();
+                            String value = dataSnapshot.getValue(String.class);
+                            studentInThisCourse.add(value);
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                startThread();
             }
 
             @Override
@@ -424,79 +493,62 @@ public class SwipeActivity extends AppCompatActivity {
         Refresh Card Controller
      */
     private synchronized void refreshUserCard() {
+        if(currentCourse == null || userCard.size() > 0 || offset >= studentInThisCourse.size()) {
+            return;
+        }
 
-        //update student uid list
-        databaseReference.child("COURSE").child(currentCourse).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Course course = dataSnapshot.getValue(Course.class);
-                List<String> uidList = course.getStudentsInTheCourse();
+        for(int i = 0 ; i < refreshSize ; i++) {
+            if(offset >= studentInThisCourse.size()) {
+                break;
+            }
+            final String otherUserUid = studentInThisCourse.get(offset);
+            if(otherUserUid.equals(userUid)) {
+                userOffset = i;
+            } else {
+                databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        final User otherUser = dataSnapshot.getValue(User.class);
 
-                //get next refreshSize of user UID
-                List<String> userUidToBeLoaded = new ArrayList<>();
-                for(int count = 0 ; count < refreshSize ; count++) {
-                    if(offset >= uidList.size()) {
-                        break;
-                    }
-                    if(uidList.get(offset).equals(userUID)) {
-                        userOffset = offset;
-                    }
-                    userUidToBeLoaded.add(uidList.get(offset));
-                    offset++;
-                }
-
-                //update card view
-                for(int i = 0 ; i < userUidToBeLoaded.size() ; i++) {
-                    final String otherUserUid = userUidToBeLoaded.get(i);
-                    if(otherUserUid.equals(firebaseAuth.getCurrentUser().getUid())) {
-                        continue;
-                    }
-                    databaseReference.child("USER").child(otherUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final User otherUser = dataSnapshot.getValue(User.class);
-
-                            //get other user's image
-                            storageReference.child("IMAGE").child(otherUserUid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String imageUri = uri.toString();
-                                    List<String> image = new ArrayList<>();
-                                    image.add(imageUri);
-                                    String name = otherUser.getUserName();
-                                    int year = otherUser.getGraduationYear();
-                                    userCard.add(new UserCardMode(name, year, image, otherUserUid));
-                                    arrayAdapter.notifyDataSetChanged();
-                                }
-                            });
+                        if(otherUser == null) {
+                            return;
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) { }
-                    });
-                }
-            }
+                        //get other user's image
+                        storageReference.child("IMAGE").child(otherUserUid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String imageUri = uri.toString();
+                                List<String> image = new ArrayList<>();
+                                image.add(imageUri);
+                                String name = otherUser.getUserName();
+                                int year = otherUser.getGraduationYear();
+                                userCard.add(new UserCardMode(name, year, image, otherUserUid));
+                                arrayAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
+            }
+            offset ++;
+        }
 
     }
 
-    /*
-        Functionality after swiping right
-        pre-condition: the user swipe right on a user
-        post-condition: 1. add the uid to user's like list in userSwipe
-                        2. check if the other user also likes current user
-                                if yes, add both user to both user's match list and prompt a toast.
-     */
     private void swipeRight(final String otherUid) {
         //add user to current user swipe like list
 
-        userSwipe.getLiked().put(otherUid, otherUid);
+        if(liked.contains(otherUid)) {
+            return;
+        }
 
-        //update userSwipe in database
-        databaseReference.child("USERSWIPE").child(userUID).child("liked").setValue(userSwipe.getLiked());
+        //update the liked list
+        liked.add(otherUid);
+        String key = databaseReference.child("USERSWIPE").child(userUid).child("liked").push().getKey();
+        databaseReference.child("USERSWIPE").child(userUid).child("liked").child(key).setValue(otherUid);
 
         //check if other also likes current user
         databaseReference.child("USERSWIPE").child(otherUid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -507,17 +559,15 @@ public class SwipeActivity extends AppCompatActivity {
                 //maybe at this point other user's swipe has not be set up yet
                 if(otherUserSwipe != null) {
 
-                    //check if you are in other's liked history
-                    if(otherUserSwipe.getLiked().containsKey(userUID)) {
-                        //add other to your matchList
-                        userSwipe.getMatchList().put(otherUid, otherUid);
+                    HashMap<String, String> otherLikedList = otherUserSwipe.getLiked();
+                    if(otherLikedList.containsKey(userUid)) {
+                        String tempKey = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
+                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(tempKey).setValue(userUid);
 
-                        //add you to the other's match list
-                        String key = databaseReference.child("USERSWIPE").child(otherUid).child("matchList").push().getKey();
-                        databaseReference.child("USERSWIPE").child(otherUid).child("matchList").child(key).setValue(userUID);
-
-                        //update your userSwipe
-                        databaseReference.child("USERSWIPE").child(userUID).setValue(userSwipe);
+                        //update your matchList
+                        matchSet.add(otherUid);
+                        tempKey = databaseReference.child("USERSWIPE").child(userUid).child("matchList").push().getKey();
+                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(tempKey).setValue(otherUid);
 
                         //make a toast
                         Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
@@ -530,43 +580,13 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-//    private synchronized void revert() {
-//        if(preUserCard == null) {
-//            Toast.makeText(this, "No pre user!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        int userCardSize = userCard.size();
-//
-//        UserCardMode tempCardMode = new UserCardMode(preUserCard.getName(), preUserCard.getYear(), preUserCard.getImages(), preUserCard.getUid());
-//        userCard.add(tempCardMode);
-//
-//        for(int i = 0 ; i < userCardSize ; i++) {
-//            UserCardMode tempMode = userCard.get(i);
-//            userCard.add(new UserCardMode(tempMode.getName(), tempMode.getYear(), tempMode.getImages(), tempMode.getUid()));
-//        }
-//
-//        for(int i = 0 ; i < userCardSize ; i++) {
-//            flingContainer.getTopCardListener().selectLeft();
-//        }
-//
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                arrayAdapter.notifyDataSetChanged();
-//            }
-//        });
-//
-//        preUserCard = null;
-//    }
-
     private synchronized void increaseUserOffset() {
-        if(readOffset == readOffset) {
+        if(readOffset == userOffset) {
             readOffset += 2;
         } else {
             readOffset += 1;
         }
-        databaseReference.child("USER").child(userUID).child("courseTakingOffsetMap").child(currentCourse).setValue(readOffset);
+        databaseReference.child("USER").child(userUid).child("courseTakingOffsetMap").child(currentCourse).setValue(readOffset);
     }
 
     static void makeToast(Context ctx, String s) {

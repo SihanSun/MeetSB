@@ -57,6 +57,7 @@ public class ClassInfoActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
+    String userUid;
 
     ArrayAdapter<String> adapter;
     ArrayList<String> selectClass;
@@ -74,6 +75,9 @@ public class ClassInfoActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+
+        //set student uid
+        userUid = firebaseAuth.getCurrentUser().getUid();
 
         //set list view
         final ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
@@ -162,23 +166,16 @@ public class ClassInfoActivity extends AppCompatActivity {
                 //update the course
                 for(int i = 0 ; i < selectClass.size() ; i++) {
                     final String courseName = selectClass.get(i);
-                    databaseReference.child("COURSE").child(courseName).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Course tempCourse = dataSnapshot.getValue(Course.class);
-                            if(tempCourse == null) {
-                                tempCourse = new Course();
-                            }
-                            tempCourse.getStudentsInTheCourse().add(firebaseAuth.getCurrentUser().getUid());
-                            databaseReference.child("COURSE").child(courseName).setValue(tempCourse);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                    String key = databaseReference.child("COURSE").child(courseName).child("studentsInTheCourse").push().getKey();
+                    databaseReference
+                            .child("COURSE")
+                            .child(courseName)
+                            .child("studentsInTheCourse")
+                            .child(key)
+                            .setValue(userUid);
                 }
+
+                //jump to Swipe Activity
                 progressDialog.dismiss();
                 Intent intent = new Intent(ClassInfoActivity.this, SwipeActivity.class);
                 finish();
