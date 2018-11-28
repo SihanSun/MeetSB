@@ -35,7 +35,7 @@ import cse110.com.meetsb.Model.User;
 public class OtherUserActivity extends AppCompatActivity {
 
     ImageView profilePicImageView;
-    TextView userNameTextView, majorTextView, gpaTextView, descriptionTextView;
+    TextView userNameTextView, majorTextView, gpaTextView, descriptionTextView, genderTextView;
 
     DatabaseReference otherUserRef;
     StorageReference storageRef;
@@ -65,6 +65,7 @@ public class OtherUserActivity extends AppCompatActivity {
         userNameTextView = findViewById(R.id.other_user_textView_name);
         majorTextView = findViewById(R.id.other_user_textView_major);
         gpaTextView = findViewById(R.id.other_user_textView_gpa);
+        genderTextView = findViewById(R.id.other_user_textView_gender);
         descriptionTextView = findViewById(R.id.other_user_textView_description);
 
         otherUserRef = FirebaseDatabase.getInstance().getReference().child("USER").child(otherUserUid);
@@ -97,6 +98,7 @@ public class OtherUserActivity extends AppCompatActivity {
                 userNameTextView.setText(userName);
                 majorTextView.setText(major);
                 gpaTextView.setText(gpa);
+                genderTextView.setText(gender);
                 descriptionTextView.setText(description);
             }
 

@@ -30,6 +30,8 @@ public class SigninActivity extends AppCompatActivity {
 
     TextView returnToSignUp;
 
+    TextView passwordRecovery;
+
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -44,6 +46,7 @@ public class SigninActivity extends AppCompatActivity {
         userPassword = (EditText) findViewById(R.id.signIn_editText_password);
         signInButton = (Button) findViewById(R.id.signIn_button_signIn);
         returnToSignUp = (TextView) findViewById(R.id.signIn_textView_returnToSignUp);
+        passwordRecovery = (TextView) findViewById(R.id.signIn_textView_passwordRecovery);
         firebaseAuth = FirebaseAuth.getInstance();
 
         //set button listner
@@ -57,6 +60,12 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 jumpToSignUpPage();
+            }
+        });
+        passwordRecovery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPasswordRecovery();
             }
         });
 
@@ -81,7 +90,12 @@ public class SigninActivity extends AppCompatActivity {
 
         //check user email or password
         //TODO
-
+        if (userEmailAddress.getText().toString().isEmpty()) {
+            Toast.makeText(SigninActivity.this,
+                    "Please enter your email",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         firebaseAuth.signInWithEmailAndPassword(userEmailAddress.getText().toString().trim()
         ,userPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -103,6 +117,27 @@ public class SigninActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setPasswordRecovery() {
+        String email = userEmailAddress.getText().toString();
+        if (email.isEmpty()) {
+            Toast.makeText(SigninActivity.this,
+                    "Please enter your email",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SigninActivity.this,
+                                    "Check your email and follow instruction",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void jumpToSwipePage() {
