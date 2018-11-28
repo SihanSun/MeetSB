@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Message implements Serializable{
     private String id;
@@ -13,6 +15,7 @@ public class Message implements Serializable{
     private Boolean seen;
     private MessageType messageType;
     private String profileImage;
+    private Map<String, String> Location;
 
     public Message(){}
 
@@ -78,6 +81,13 @@ public class Message implements Serializable{
 
     public void setSeen(Boolean seen) {
         this.seen = seen;
+    }
+    public Map<String, String> getLocation() {
+        return Location;
+    }
+
+    public void setLocation(Map<String, String> location) {
+        Location = location;
     }
 
     @Override

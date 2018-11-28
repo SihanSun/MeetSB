@@ -19,6 +19,26 @@
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/tool_bar"
+        android:visibility="gone"
+        android:minHeight="48dp"
+        android:padding="7dp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/add_location"
+            android:layout_marginLeft="10dp"
+            android:onClick="btnAddLocation"
+            android:src="@drawable/add_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:id="@+id/footer_bar"
