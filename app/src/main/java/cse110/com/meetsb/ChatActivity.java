@@ -14,7 +14,9 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,6 +48,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayoutManager linearLayoutManager;
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutCompat linearLayoutCompat;
+    private Button backButton;
+    private TextView userName;
 
     private static final int showItem = 5;
     int position = 0;
@@ -148,6 +152,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         editText = (EditText) findViewById(R.id.footer_bar).findViewById(R.id.editText);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setRefreshing(true);
+        backButton = (Button)findViewById(R.id.chat_button_back);
+        userName = (TextView)findViewById(R.id.chat_textView_name);
 
         //get other user UID
         otherUID = getIntent().getStringExtra("UID");
@@ -171,6 +177,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             user = new User();
             String userId = chat.getUserId();
 
+            userName.setText(user.getUserName());
 
             storageReference.child("IMAGE").child(currentUserUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -203,6 +210,20 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 loadMoreData();
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), MatchListActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void loadData() {
