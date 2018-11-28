@@ -2,13 +2,20 @@ package cse110.com.meetsb;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +28,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -40,7 +48,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,6 +63,7 @@ import cse110.com.meetsb.Model.Chat;
 import cse110.com.meetsb.Model.Message;
 import cse110.com.meetsb.Model.MessageAdapter;
 import cse110.com.meetsb.Model.MessageType;
+import cse110.com.meetsb.Model.TextType;
 import cse110.com.meetsb.Model.User;
 
 
@@ -71,10 +83,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private Uri yourImage;
     private MessageType me = MessageType.me;
     private MessageType you = MessageType.you;
+    private TextType text = TextType.text;
+    private TextType image = TextType.image;
     private ImageButton addLocation;
 
     String otherUID;
-
+    ProgressDialog progressDialog;
     private static String lastMessage = "";
     private MessageAdapter messageAdapter;
     private FirebaseAuth firebaseAuth;
@@ -83,7 +97,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     StorageReference storageReference;
 
     FusedLocationProviderClient fusedLocationProviderClient;
-
+    private String imageURL;
     private LinkedList<Message> messageList = new LinkedList<Message>();
     private LinkedList<String> messageId = new LinkedList<String>();
 
@@ -290,19 +304,65 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         //push my message into my message field
         databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
-        Message Mymessage = new Message(userId, userId, editText.getText().toString(), ServerValue.TIMESTAMP, false, me, myImage.toString());
+        Message Mymessage = new Message(userId, userId, editText.getText().toString(), ServerValue.TIMESTAMP, false, me, text, myImage.toString());
         String Mykey = databaseReference.push().getKey();
         databaseReference.child(Mykey).setValue(Mymessage);
 
         //push my message into your message field
         databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(otherUID).child(userId);
-        Message Yourmessage = new Message(otherUID, otherUID, editText.getText().toString(), ServerValue.TIMESTAMP, false, you, myImage.toString());
+        Message Yourmessage = new Message(otherUID, otherUID, editText.getText().toString(), ServerValue.TIMESTAMP, false, you, text, myImage.toString());
         String Yourkey = databaseReference.push().getKey();
         databaseReference.child(Yourkey).setValue(Yourmessage);
 
         editText.setText("");
         recyclerView.scrollToPosition(messageList.size() - 1);
         Toast.makeText(this, "Send successfully", Toast.LENGTH_SHORT);
+    }
+
+    public void sendImage(Uri imageURL, Bitmap bitmap) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        //push my message into my message field
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
+        Message Mymessage = new Message(userId, userId, imageURL.toString(), ServerValue.TIMESTAMP, false, me, image, myImage.toString());
+        String Mykey = databaseReference.push().getKey();
+        databaseReference.child(Mykey).setValue(Mymessage);
+
+        //push my message into your message field
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(otherUID).child(userId);
+        Message Yourmessage = new Message(otherUID, otherUID, imageURL.toString(), ServerValue.TIMESTAMP, false, you, image, myImage.toString());
+        String Yourkey = databaseReference.push().getKey();
+        databaseReference.child(Yourkey).setValue(Yourmessage);
+
+        recyclerView.scrollToPosition(messageList.size() - 1);
+
+
+        storageReference = FirebaseStorage.getInstance().getReference().child("IMAGE").child(Mykey);
+        if(imageURL != null) {
+            UploadTask uploadTask = storageReference.putFile(imageURL);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(ChatActivity.this, "Upload Successfully -> " , Toast.LENGTH_SHORT).show();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ChatActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            });
+        }
+
+        Toast.makeText(this, "Send Image successfully", Toast.LENGTH_SHORT);
+    }
+
+    public void btnAddImage(View view){
+        linearLayoutCompat.setVisibility(View.GONE);
+        Intent image = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(image, 2);
     }
 
     public void btnAddLocation(View view){
@@ -325,6 +385,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     private void sendLocation() {
         Toast.makeText(this, "sendLocation", Toast.LENGTH_SHORT).show();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -345,13 +406,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                 String userId = firebaseAuth.getCurrentUser().getUid();
 
                                 databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
-                                Message Mymessage = new Message(userId, userId, url, ServerValue.TIMESTAMP, false, me, myImage.toString());
+                                Message Mymessage = new Message(userId, userId, url, ServerValue.TIMESTAMP, false, me, text, myImage.toString());
                                 String Mykey = databaseReference.push().getKey();
                                 databaseReference.child(Mykey).setValue(Mymessage);
 
                                 //push my message into your message field
                                 databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(otherUID).child(userId);
-                                Message Yourmessage = new Message(otherUID, otherUID, url, ServerValue.TIMESTAMP, false, you, myImage.toString());
+                                Message Yourmessage = new Message(otherUID, otherUID, url, ServerValue.TIMESTAMP, false, you, text, myImage.toString());
                                 String Yourkey = databaseReference.push().getKey();
                                 databaseReference.child(Yourkey).setValue(Yourmessage);
 
@@ -364,13 +425,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                 String userId = firebaseAuth.getCurrentUser().getUid();
 
                                 databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(userId).child(otherUID);
-                                Message Mymessage = new Message(userId, userId, url, ServerValue.TIMESTAMP, false, me, myImage.toString());
+                                Message Mymessage = new Message(userId, userId, url, ServerValue.TIMESTAMP, false, me, text, myImage.toString());
                                 String Mykey = databaseReference.push().getKey();
                                 databaseReference.child(Mykey).setValue(Mymessage);
 
                                 //push my message into your message field
                                 databaseReference = FirebaseDatabase.getInstance().getReference().child("MESSAGE").child(otherUID).child(userId);
-                                Message Yourmessage = new Message(otherUID, otherUID, url, ServerValue.TIMESTAMP, false, you, myImage.toString());
+                                Message Yourmessage = new Message(otherUID, otherUID, url, ServerValue.TIMESTAMP, false, you, text, myImage.toString());
                                 String Yourkey = databaseReference.push().getKey();
                                 databaseReference.child(Yourkey).setValue(Yourmessage);
                             }
@@ -391,6 +452,31 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 linearLayoutCompat.setVisibility(View.GONE);
                 addLocation.setImageResource(R.drawable.ic_add_black);
             }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getActiveNetworkInfo() != null) {
+            if (requestCode == 2) {
+                try {
+                    Uri imageUri = data.getData();
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+
+                    //convert bitmap to string
+                    ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+                    sendImage(imageUri, bitmap);
+
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else {
+            Toast.makeText(this, "No connection available", Toast.LENGTH_LONG).show();
         }
     }
 }

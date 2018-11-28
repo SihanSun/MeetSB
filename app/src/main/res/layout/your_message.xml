@@ -53,6 +53,12 @@
                 android:text="How are you doing? This is a long message that should probably wrap."
                 android:textSize="18dp" />
 
+            <ImageView
+                android:id="@+id/your_image_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
         </RelativeLayout>
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v7.widget.LinearLayoutCompat>
