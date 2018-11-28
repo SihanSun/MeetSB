@@ -2,59 +2,88 @@
 <android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swiperefresh"
-        android:layout_weight="2"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/messages_view"
-            android:divider="#fff"
+        android:layout_height="68dp"
+        android:background="@color/colorYellow"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/chat_button_back"
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/dark_back_btn" />
+
+        <TextView
+            android:id="@+id/chat_textView_name"
+            android:layout_width="326dp"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginLeft="11dp"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/messages_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#fff" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
         android:id="@+id/footer_bar"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:padding="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:background="#fff"
-        android:orientation="horizontal">
+        android:minHeight="28dp"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
         <ImageButton
             android:id="@+id/add_btn"
-            android:background="#fff"
-            android:src="@drawable/ic_add_black"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="0"
-            android:layout_width="30dp"
-            android:layout_height="50dp" />
+            android:background="#fff"
+            android:src="@drawable/ic_add_black" />
 
         <EditText
             android:id="@+id/editText"
-            android:maxLines="3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:background="@drawable/rounded_edit"
             android:hint="Write a message"
+            android:maxLines="3"
             android:padding="10dp" />
 
         <ImageButton
             android:id="@+id/btn_send"
-            android:layout_weight="1"
             android:layout_width="70dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:focusable="true"
+            android:layout_weight="1"
             android:background="#fff"
+            android:focusable="true"
             android:src="@drawable/ic_send_black_24dp" />
     </LinearLayout>
 </android.support.v7.widget.LinearLayoutCompat>

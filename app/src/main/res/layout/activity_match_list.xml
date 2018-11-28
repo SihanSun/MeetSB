@@ -21,6 +21,7 @@
             android:layout_width="17dp"
             android:layout_height="25dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/dark_back_btn" />
 
