@@ -24,7 +24,7 @@
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="259dp"
-        android:background="@drawable/small_transparent_box"
+        android:background="@drawable/transparent_box_small"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
@@ -38,7 +38,7 @@
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/small_transparent_box"
+        android:background="@drawable/transparent_box_small"
         android:hint="@string/prompt_password"
         android:imeActionId="6"
         android:imeActionLabel="@string/action_sign_in_short"
@@ -56,7 +56,7 @@
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/sign_in_btn"
+        android:background="@drawable/signin_btn"
         android:textStyle="bold"
         tools:textColor="@android:color/white" />
 

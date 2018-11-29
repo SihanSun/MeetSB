@@ -20,14 +20,14 @@
             android:layout_width="17dp"
             android:layout_height="25dp"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/back_button" />
+            android:background="@drawable/back_btn_light" />
 
         <Button
             android:id="@+id/profile_button_ToSetting"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="325dp"
-            android:background="@drawable/ic_edit_black_24dp" />
+            android:background="@drawable/edit_btn_black" />
 
 
     </LinearLayout>
@@ -198,6 +198,6 @@
         android:layout_height="34dp"
         android:layout_marginTop="15dp"
         android:layout_weight="0"
-        android:background="@drawable/sign_out_btn" />
+        android:background="@drawable/signout_btn" />
 
 </LinearLayout>

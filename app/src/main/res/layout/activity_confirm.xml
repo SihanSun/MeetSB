@@ -46,7 +46,7 @@
             android:layout_width="119dp"
             android:layout_height="42dp"
             android:layout_marginLeft="100dp"
-            android:background="@drawable/small_continue_btn" />
+            android:background="@drawable/continue_btn_small" />
     </LinearLayout>
 
 </LinearLayout>

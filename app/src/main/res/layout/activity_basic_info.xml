@@ -33,7 +33,7 @@
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/small_transparent_box"
+        android:background="@drawable/transparent_box_small"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
@@ -44,7 +44,7 @@
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/small_transparent_box"
+        android:background="@drawable/transparent_box_small"
         android:entries="@array/gender_array"
         android:paddingLeft="13dp"
         android:paddingRight="13dp" />
@@ -54,7 +54,7 @@
         android:layout_width="288dp"
         android:layout_height="167dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/big_transparent_box"
+        android:background="@drawable/transparent_box_big"
         android:ems="10"
         android:gravity="top"
         android:hint="Description"
@@ -72,5 +72,5 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
-        android:background="@drawable/continue_btn" />
+        android:background="@drawable/continue_btn_big" />
 </LinearLayout>
