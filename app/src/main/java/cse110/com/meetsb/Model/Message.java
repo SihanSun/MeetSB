@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Message implements Serializable{
     private String id;
@@ -12,17 +14,19 @@ public class Message implements Serializable{
     private Object time;
     private Boolean seen;
     private MessageType messageType;
+    private TextType textType;
     private String profileImage;
 
     public Message(){}
 
-    public Message(String id, String userId, String text, Object time, Boolean seen, MessageType messageType, String profileImage) {
+    public Message(String id, String userId, String text, Object time, Boolean seen, MessageType messageType, TextType textType, String profileImage) {
         this.id = id;
         this.userId = userId;
         this.text = text;
         this.time = time;
         this.seen = seen;
         this.messageType = messageType;
+        this.textType = textType;
         this.profileImage = profileImage;
     }
     public String getProfileImage() {
@@ -32,6 +36,7 @@ public class Message implements Serializable{
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
     public MessageType getMessageType() {
         return messageType;
     }
@@ -40,6 +45,13 @@ public class Message implements Serializable{
         this.messageType = messageType;
     }
 
+    public TextType getTextType() {
+        return textType;
+    }
+
+    public void setTextType(TextType textType) {
+        this.textType = textType;
+    }
     public String getId() {
         return id;
     }
