@@ -1,3 +1,4 @@
+
 package cse110.com.meetsb;
 
 import android.support.annotation.NonNull;
@@ -27,8 +28,6 @@ import cse110.com.meetsb.Model.User;
 public class AddClassActivity extends AppCompatActivity {
 
     Button submit;
-    ListView lvAddedClasses;
-    ListView lvClassesOffered;
 
     private FirebaseDatabase databaseInstance;
     private DatabaseReference userRef;
@@ -46,8 +45,8 @@ public class AddClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_info);
 
-        lvAddedClasses = findViewById(R.id.class_info_listview_addedClass);
-        lvClassesOffered = findViewById(R.id.class_info_listview_classlist);
+        final ListView lvAddedClasses = findViewById(R.id.class_info_listview_addedClass);
+        final ListView lvClassesOffered = findViewById(R.id.class_info_listview_classlist);
         submit = findViewById(R.id.class_info_button_submit);
 
         // set up firebase relevant
@@ -121,10 +120,7 @@ public class AddClassActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_class_info);
 
     }
-
-
 
 }
