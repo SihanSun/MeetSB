@@ -16,10 +16,12 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
 
 import org.ocpsoft.prettytime.PrettyTime;
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.util.Date;
 import cse110.com.meetsb.Model.Message;
+import cse110.com.meetsb.Model.TextType;
 import cse110.com.meetsb.R;
 
 
@@ -27,6 +29,7 @@ public class SendViewHolder extends RecyclerView.ViewHolder{
     TextView my_message;
     TextView showTime;
     ImageView my_profile;
+    ImageView my_image;
     private Context context;
 
     public SendViewHolder(@NonNull View itemView, Context context) {
@@ -34,6 +37,7 @@ public class SendViewHolder extends RecyclerView.ViewHolder{
         my_message=(TextView)itemView.findViewById(R.id.my_message_body);
         showTime=(TextView)itemView.findViewById(R.id.time_show);
         my_profile=(ImageView)itemView.findViewById(R.id.image);
+        my_image=(ImageView)itemView.findViewById(R.id.my_image_body);
         this.context = context;
         my_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +54,12 @@ public class SendViewHolder extends RecyclerView.ViewHolder{
     public void bindToMessage(Message message){
         PrettyTime p = new PrettyTime();
         showTime.setText(p.format(new Date((long)message.getTime())));
-        my_message.setText(message.getText());
+        if (message.getTextType().equals(TextType.text)) {
+            my_message.setText(message.getText());
+        }
+        else{
+            Glide.with(context).load(message.getText()).into(my_image);
+        }
         //my_profile.setImageURI(Uri.parse(message.getProfileImage()));
        Glide.with(context).load(message.getProfileImage()).into(my_profile);
     }
