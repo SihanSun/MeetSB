@@ -439,6 +439,8 @@ public class SwipeActivity extends AppCompatActivity {
                             }
                         });
 
+                        startThread();
+
                         //attach a listener for the students in the course (order by key)
                         if(currentCourse != null) {
                             databaseReference.child("COURSE")
@@ -474,8 +476,6 @@ public class SwipeActivity extends AppCompatActivity {
                                         }
                                     });
                         }
-
-                        startThread();
                     }
 
                     @Override
@@ -483,6 +483,7 @@ public class SwipeActivity extends AppCompatActivity {
 
                     }
                 });
+
             }
 
             @Override
