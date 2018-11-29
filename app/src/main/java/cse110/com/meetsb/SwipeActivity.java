@@ -278,11 +278,6 @@ public class SwipeActivity extends AppCompatActivity {
 
             }
         });
-
-        beginFlash();
-
-        //set up course information, swipe information, and the list
-        setUp();
     }
 
     /*
