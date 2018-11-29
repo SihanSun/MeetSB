@@ -17,7 +17,7 @@
         android:layout_gravity="left"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/back_button" />
+        android:background="@drawable/back_btn_light" />
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/setting_imageView_avatar"
@@ -33,7 +33,7 @@
         android:layout_width="288dp"
         android:layout_height="42dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/small_dark_box"
+        android:background="@drawable/dark_box_small"
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
@@ -46,7 +46,7 @@
         android:layout_height="42dp"
         android:layout_marginTop="20dp"
         android:layout_weight="0"
-        android:background="@drawable/small_dark_box"
+        android:background="@drawable/dark_box_small"
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_weight="0"
-        android:background="@drawable/big_dark_box"
+        android:background="@drawable/dark_box_big"
         android:ems="10"
         android:gravity="top|left"
         android:inputType="textMultiLine"
@@ -98,7 +98,7 @@
         android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/continue_btn"
+        android:background="@drawable/continue_btn_big"
         android:textColor="#B2B1B3"
         android:textSize="30sp" />
 

@@ -23,7 +23,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/dark_back_btn" />
+            android:background="@drawable/back_btn_dark" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/match_list_toobar_title"

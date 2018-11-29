@@ -103,6 +103,7 @@ public class MatchListActivity extends AppCompatActivity {
                 bundle.putSerializable("chat", chat);
                 Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
                 intent.putExtra("UID", matchList.get(i));
+                intent.putExtra("name", nameList[i]);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

@@ -20,7 +20,7 @@
             android:layout_height="25dp"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/dark_back_btn" />
+            android:background="@drawable/back_btn_dark" />
 
         <TextView
             android:id="@+id/chat_textView_name"
@@ -54,8 +54,7 @@
         android:layout_height="40dp"
         android:background="#fff"
         android:minHeight="28dp"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/add_btn"
@@ -64,17 +63,20 @@
             android:layout_gravity="center"
             android:layout_weight="0"
             android:background="#fff"
-            android:src="@drawable/ic_add_black" />
+            android:src="@drawable/add_btn_dark" />
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="2dp"
             android:layout_weight="2"
-            android:hint="Write a message"
             android:maxLines="3"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:text="hi"
+            android:textColor="@color/colorPrimaryDark" />
 
         <ImageButton
             android:id="@+id/btn_send"

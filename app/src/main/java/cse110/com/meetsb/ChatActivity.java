@@ -158,6 +158,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         //get other user UID
         otherUID = getIntent().getStringExtra("UID");
 
+        userName.setText(getIntent().getStringExtra("name"));
         linearLayoutManager = new LinearLayoutManager(this);
         messageAdapter = new MessageAdapter(this, messageList);
         recyclerView.setAdapter(messageAdapter);
@@ -176,8 +177,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             chat = (Chat) bundle.getSerializable("chat");
             user = new User();
             String userId = chat.getUserId();
-
-            userName.setText(user.getUserName());
 
             storageReference.child("IMAGE").child(currentUserUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override

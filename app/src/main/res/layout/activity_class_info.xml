@@ -24,7 +24,7 @@
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
         android:layout_weight="0"
-        android:background="@drawable/big_transparent_box" />
+        android:background="@drawable/transparent_box_big" />
 
     <ListView
         android:id="@+id/class_info_listview_classlist"
@@ -42,7 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="85dp"
-        android:background="@drawable/continue_btn" />
+        android:background="@drawable/continue_btn_big" />
 
 
 </RelativeLayout>

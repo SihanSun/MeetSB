@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
-        android:background="@drawable/home_buttons_like" />
+        android:background="@drawable/like_btn" />
 
     <Button
         android:id="@+id/buttons_button_dislike"
@@ -27,6 +27,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="60dp"
         android:layout_marginLeft="60dp"
-        android:background="@drawable/home_buttons_dislike" />
+        android:background="@drawable/dislike_btn" />
 
 </RelativeLayout>
