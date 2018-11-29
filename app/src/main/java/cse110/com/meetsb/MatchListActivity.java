@@ -49,6 +49,7 @@ public class MatchListActivity extends AppCompatActivity {
     Uri[] imageList;
     String[] nameList;
     String [] messageList;
+    String [] matchUidList;
     String[] NAMES = {"Chen Zhongyu", "Lychee"};
     String[] Messages = {"Hello", "Wanna get laid"};
 
@@ -103,7 +104,7 @@ public class MatchListActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("chat", chat);
                 Intent intent = new Intent(MatchListActivity.this, ChatActivity.class);
-                intent.putExtra("UID", matchList.get(i));
+                intent.putExtra("UID", matchUidList[i]);
                 intent.putExtra("name", nameList[i]);
                 intent.putExtras(bundle);
                 finish();
@@ -121,11 +122,6 @@ public class MatchListActivity extends AppCompatActivity {
 
         //set UID
         currentUserUID = firebaseAuth.getCurrentUser().getUid();
-
-        //progress dialog
-        progressDialog = new ProgressDialog(MatchListActivity.this);
-        progressDialog.setMessage("Hang on tight...");
-        progressDialog.show();
 
         //set matchList
         matchList = new ArrayList<>();
@@ -147,11 +143,19 @@ public class MatchListActivity extends AppCompatActivity {
                 }
 
                 //User List
-                int matchListSize = matchList.size();
+                final int matchListSize = matchList.size();
 
                 imageList = new Uri[matchListSize];
                 nameList = new String[matchListSize];
                 messageList = new String[matchListSize];
+                matchUidList = new String[matchListSize];
+
+                if(matchListSize != 0) {
+                    //progress dialog
+                    progressDialog = new ProgressDialog(MatchListActivity.this);
+                    progressDialog.setMessage("Hang on tight...");
+                    progressDialog.show();
+                }
 
                 //go over each item in the match list and add it to the list view
                 for(int i = 0 ; i < matchList.size() ; i++) {
@@ -170,7 +174,11 @@ public class MatchListActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String otherUserName = dataSnapshot.getValue(String.class);
                                     nameList[index] = otherUserName;
+                                    matchUidList[index] = otherUID;
                                     count++;
+                                    if(count == matchListSize) {
+                                        progressDialog.dismiss();
+                                    }
 
                                     //get the message
                                     //TODO
@@ -208,7 +216,6 @@ public class MatchListActivity extends AppCompatActivity {
             if(matchList == null) {
                 return 0;
             } else if (count == matchList.size()) {
-                progressDialog.dismiss();
                 return count;
             } else {
                 return 0;
