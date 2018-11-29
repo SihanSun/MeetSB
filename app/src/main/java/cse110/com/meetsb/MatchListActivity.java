@@ -85,9 +85,8 @@ public class MatchListActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MatchListActivity.this, SwipeActivity.class));
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                onBackPressed();
+                startActivity(new Intent(MatchListActivity.this, SwipeActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -246,6 +245,11 @@ public class MatchListActivity extends AppCompatActivity {
             registry.append(StorageReference.class, InputStream.class,
                     new FirebaseImageLoader.Factory());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please use back button", Toast.LENGTH_SHORT).show();
     }
 }
 

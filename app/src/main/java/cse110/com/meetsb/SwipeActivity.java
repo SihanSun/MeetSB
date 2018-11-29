@@ -369,11 +369,11 @@ public class SwipeActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             selectedCourseIndex = i;
                             if(selectedCourseIndex != currentCourseIndex) {
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 Intent changeCourseIntent = new Intent(SwipeActivity.this, SwipeActivity.class);
                                 changeCourseIntent.putExtra("courseChoosing", Integer.toString(selectedCourseIndex));
                                 finish();
                                 startActivity(changeCourseIntent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         }
 
