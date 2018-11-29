@@ -19,20 +19,25 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import cse110.com.meetsb.Model.User;
 
 public class AddClassActivity extends AppCompatActivity {
 
     Button submit;
+    ListView lvAddedClasses;
+    ListView lvClassesOffered;
 
     private FirebaseDatabase databaseInstance;
     private DatabaseReference userRef;
     FirebaseAuth auth;
     ArrayAdapter<String> adapter;
-    ArrayList<String> selectedClass;
+    ArrayList<String> courseTaking;
+    HashMap<String, Integer> mapCourseTaking = new HashMap<>();
 
-    User user;
+    //User user;
 
 
 
@@ -40,6 +45,10 @@ public class AddClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_info);
+
+        lvAddedClasses = findViewById(R.id.class_info_listview_addedClass);
+        lvClassesOffered = findViewById(R.id.class_info_listview_classlist);
+        submit = findViewById(R.id.class_info_button_submit);
 
         // set up firebase relevant
         auth = FirebaseAuth.getInstance();
@@ -49,7 +58,10 @@ public class AddClassActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
+                User user = dataSnapshot.getValue(User.class);
+                for(Map.Entry<String, Integer> entry : user.getCourseTakingOffsetMap().entrySet()){
+                    mapCourseTaking.put(entry.getKey(), entry.getValue());
+                }
             }
 
             @Override
@@ -58,46 +70,54 @@ public class AddClassActivity extends AppCompatActivity {
             }
         });
 
-        // set list view for current class taking
+        // get the list of classes that the user is currently taking
+        courseTaking = new ArrayList<>();
+        for(String className : mapCourseTaking.keySet()){
+            courseTaking.add(className);
+        }
+
+        // add the current list of classes to the view
+        ArrayAdapter<String> adapterCourseTaking = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, courseTaking);
+        lvAddedClasses.setAdapter(adapterCourseTaking);
 
 
-
-        //set list view
-        final ListView lv = (ListView)findViewById(R.id.class_info_listview_classlist);
+        //set class selection list view
         final ArrayList<String> arrayClass = new ArrayList<>();
         arrayClass.addAll(Arrays.asList(getResources().getStringArray(R.array.class_array)));
-        selectedClass = new ArrayList<String>();
         adapter = new ArrayAdapter<>(AddClassActivity.this,
                 android.R.layout.simple_list_item_1,
                 arrayClass);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvClassesOffered.setAdapter(adapter);
+
+        // add the class when the user clicks
+        lvClassesOffered.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //courseTaking.add(view.toString());
-                //TODO
-                //add the existing classes to the view
-                String item = (lv.getItemAtPosition(i)).toString();
-                if (!selectedClass.contains(item)) {
-                    selectedClass.add(item);
-                    ListView sl = (ListView)findViewById(R.id.class_info_listview_addedClass);
+                String item = (lvClassesOffered.getItemAtPosition(i)).toString();
+
+                /*  if user added a new course, then add it to the view.
+                    also add it to user's courseTakingOffsetMap with an offset 0
+                 */
+                if (!courseTaking.contains(item)) {
+                    courseTaking.add(item);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
-                            android.R.layout.simple_list_item_1, selectedClass);
-                    sl.setAdapter(adapter);
+                            android.R.layout.simple_list_item_1, courseTaking);
+                    lvAddedClasses.setAdapter(adapter);
+
+                    mapCourseTaking.put(item, 0);
                 }
             }
         });
 
 
 
-        submit = findViewById(R.id.class_info_button_submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
                 //Save infomation in the fire base
-
+                userRef.child("courseTakingOffsetMap").setValue(mapCourseTaking);
             }
         });
 
