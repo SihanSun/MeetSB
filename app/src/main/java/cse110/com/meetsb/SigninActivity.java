@@ -69,11 +69,11 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
-        //check if the user has already
-        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
-            jumpToSwipePage();
-        }
-
+//        //check if the user has already
+//        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
+//            jumpToSwipePage();
+//        }
+//
 
     }
     @Override
