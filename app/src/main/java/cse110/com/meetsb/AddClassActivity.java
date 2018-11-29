@@ -30,15 +30,12 @@ public class AddClassActivity extends AppCompatActivity {
     Button submit;
 
     private FirebaseDatabase databaseInstance;
+    private DatabaseReference userCourseRef;
     private DatabaseReference userRef;
     FirebaseAuth auth;
     ArrayAdapter<String> adapter;
     ArrayList<String> courseTaking;
     HashMap<String, Integer> mapCourseTaking = new HashMap<>();
-
-    //User user;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +49,16 @@ public class AddClassActivity extends AppCompatActivity {
         // set up firebase relevant
         auth = FirebaseAuth.getInstance();
         databaseInstance = FirebaseDatabase.getInstance();
+        userCourseRef = databaseInstance.getReference().child("USER").child(auth.getCurrentUser().getUid()).child("courseTakingOffsetMap");
         userRef = databaseInstance.getReference().child("USER").child(auth.getCurrentUser().getUid());
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        userCourseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                for(Map.Entry<String, Integer> entry : user.getCourseTakingOffsetMap().entrySet()){
-                    mapCourseTaking.put(entry.getKey(), entry.getValue());
-                }
+                mapCourseTaking = (HashMap<String, Integer>) dataSnapshot.getValue();
+//                for(Map.Entry<String, Integer> entry : currentMap.entrySet()){
+//                    mapCourseTaking.put(entry.getKey(), entry.getValue());
+//                }
             }
 
             @Override
