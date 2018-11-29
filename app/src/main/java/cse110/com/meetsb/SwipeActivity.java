@@ -242,6 +242,43 @@ public class SwipeActivity extends AppCompatActivity {
 
         //start animation
         setUpAnnimation();
+
+        //check if the user has already registered
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild("USER")) {
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
+                    startActivity(intent);
+                } else {
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(!dataSnapshot.hasChild(userUid)) {
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
+                                startActivity(intent);
+                            } else {
+                                beginFlash();
+                                setUp();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         beginFlash();
 
         //set up course information, swipe information, and the list
@@ -331,12 +368,6 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-                if(user == null) {
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
-                    startActivity(intent);
-
-                }
 
                 courseTaking = new ArrayList<>();
                 //get the courses that the user is taking and get the default course
