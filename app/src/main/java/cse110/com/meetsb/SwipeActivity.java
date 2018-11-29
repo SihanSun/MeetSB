@@ -388,7 +388,6 @@ public class SwipeActivity extends AppCompatActivity {
 
 
                 //update the matchList
-
                 databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -406,6 +405,77 @@ public class SwipeActivity extends AppCompatActivity {
                             String otherUserUid = likedList.get(key);
                             liked.add(otherUserUid);
                         }
+
+                        //attach a lister to the match list
+                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                String key = dataSnapshot.getKey();
+                                String value = dataSnapshot.getValue(String.class);
+                                if(!matchSet.contains(value)) {
+                                    Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_LONG).show();
+                                }
+                                matchSet.add(value);
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        //attach a listener for the students in the course (order by key)
+                        if(currentCourse != null) {
+                            databaseReference.child("COURSE")
+                                    .child(currentCourse)
+                                    .child("studentsInTheCourse")
+                                    .orderByKey()
+                                    .addChildEventListener(new ChildEventListener() {
+                                        @Override
+                                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                            String key = dataSnapshot.getKey();
+                                            String value = dataSnapshot.getValue(String.class);
+                                            studentInThisCourse.add(value);
+                                        }
+
+                                        @Override
+                                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                        }
+
+                        startThread();
                     }
 
                     @Override
@@ -413,76 +483,6 @@ public class SwipeActivity extends AppCompatActivity {
 
                     }
                 });
-
-                //attch a lister to the match list
-                databaseReference.child("USERSWIPE").child(userUid).child("matchList").addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        String key = dataSnapshot.getKey();
-                        String value = dataSnapshot.getValue(String.class);
-                        if(!matchSet.contains(value)) {
-                            Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_LONG).show();
-                        }
-                        matchSet.add(value);
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-                //attach a listener for the students in the course (order by key)
-                if(currentCourse != null) {
-                    databaseReference.child("COURSE")
-                            .child(currentCourse)
-                            .child("studentsInTheCourse")
-                            .orderByKey()
-                            .addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                            String key = dataSnapshot.getKey();
-                            String value = dataSnapshot.getValue(String.class);
-                            studentInThisCourse.add(value);
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-                startThread();
             }
 
             @Override
