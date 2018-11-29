@@ -139,7 +139,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         progressDialog.setMessage("Uploading...");
         progressDialog.show();
 
-        //set the new user
+        //upload the new user
         User newUser = new User();
         newUser.setUserName(userName);
         newUser.setDescription(description);
@@ -151,47 +151,50 @@ public class ClassInfoActivity extends AppCompatActivity {
         newUser.setCourseTakingOffsetMap(classOffsetMap);
         newUser.setGpa(gpaString);
         newUser.setMajor(major);
-        String userId = firebaseAuth.getCurrentUser().getUid();
-        databaseReference.child("USER").child(userId).setValue(newUser);
-
-        //upload image
-        StorageReference childRef = storageRef.child("IMAGE").child(userId);
-        Uri filePath = Uri.parse(filePathStr);
-        //uploading the image
-        UploadTask uploadTask = childRef.putFile(filePath);
-
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final String userId = firebaseAuth.getCurrentUser().getUid();
+        databaseReference.child("USER").child(userId).setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //update the course
-                for(int i = 0 ; i < selectClass.size() ; i++) {
-                    final String courseName = selectClass.get(i);
-                    String key = databaseReference.child("COURSE").child(courseName).child("studentsInTheCourse").push().getKey();
-                    databaseReference
-                            .child("COURSE")
-                            .child(courseName)
-                            .child("studentsInTheCourse")
-                            .child(key)
-                            .setValue(userUid);
-                }
+            public void onSuccess(Void aVoid) {
 
-                //jump to Swipe Activity
-                progressDialog.dismiss();
-                Intent intent = new Intent(ClassInfoActivity.this, SwipeActivity.class);
-                finish();
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //upload image
+                StorageReference childRef = storageRef.child("IMAGE").child(userId);
+                Uri filePath = Uri.parse(filePathStr);
+                UploadTask uploadTask = childRef.putFile(filePath);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                //Toast.makeText(ClassInfoActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                        //update the course
+                        for(int i = 0 ; i < selectClass.size() ; i++) {
+                            final String courseName = selectClass.get(i);
+                            String key = databaseReference.child("COURSE").child(courseName).child("studentsInTheCourse").push().getKey();
+                            databaseReference
+                                    .child("COURSE")
+                                    .child(courseName)
+                                    .child("studentsInTheCourse")
+                                    .child(key)
+                                    .setValue(userUid);
+                        }
+
+                        //jump to Swipe Activity
+                        progressDialog.dismiss();
+                        Intent intent = new Intent(ClassInfoActivity.this, SwipeActivity.class);
+                        finish();
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                        //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        //Toast.makeText(ClassInfoActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
-
     }
 
 
