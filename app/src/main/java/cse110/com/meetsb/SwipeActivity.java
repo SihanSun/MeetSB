@@ -563,8 +563,8 @@ public class SwipeActivity extends AppCompatActivity {
 
                             //make a toast
                             Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
+                            break;
                         }
-                        break;
                     }
                 }
             }
