@@ -455,27 +455,41 @@ public class SwipeActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.hasChild("USERSWIPE")) {
-                            databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.child("USERSWIPE").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
+                                    if(dataSnapshot.hasChild(userUid)) {
+                                        databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
 
-                                    //update the matchSet
-                                    HashMap<String, String> matchList = userSwipe.getMatchList();
-                                    for(String key : matchList.keySet()) {
-                                        String otherUserUid = matchList.get(key);
-                                        matchSet.add(otherUserUid);
+                                                //update the matchSet
+                                                HashMap<String, String> matchList = userSwipe.getMatchList();
+                                                for(String key : matchList.keySet()) {
+                                                    String otherUserUid = matchList.get(key);
+                                                    matchSet.add(otherUserUid);
+                                                }
+
+                                                //update the liked
+                                                HashMap<String, String> likedList = userSwipe.getLiked();
+                                                for(String key : likedList.keySet()) {
+                                                    String otherUserUid = likedList.get(key);
+                                                    liked.add(otherUserUid);
+                                                }
+
+                                                //attach a listener to the matchList
+                                                attachListenerToMatchList();
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    } else {
+                                        attachListenerToMatchList();
                                     }
-
-                                    //update the liked
-                                    HashMap<String, String> likedList = userSwipe.getLiked();
-                                    for(String key : likedList.keySet()) {
-                                        String otherUserUid = likedList.get(key);
-                                        liked.add(otherUserUid);
-                                    }
-
-                                    //attach a listener to the matchList
-                                    attachListenerToMatchList();
                                 }
 
                                 @Override
