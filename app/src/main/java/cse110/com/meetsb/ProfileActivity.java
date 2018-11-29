@@ -177,4 +177,10 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

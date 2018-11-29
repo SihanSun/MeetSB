@@ -85,6 +85,7 @@ public class MatchListActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 startActivity(new Intent(MatchListActivity.this, SwipeActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -105,7 +106,9 @@ public class MatchListActivity extends AppCompatActivity {
                 intent.putExtra("UID", matchList.get(i));
                 intent.putExtra("name", nameList[i]);
                 intent.putExtras(bundle);
+                finish();
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -195,7 +198,6 @@ public class MatchListActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 
@@ -250,7 +252,9 @@ public class MatchListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Please use back button", Toast.LENGTH_SHORT).show();
+        finish();
+        startActivity(new Intent(MatchListActivity.this, SwipeActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
 
