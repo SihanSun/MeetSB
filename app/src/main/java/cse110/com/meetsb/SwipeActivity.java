@@ -252,7 +252,7 @@ public class SwipeActivity extends AppCompatActivity {
                     Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
                     startActivity(intent);
                 } else {
-                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("USER").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(!dataSnapshot.hasChild(userUid)) {
