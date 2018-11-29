@@ -386,95 +386,79 @@ public class SwipeActivity extends AppCompatActivity {
                     readOffset = offset;
                 }
 
+                //attach a listener for the students in the course (order by key)
+                if(currentCourse != null) {
+                    databaseReference.child("COURSE")
+                            .child(currentCourse)
+                            .child("studentsInTheCourse")
+                            .orderByKey()
+                            .addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    String key = dataSnapshot.getKey();
+                                    String value = dataSnapshot.getValue(String.class);
+                                    studentInThisCourse.add(value);
+                                }
 
-                //update the matchList
-                databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                }
+
+                startThread();
+
+                //attach the matchList listener
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
-                        if(userSwipe == null) {
-                            return;
-                        }
-                        HashMap<String, String> matchList = userSwipe.getMatchList();
-                        for(String key : matchList.keySet()) {
-                            String otherUserUid = matchList.get(key);
-                            matchSet.add(otherUserUid);
-                        }
-                        HashMap<String, String> likedList = userSwipe.getLiked();
-                        for(String key : likedList.keySet()) {
-                            String otherUserUid = likedList.get(key);
-                            liked.add(otherUserUid);
-                        }
+                        if(dataSnapshot.hasChild("USERSWIPE")) {
+                            databaseReference.child("USERSWIPE").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    UserSwipe userSwipe = dataSnapshot.getValue(UserSwipe.class);
 
-                        //attach a lister to the match list
-                        databaseReference.child("USERSWIPE").child(userUid).child("matchList").addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                String key = dataSnapshot.getKey();
-                                String value = dataSnapshot.getValue(String.class);
-                                if(!matchSet.contains(value)) {
-                                    Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_LONG).show();
+                                    //update the matchSet
+                                    HashMap<String, String> matchList = userSwipe.getMatchList();
+                                    for(String key : matchList.keySet()) {
+                                        String otherUserUid = matchList.get(key);
+                                        matchSet.add(otherUserUid);
+                                    }
+
+                                    //update the liked
+                                    HashMap<String, String> likedList = userSwipe.getLiked();
+                                    for(String key : likedList.keySet()) {
+                                        String otherUserUid = likedList.get(key);
+                                        liked.add(otherUserUid);
+                                    }
+
+                                    //attach a listener to the matchList
+                                    attachListenerToMatchList();
                                 }
-                                matchSet.add(value);
-                            }
 
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        startThread();
-
-                        //attach a listener for the students in the course (order by key)
-                        if(currentCourse != null) {
-                            databaseReference.child("COURSE")
-                                    .child(currentCourse)
-                                    .child("studentsInTheCourse")
-                                    .orderByKey()
-                                    .addChildEventListener(new ChildEventListener() {
-                                        @Override
-                                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                            String key = dataSnapshot.getKey();
-                                            String value = dataSnapshot.getValue(String.class);
-                                            studentInThisCourse.add(value);
-                                        }
-
-                                        @Override
-                                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
+                                }
+                            });
+                        } else {
+                            attachListenerToMatchList();
                         }
                     }
 
@@ -483,7 +467,6 @@ public class SwipeActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
 
             @Override
@@ -621,6 +604,40 @@ public class SwipeActivity extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    private void attachListenerToMatchList() {
+        databaseReference.child("USERSWIPE").child(userUid).child("matchList").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String key = dataSnapshot.getKey();
+                String value = dataSnapshot.getValue(String.class);
+                if(!matchSet.contains(value)) {
+                    Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_LONG).show();
+                    matchSet.add(value);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
