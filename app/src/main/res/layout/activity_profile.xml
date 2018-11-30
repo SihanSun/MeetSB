@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_profile"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
@@ -100,8 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:gravity="right|center_vertical"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="Major:" />
+            android:text="Major:"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/profile_textView_major"
@@ -109,8 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -126,8 +126,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:gravity="right|center_vertical"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="GPA:" />
+            android:text="GPA:"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/profile_textView_GPA"
@@ -153,8 +153,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:gravity="right|center_vertical"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="Gender:" />
+            android:text="Gender:"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/profile_textView_gender"
@@ -179,8 +179,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:gravity="right|center_vertical"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="Description" />
+            android:text="Description"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/profile_textView_description"

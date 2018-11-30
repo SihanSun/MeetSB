@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_3"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".AcademicInfoActivity">
 
@@ -23,7 +23,7 @@
         android:id="@+id/academic_info_spinner_major"
         android:layout_width="288dp"
         android:layout_height="42dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="250dp"
         android:layout_weight="0"
         android:background="@drawable/transparent_box_small"
         android:entries="@array/major_array"
