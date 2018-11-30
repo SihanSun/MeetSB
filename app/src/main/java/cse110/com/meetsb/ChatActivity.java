@@ -250,9 +250,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(getApplicationContext(), MatchListActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                onBackPressed();
             }
         });
     }
@@ -503,8 +501,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        finish();
-        startActivity(new Intent(getApplicationContext(), MatchListActivity.class));
+        super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

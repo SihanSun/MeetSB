@@ -180,14 +180,14 @@ public class SigninActivity extends AppCompatActivity {
 
         // 检查密码是不是valid
         // 至少八个字符，至少一个字母和一个数字
-        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-        r = Pattern.compile(pattern);
-        m = r.matcher(password);
-        if (!m.find()) {
-            Toast.makeText(this, "Not valid password", Toast.LENGTH_LONG).show();
-
-            return false;
-        }
+//        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+//        r = Pattern.compile(pattern);
+//        m = r.matcher(password);
+//        if (!m.find()) {
+//            Toast.makeText(this, "Not valid password", Toast.LENGTH_LONG).show();
+//
+//            return false;
+//        }
 
         return true;
     }

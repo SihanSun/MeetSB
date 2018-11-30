@@ -153,18 +153,17 @@ public class ProfileActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
     }
 
-    @Override
-    public void finish(){
-        super.finish();
-        startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
+//    @Override
+//    public void finish(){
+//        super.finish();
+//        startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//    }
 
     public void openSetting() {
 
@@ -180,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
+        super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

@@ -126,6 +126,7 @@ public class SettingActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
@@ -192,9 +193,7 @@ public class SettingActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
-                    finish();
-                    startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    onBackPressed();
                     //Toast.makeText(ClassInfoActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -207,9 +206,7 @@ public class SettingActivity extends AppCompatActivity {
         }
         else {
             progressDialog.dismiss();
-            finish();
-            startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            onBackPressed();
         }
 
     }
@@ -243,10 +240,9 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
     }
 }
