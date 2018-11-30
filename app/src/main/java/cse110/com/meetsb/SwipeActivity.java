@@ -39,6 +39,7 @@ import cse110.com.meetsb.Model.User;
 import cse110.com.meetsb.Model.UserCardAdapter;
 import cse110.com.meetsb.Model.UserCardMode;
 import cse110.com.meetsb.Model.UserSwipe;
+import cse110.com.meetsb.ViewHolder.NotificationButton;
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -128,7 +129,7 @@ public class SwipeActivity extends AppCompatActivity {
         btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
         btnLike = (Button) findViewById(R.id.buttons_button_like);
         btnProfile  = (Button) findViewById(R.id.classInfo_button_profile);
-        btnChat = (Button) findViewById(R.id.classInfo_button_chat);
+        btnChat = (NotificationButton) findViewById(R.id.classInfo_button_chat);
         btnAddClass = (Button) findViewById(R.id.classInfo_button_add);
 
         //set the swipe view
@@ -226,6 +227,7 @@ public class SwipeActivity extends AppCompatActivity {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((NotificationButton) btnChat).setNotificationNumber(0);
                 startActivity(new Intent(SwipeActivity.this, MatchListActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
@@ -602,6 +604,7 @@ public class SwipeActivity extends AppCompatActivity {
                             databaseReference.child("USERSWIPE").child(userUid).child("matchList").child(tempKey).setValue(otherUid);
 
                             //make a toast
+                            ((NotificationButton) btnChat).setNotificationNumber(1);
                             Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_SHORT).show();
                             break;
                         }
@@ -653,6 +656,7 @@ public class SwipeActivity extends AppCompatActivity {
                 String key = dataSnapshot.getKey();
                 String value = dataSnapshot.getValue(String.class);
                 if(!matchSet.contains(value)) {
+                    ((NotificationButton) btnChat).setNotificationNumber(1);
                     Toast.makeText(SwipeActivity.this, "Congratulations, you got a new match!", Toast.LENGTH_LONG).show();
                     matchSet.add(value);
                 }

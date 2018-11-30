@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:notButton="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="67dp"
@@ -17,7 +18,7 @@
         android:layout_marginRight="25dp"
         android:background="@drawable/profile_btn" />
 
-    <Button
+    <cse110.com.meetsb.ViewHolder.NotificationButton
         android:id="@+id/classInfo_button_chat"
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -26,7 +27,10 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
-        android:background="@drawable/chat_btn" />
+        android:background="@drawable/chat_btn"
+        notButton:circleBgColor="@android:color/holo_red_light"
+        notButton:circleSize="12dp"
+        notButton:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/classInfo_button_add"
