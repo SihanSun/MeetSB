@@ -38,6 +38,7 @@ public class AddClassActivity extends AppCompatActivity {
     ArrayList<String> courseTaking;
     HashMap<String, Integer> mapCourseTaking = new HashMap<>();
     String userid;
+    ArrayList<String> newCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class AddClassActivity extends AppCompatActivity {
         userid = auth.getCurrentUser().getUid();
         userRef = databaseInstance.getReference().child("USER").child(userid);
         courseRef = databaseInstance.getReference().child("COURSE");
+        newCourses = new ArrayList<>();
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,9 +100,7 @@ public class AddClassActivity extends AppCompatActivity {
                             lvAddedClasses.setAdapter(adapter);
 
                             mapCourseTaking.put(item, 0);
-
-                            String key = courseRef.child(item).child("studentsInTheCourse").push().getKey();
-                            courseRef.child(item).child("studentsInTheCourse").child(key).setValue(userid);
+                            newCourses.add(item);
                         }
                     }
                 });
@@ -109,6 +109,10 @@ public class AddClassActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         //Save infomation in the fire base
+                        for(int i = 0; i < newCourses.size(); i++){
+                            String key = courseRef.child(newCourses.get(i)).child("studentsInTheCourse").push().getKey();
+                            courseRef.child(newCourses.get(i)).child("studentsInTheCourse").child(key).setValue(userid);
+                        }
                         userRef.child("courseTakingOffsetMap").setValue(mapCourseTaking);
                         startActivity(new Intent(AddClassActivity.this, SwipeActivity.class));
                     }
