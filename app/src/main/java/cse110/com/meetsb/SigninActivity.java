@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SigninActivity extends AppCompatActivity {
 
     EditText userEmailAddress;
@@ -89,15 +92,14 @@ public class SigninActivity extends AppCompatActivity {
         }
 
         //check user email or password
-        //TODO
-        if (userEmailAddress.getText().toString().isEmpty()) {
-            Toast.makeText(SigninActivity.this,
-                    "Please enter your email",
-                    Toast.LENGTH_SHORT).show();
+        String email = userEmailAddress.getText().toString();
+        String password = userPassword.getText().toString();
+        if (!isValid(email, password)) {
             return;
         }
-        firebaseAuth.signInWithEmailAndPassword(userEmailAddress.getText().toString().trim()
-        ,userPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        firebaseAuth.signInWithEmailAndPassword(email.trim()
+        ,password.trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
@@ -140,6 +142,55 @@ public class SigninActivity extends AppCompatActivity {
                 });
     }
 
+    private boolean isValid(String email, String password) {
+
+        if (email.isEmpty()) {
+            Toast.makeText(this,
+                    "Please enter your email",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (password.isEmpty()) {
+            Toast.makeText(this,
+                    "Please enter your password",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // 检查邮箱是不是valid
+        String pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}" +
+                "[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(email);
+        if (!m.find()) {
+            Toast.makeText(this, "Not valid email", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+        // 检查是不是ucsd email
+        pattern = "@(\\w)+((\\.\\w+)+)$";
+        r = Pattern.compile(pattern);
+        m = r.matcher(email);
+        if (!m.find() || !m.group(0).equals("@ucsd.edu")) {
+            Toast.makeText(this, m.group(0) +
+                    " is not a valid UCSD email", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // 检查密码是不是valid
+        // 至少八个字符，至少一个字母和一个数字
+        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        r = Pattern.compile(pattern);
+        m = r.matcher(password);
+        if (!m.find()) {
+            Toast.makeText(this, "Not valid password", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+        return true;
+    }
     private void jumpToSwipePage() {
         finish();
         startActivity(new Intent(this, SwipeActivity.class));

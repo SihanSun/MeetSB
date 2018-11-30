@@ -22,6 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class SignupActivity extends AppCompatActivity {
 
 
@@ -82,20 +85,9 @@ public class SignupActivity extends AppCompatActivity {
         String email = emailAddress.getText().toString().trim();
         String password = passwordEntered.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email)) {
-            //email is empty
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
-
+        if (!isValid(email, password)) {
             return;
         }
-        if(TextUtils.isEmpty(password)) {
-            //password is empty
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
-
-            return;
-        }
-        //检查ucsd 邮箱
-        //TODO
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Working on it...");
@@ -135,4 +127,54 @@ public class SignupActivity extends AppCompatActivity {
                 });
 
     }
+    private boolean isValid(String email, String password) {
+
+        if(TextUtils.isEmpty(email)) {
+            //email is empty
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+        if(TextUtils.isEmpty(password)) {
+            //password is empty
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+        // 检查邮箱是不是valid
+        String pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}" +
+                "[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(email);
+        if (!m.find()) {
+            Toast.makeText(this, "Not valid email", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+        // 检查是不是ucsd email
+        pattern = "@(\\w)+((\\.\\w+)+)$";
+        r = Pattern.compile(pattern);
+        m = r.matcher(email);
+        if (!m.find() || !m.group(0).equals("@ucsd.edu")) {
+            Toast.makeText(this, m.group(0) +
+                    " is not a valid UCSD email", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // 检查密码是不是valid
+        // 至少八个字符，至少一个字母和一个数字
+        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        r = Pattern.compile(pattern);
+        m = r.matcher(password);
+        if (!m.find()) {
+            Toast.makeText(this, "Not valid password", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+        return true;
+    }
+
 }
