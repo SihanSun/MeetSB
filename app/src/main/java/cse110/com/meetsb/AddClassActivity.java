@@ -115,6 +115,7 @@ public class AddClassActivity extends AppCompatActivity {
                         }
                         userRef.child("courseTakingOffsetMap").setValue(mapCourseTaking);
                         startActivity(new Intent(AddClassActivity.this, SwipeActivity.class));
+                        overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
                     }
                 });
 
@@ -127,17 +128,15 @@ public class AddClassActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
+
+
         });
+    }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 
 }
