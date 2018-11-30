@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:gravity="center_horizontal"
+    android:background="@drawable/setting"
+    android:gravity="center_horizontal|center"
     android:orientation="vertical"
     tools:context=".SettingActivity">
 
