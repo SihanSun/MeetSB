@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <Button
