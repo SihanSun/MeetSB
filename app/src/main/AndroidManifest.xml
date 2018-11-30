@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MatchListActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -38,18 +38,18 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ChatActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".SignupActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ConfirmActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SigninActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
