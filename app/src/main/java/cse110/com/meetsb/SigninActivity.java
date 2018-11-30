@@ -173,8 +173,7 @@ public class SigninActivity extends AppCompatActivity {
         r = Pattern.compile(pattern);
         m = r.matcher(email);
         if (!m.find() || !m.group(0).equals("@ucsd.edu")) {
-            Toast.makeText(this, m.group(0) +
-                    " is not a valid UCSD email", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Not a valid UCSD email", Toast.LENGTH_LONG).show();
             return false;
         }
 
