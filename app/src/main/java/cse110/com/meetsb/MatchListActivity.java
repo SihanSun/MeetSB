@@ -238,7 +238,7 @@ public class MatchListActivity extends AppCompatActivity {
             //imageView.setImageURI(imageList.get(i));
             Glide.with(getApplicationContext()).load(imageList[i].toString()).into(imageView);
             textView_name.setText(nameList[i]);
-            textView_message.setText("hello from the other side");
+            textView_message.setText("Tap to chat");
             return view;
         }
     }
