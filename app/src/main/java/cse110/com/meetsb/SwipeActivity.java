@@ -236,8 +236,7 @@ public class SwipeActivity extends AppCompatActivity {
         btnAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SwipeActivity.this, ClassInfoActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(SwipeActivity.this, AddClassActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
