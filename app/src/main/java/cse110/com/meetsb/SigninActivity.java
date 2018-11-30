@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SigninActivity extends AppCompatActivity {
+
+    public static final int MIN_LENGTH_PASSWORD = 8;
 
     EditText userEmailAddress;
 
@@ -144,16 +147,16 @@ public class SigninActivity extends AppCompatActivity {
 
     private boolean isValid(String email, String password) {
 
-        if (email.isEmpty()) {
-            Toast.makeText(this,
-                    "Please enter your email",
-                    Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(email)) {
+            //email is empty
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+
             return false;
         }
-        if (password.isEmpty()) {
-            Toast.makeText(this,
-                    "Please enter your password",
-                    Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(password)) {
+            //password is empty
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+
             return false;
         }
 
@@ -163,7 +166,8 @@ public class SigninActivity extends AppCompatActivity {
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(email);
         if (!m.find()) {
-            Toast.makeText(this, "Not valid email", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, email +
+                    " is not a valid email address", Toast.LENGTH_LONG).show();
 
             return false;
         }
@@ -173,13 +177,23 @@ public class SigninActivity extends AppCompatActivity {
         r = Pattern.compile(pattern);
         m = r.matcher(email);
         if (!m.find() || !m.group(0).equals("@ucsd.edu")) {
-            Toast.makeText(this, m.group(0) +
-                    " is not a valid UCSD email", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, email +
+                    " is not a valid UCSD email address", Toast.LENGTH_LONG).show();
             return false;
         }
 
         // 检查密码是不是valid
-        // 至少八个字符，至少一个字母和一个数字
+        // 密码要求： 八个字符
+        if (password.length() < MIN_LENGTH_PASSWORD) {
+            Toast.makeText(this, "Password needs to be at least " +
+                    MIN_LENGTH_PASSWORD + " digits", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+
+//        //以下密码要求太严格，不采用
+//        //密码要求：至少八个字符，至少一个字母和一个数字
 //        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 //        r = Pattern.compile(pattern);
 //        m = r.matcher(password);

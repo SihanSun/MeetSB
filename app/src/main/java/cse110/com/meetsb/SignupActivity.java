@@ -28,6 +28,8 @@ import java.util.regex.Matcher;
 public class SignupActivity extends AppCompatActivity {
 
 
+    public static final int MIN_LENGTH_PASSWORD = 8;
+
     private Button registerButton;
 
     private TextView returnToLogin;
@@ -148,7 +150,8 @@ public class SignupActivity extends AppCompatActivity {
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(email);
         if (!m.find()) {
-            Toast.makeText(this, "Not valid email", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, email +
+                    " is not a valid email address", Toast.LENGTH_LONG).show();
 
             return false;
         }
@@ -158,21 +161,31 @@ public class SignupActivity extends AppCompatActivity {
         r = Pattern.compile(pattern);
         m = r.matcher(email);
         if (!m.find() || !m.group(0).equals("@ucsd.edu")) {
-            Toast.makeText(this, m.group(0) +
-                    " is not a valid UCSD email", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, email +
+                    " is not a valid UCSD email address", Toast.LENGTH_LONG).show();
             return false;
         }
 
         // 检查密码是不是valid
-        // 至少八个字符，至少一个字母和一个数字
-        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-        r = Pattern.compile(pattern);
-        m = r.matcher(password);
-        if (!m.find()) {
-            Toast.makeText(this, "Not valid password", Toast.LENGTH_LONG).show();
+        // 密码要求： 八个字符
+        if (password.length() < MIN_LENGTH_PASSWORD) {
+            Toast.makeText(this, "Password needs to be at least " +
+                    MIN_LENGTH_PASSWORD + " digits", Toast.LENGTH_LONG).show();
 
             return false;
         }
+
+
+//        //以下密码要求太严格，不采用
+//        //密码要求：至少八个字符，至少一个字母和一个数字
+//        pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+//        r = Pattern.compile(pattern);
+//        m = r.matcher(password);
+//        if (!m.find()) {
+//            Toast.makeText(this, "Not valid password", Toast.LENGTH_LONG).show();
+//
+//            return false;
+//        }
 
         return true;
     }
