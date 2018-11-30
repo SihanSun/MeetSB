@@ -18,7 +18,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/match_list_toobar_title"
-            android:layout_width="370dp"
+            android:layout_width="330dp"
             android:layout_height="67dp"
             android:layout_weight="0"
             android:background="@color/colorYellow"

@@ -16,9 +16,9 @@
 
         <TextView
             android:id="@+id/chat_textView_name"
-            android:layout_width="300dp"
+            android:layout_width="326dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="11dp"
             android:layout_weight="0"
             android:gravity="center"
             android:textColor="@color/colorPrimaryDark"
@@ -29,7 +29,8 @@
             android:id="@+id/chat_button_back"
             android:layout_width="17dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/back_btn_dark" />
 
     </LinearLayout>

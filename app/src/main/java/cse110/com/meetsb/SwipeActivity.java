@@ -373,7 +373,7 @@ public class SwipeActivity extends AppCompatActivity {
 
                 //set the spinner view
                 courseChoosing = (Spinner)findViewById(R.id.classInfo_spinner_class);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, courseTaking);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, courseTaking);
                 courseChoosing.setAdapter(adapter);
 
                 //set current course

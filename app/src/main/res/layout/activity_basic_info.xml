@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_3"
-    android:gravity="center_horizontal"
+    android:background="@drawable/study_bg"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
@@ -18,15 +18,14 @@
         android:textColor="#fff"
         android:textSize="36sp" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/basic_info_imageView_avatar"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        app:civ_border_width="1dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/profile_pic"
         app:civ_border_color="@color/colorYellow"
-        android:background="@drawable/profile_pic"/>
+        app:civ_border_width="1dp" />
 
     <EditText
         android:id="@+id/basic_info_editText_username"

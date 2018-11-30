@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_3"
-    android:gravity="center_horizontal"
+    android:background="@drawable/study_bg"
+    android:gravity="center_horizontal|center"
     android:orientation="vertical"
     tools:context=".ConfirmActivity">
 
