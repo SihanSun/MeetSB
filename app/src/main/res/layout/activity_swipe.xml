@@ -1,26 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#fff">
+
+    <RelativeLayout
+        android:id="@+id/class_bar"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_alignParentTop="true"
+        android:background="#fff">
+
+        <Button
+            android:id="@+id/classInfo_button_add"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="77dp"
+            android:layout_marginLeft="77dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toStartOf="@+id/classInfo_spinner_class"
+            android:layout_toLeftOf="@+id/classInfo_spinner_class"
+            android:background="@drawable/ic_playlist_add_black_24dp" />
+
+        <Spinner
+            android:id="@+id/classInfo_spinner_class"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="50dp"
+            android:spinnerMode="dialog" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/iv_loading"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:src="@drawable/loading" />
-
-    <include layout="@layout/class_bar"/>
-    <include layout="@layout/buttons" />
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:rotation_degrees="15.5"
-        tools:context=".MyActivity" />
+        android:layout_above="@+id/buttons"
+        android:layout_below="@+id/class_bar"
+        app:rotation_degrees="15.5" />
 
-</FrameLayout>
+    <RelativeLayout xmlns:notButton="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/classInfo_button_profile"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/profile_btn" />
+
+        <cse110.com.meetsb.ViewHolder.NotificationButton
+            android:id="@+id/classInfo_button_chat"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignBaseline="@+id/buttons_button_like"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginLeft="26dp"
+            android:background="@drawable/chat_btn"
+            notButton:circleBgColor="@android:color/holo_red_light"
+            notButton:circleSize="12dp"
+            notButton:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/buttons_button_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_toStartOf="@+id/classInfo_button_profile"
+            android:layout_toLeftOf="@+id/classInfo_button_profile"
+            android:background="@drawable/like_btn" />
+
+        <Button
+            android:id="@+id/buttons_button_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="29dp"
+            android:layout_marginLeft="29dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toEndOf="@+id/classInfo_button_chat"
+            android:layout_toRightOf="@+id/classInfo_button_chat"
+            android:background="@drawable/dislike_btn" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
