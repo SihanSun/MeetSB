@@ -14,14 +14,6 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/chat_button_back"
-            android:layout_width="17dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/back_btn_dark" />
-
         <TextView
             android:id="@+id/chat_textView_name"
             android:layout_width="326dp"
@@ -32,6 +24,14 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/chat_button_back"
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/back_btn_dark" />
 
     </LinearLayout>
 
