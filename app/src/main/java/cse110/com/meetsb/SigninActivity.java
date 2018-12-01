@@ -75,12 +75,15 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
-//        //check if the user has already
-//        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
-//            jumpToSwipePage();
-//        }
-//
+        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
+            finish();
+            jumpToSwipePage();
+        }
 
+        if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
+            finish();
+            jumpToConfirmPage();
+        }
     }
     @Override
     public void finish() {
@@ -89,10 +92,6 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void userSignIn() {
-
-        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
-            jumpToSwipePage();
-        }
 
         //check user email or password
         String email = userEmailAddress.getText().toString();

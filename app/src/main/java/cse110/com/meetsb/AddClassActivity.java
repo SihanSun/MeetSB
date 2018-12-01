@@ -141,7 +141,6 @@ public class AddClassActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
 
-
         });
     }
 

@@ -189,12 +189,12 @@ public class SwipeActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(SwipeActivity.this, "You Clicked Gary!!");
                 UserCardMode tempCardMode = (UserCardMode) dataObject;
                 String otherUserUid = tempCardMode.getUid();
                 Intent intent = new Intent(SwipeActivity.this, OtherUserActivity.class);
                 intent.putExtra("otherUser", otherUserUid);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
             }
         });
 
@@ -236,6 +236,7 @@ public class SwipeActivity extends AppCompatActivity {
         btnAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 startActivity(new Intent(SwipeActivity.this, AddClassActivity.class));
                 overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
             }
@@ -249,17 +250,19 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild("USER")) {
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                     Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
                     databaseReference.child("USER").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(!dataSnapshot.hasChild(userUid)) {
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
                                 Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
                                 startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             } else {
                                 beginFlash();
                                 setUp();
