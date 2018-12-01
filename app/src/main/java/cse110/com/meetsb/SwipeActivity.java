@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import cse110.com.meetsb.Model.Course;
 import cse110.com.meetsb.Model.User;
 import cse110.com.meetsb.Model.UserCardAdapter;
 import cse110.com.meetsb.Model.UserCardMode;
@@ -129,9 +128,9 @@ public class SwipeActivity extends AppCompatActivity {
         //catch all the btns
         btnDislike = (Button) findViewById(R.id.buttons_button_dislike);
         btnLike = (Button) findViewById(R.id.buttons_button_like);
-        btnProfile  = (Button) findViewById(R.id.classInfo_button_profile);
-        btnChat = (NotificationButton) findViewById(R.id.classInfo_button_chat);
-        btnAddClass = (Button) findViewById(R.id.classInfo_button_add);
+        btnProfile  = (Button) findViewById(R.id.swipe_button_profile);
+        btnChat = (NotificationButton) findViewById(R.id.swipe_button_chat);
+        btnAddClass = (Button) findViewById(R.id.swipe_button_add);
 
         //set the swipe view
         this.flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
@@ -376,7 +375,7 @@ public class SwipeActivity extends AppCompatActivity {
                 }
 
                 //set the spinner view
-                courseChoosing = (Spinner)findViewById(R.id.classInfo_spinner_class);
+                courseChoosing = (Spinner)findViewById(R.id.swipe_spinner_class);
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, courseTaking);
                 courseChoosing.setAdapter(adapter);
 

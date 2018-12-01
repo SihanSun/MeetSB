@@ -14,7 +14,7 @@
         android:background="#fff">
 
         <Button
-            android:id="@+id/classInfo_button_add"
+            android:id="@+id/swipe_button_add"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentStart="true"
@@ -25,7 +25,7 @@
             android:background="@drawable/ic_playlist_add_black_24dp" />
 
         <Spinner
-            android:id="@+id/classInfo_spinner_class"
+            android:id="@+id/swipe_spinner_class"
             style="@style/Widget.AppCompat.Spinner"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/classInfo_button_profile"
+            android:id="@+id/swipe_button_profile"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentEnd="true"
@@ -72,7 +72,7 @@
             android:background="@drawable/profile_btn" />
 
         <cse110.com.meetsb.ViewHolder.NotificationButton
-            android:id="@+id/classInfo_button_chat"
+            android:id="@+id/swipe_button_chat"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignBaseline="@+id/buttons_button_like"
@@ -93,8 +93,8 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="28dp"
             android:layout_marginRight="28dp"
-            android:layout_toStartOf="@+id/classInfo_button_profile"
-            android:layout_toLeftOf="@+id/classInfo_button_profile"
+            android:layout_toStartOf="@+id/swipe_button_profile"
+            android:layout_toLeftOf="@+id/swipe_button_profile"
             android:background="@drawable/like_btn" />
 
         <Button
@@ -106,8 +106,8 @@
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginBottom="4dp"
-            android:layout_toEndOf="@+id/classInfo_button_chat"
-            android:layout_toRightOf="@+id/classInfo_button_chat"
+            android:layout_toEndOf="@+id/swipe_button_chat"
+            android:layout_toRightOf="@+id/swipe_button_chat"
             android:background="@drawable/dislike_btn" />
 
     </RelativeLayout>
