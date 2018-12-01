@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -124,22 +125,30 @@ public class AddClassActivity extends AppCompatActivity {
                             String key = courseRef.child(newCourses.get(i)).child("studentsInTheCourse").push().getKey();
                             courseRef.child(newCourses.get(i)).child("studentsInTheCourse").child(key).setValue(userid);
                         }
-                        userRef.child("courseTakingOffsetMap").setValue(mapCourseTaking);
-                        startActivity(new Intent(AddClassActivity.this, SwipeActivity.class));
+                        userRef.child("courseTakingOffsetMap").setValue(mapCourseTaking).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                onBackPressed();
+                                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                            }
+                        });
                     }
                 });
-
-
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
-        });
 
+
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 
 }
