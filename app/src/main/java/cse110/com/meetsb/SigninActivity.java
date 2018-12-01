@@ -80,6 +80,7 @@ public class SigninActivity extends AppCompatActivity {
         }
 
         if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
+            Toast.makeText(this, "Please confirm your email first", Toast.LENGTH_SHORT).show();
             jumpToConfirmPage();
         }
     }

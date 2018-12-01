@@ -150,8 +150,6 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onLeftCardExit(Object dataObject) {
                 increaseUserOffset();
-                UserCardMode userCardMode = (UserCardMode) dataObject;
-                makeToast(SwipeActivity.this, "Dislike " + userCardMode.getName());
             }
 
             @Override
@@ -161,7 +159,6 @@ public class SwipeActivity extends AppCompatActivity {
                 UserCardMode userCardMode = (UserCardMode) dataObject;
                 String otherUID = userCardMode.getUid();
                 swipeRight(otherUID);
-                makeToast(SwipeActivity.this, "Like"  + userCardMode.getName());
             }
 
             @Override
@@ -250,6 +247,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild("USER")) {
+                    Toast.makeText(SwipeActivity.this, "Please finailize your information.", Toast.LENGTH_SHORT).show();
                     finish();
                     Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
                     startActivity(intent);
@@ -259,6 +257,7 @@ public class SwipeActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(!dataSnapshot.hasChild(userUid)) {
+                                Toast.makeText(SwipeActivity.this, "Please finailize your information.", Toast.LENGTH_SHORT).show();
                                 finish();
                                 Intent intent = new Intent(SwipeActivity.this, BasicInfoActivity.class);
                                 startActivity(intent);
