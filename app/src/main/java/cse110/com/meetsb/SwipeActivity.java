@@ -192,7 +192,7 @@ public class SwipeActivity extends AppCompatActivity {
                 Intent intent = new Intent(SwipeActivity.this, OtherUserActivity.class);
                 intent.putExtra("otherUser", otherUserUid);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
             }
         });
 
