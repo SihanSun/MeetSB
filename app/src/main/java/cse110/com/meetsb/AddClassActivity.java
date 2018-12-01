@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +31,7 @@ import cse110.com.meetsb.Model.User;
 public class AddClassActivity extends AppCompatActivity {
 
     Button submit;
+    ImageView back;
 
     private FirebaseDatabase databaseInstance;
     private DatabaseReference userRef;
@@ -48,7 +51,15 @@ public class AddClassActivity extends AppCompatActivity {
         final ListView lvAddedClasses = findViewById(R.id.class_info_listview_addedClass);
         final ListView lvClassesOffered = findViewById(R.id.class_info_listview_classlist);
         submit = findViewById(R.id.class_info_button_submit);
-
+        back = findViewById(R.id.class_info_imageview_back);
+        back.setVisibility(View.VISIBLE);
+        Glide.with(this).load(R.drawable.bounce_arrow).into(back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         // set up firebase relevant
         auth = FirebaseAuth.getInstance();
         databaseInstance = FirebaseDatabase.getInstance();
@@ -128,15 +139,6 @@ public class AddClassActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
-
-
-
-
-
 
     }
 

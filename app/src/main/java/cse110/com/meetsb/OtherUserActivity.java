@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ import cse110.com.meetsb.Model.User;
 public class OtherUserActivity extends AppCompatActivity {
 
     ImageView profilePicImageView;
+    Button backBtn;
     TextView userNameTextView, majorTextView, gpaTextView, descriptionTextView, genderTextView;
 
     DatabaseReference otherUserRef;
@@ -67,6 +69,13 @@ public class OtherUserActivity extends AppCompatActivity {
         gpaTextView = findViewById(R.id.other_user_textView_gpa);
         genderTextView = findViewById(R.id.other_user_textView_gender);
         descriptionTextView = findViewById(R.id.other_user_textView_description);
+        backBtn = findViewById(R.id.other_user_button_back);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         otherUserRef = FirebaseDatabase.getInstance().getReference().child("USER").child(otherUserUid);
         storageRef = FirebaseStorage.getInstance().getReference().child("IMAGE").child(otherUserUid);
@@ -110,5 +119,4 @@ public class OtherUserActivity extends AppCompatActivity {
 
 
     }
-
 }

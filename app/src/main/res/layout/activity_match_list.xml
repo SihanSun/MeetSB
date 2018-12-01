@@ -9,35 +9,33 @@
     tools:context=".MatchListActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="67dp"
         android:layout_weight="0"
-        android:background="@color/colorYellow"
-        android:orientation="horizontal">
+        android:background="@color/colorYellow">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/match_list_toobar_title"
-            android:layout_width="330dp"
-            android:layout_height="67dp"
-            android:layout_weight="0"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:background="@color/colorYellow"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:title="My SBs"
-            app:titleMarginStart="160dp"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/colorPrimaryDark" />
 
         <Button
             android:id="@+id/match_list_button_back"
-            android:layout_width="17dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="23.8dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/back_btn_dark" />
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <ListView

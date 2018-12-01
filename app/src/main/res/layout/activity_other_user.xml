@@ -9,6 +9,18 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
+    <Button
+        android:id="@+id/other_user_button_back"
+        android:layout_width="23.8dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="left"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/back_btn_light" />
+
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/other_user_imageView_avatar_"
         android:layout_width="180dp"
@@ -22,6 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -119,6 +132,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         android:paddingLeft="50dp"
         android:paddingTop="8dp">
