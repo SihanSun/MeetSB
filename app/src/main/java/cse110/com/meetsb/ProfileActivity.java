@@ -1,5 +1,6 @@
 package cse110.com.meetsb;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -52,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView descriptionsText;
     ImageView profilePictureImageView;
 
+    ProgressDialog progressDialog;
 
     @GlideModule
     public class MyAppGlideModule extends AppGlideModule {
@@ -76,58 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
         genderText = findViewById(R.id.profile_textView_gender);
         descriptionsText = findViewById(R.id.profile_textView_description);
         profilePictureImageView = findViewById(R.id.profile_imageView_avatar);
-
-        auth = FirebaseAuth.getInstance();
-
-        emailText.setText(auth.getCurrentUser().getEmail());
-
-        ref = FirebaseDatabase.getInstance().getReference().child("USER").child(auth.getCurrentUser().getUid());
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child("IMAGE").child(auth.getCurrentUser().getUid());
-
-//        // Download directly from StorageReference using Glide
-//        // (See MyAppGlideModule for Loader registration)
-//        Glide.with(this /* context */)
-//                .load(storageRef)
-//                .into(profilePictureImageView);
-      storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                String imageURL = uri.toString();
-                Glide.with(getApplicationContext()).load(imageURL).into(profilePictureImageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                String userName = user.getUserName();
-                String major = user.getMajor();
-                String gpa = user.getGpa();
-                String gender = user.getGender();
-                String description = user.getDescription();
-
-                userNameText.setText(userName);
-                majorText.setText(major);
-                gpaText.setText(gpa);
-                genderText.setText(gender);
-                descriptionsText.setText(description);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), databaseError.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-
 
         editButton = findViewById(R.id.profile_button_ToSetting);
         signOutButton = findViewById(R.id.profile_button_signOut);
@@ -156,17 +106,70 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Hang on tight...");
+        progressDialog.show();
+
+        auth = FirebaseAuth.getInstance();
+
+        emailText.setText(auth.getCurrentUser().getEmail());
+
+        ref = FirebaseDatabase.getInstance().getReference().child("USER").child(auth.getCurrentUser().getUid());
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference().child("IMAGE").child(auth.getCurrentUser().getUid());
+
+//        // Download directly from StorageReference using Glide
+//        // (See MyAppGlideModule for Loader registration)
+//        Glide.with(this /* context */)
+//                .load(storageRef)
+//                .into(profilePictureImageView);
+      storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String imageURL = uri.toString();
+                Glide.with(getApplicationContext()).load(imageURL).into(profilePictureImageView);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Uri>() {
+          @Override
+          public void onSuccess(Uri uri) {
+              ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                      User user = dataSnapshot.getValue(User.class);
+
+                      String userName = user.getUserName();
+                      String major = user.getMajor();
+                      String gpa = user.getGpa();
+                      String gender = user.getGender();
+                      String description = user.getDescription();
+
+                      userNameText.setText(userName);
+                      majorText.setText(major);
+                      gpaText.setText(gpa);
+                      genderText.setText(gender);
+                      descriptionsText.setText(description);
+
+                      progressDialog.dismiss();
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError databaseError) {
+                      Toast.makeText(getApplicationContext(), databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                      progressDialog.dismiss();
+                  }
+              });
+          }
+      }).addOnFailureListener(new OnFailureListener() {
+          @Override
+          public void onFailure(@NonNull Exception e) {
+              progressDialog.dismiss();
+          }
+      });
     }
 
-//    @Override
-//    public void finish(){
-//        super.finish();
-//        startActivity(new Intent(ProfileActivity.this, SwipeActivity.class));
-//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-//    }
-
     public void openSetting() {
-
+        finish();
         Intent intent = new Intent(ProfileActivity.this, SettingActivity.class);
         intent.putExtra("USERNAME", userNameText.getText().toString());
         intent.putExtra("GENDER",genderText.getText().toString());
