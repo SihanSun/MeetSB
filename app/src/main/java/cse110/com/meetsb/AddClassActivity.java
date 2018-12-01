@@ -150,5 +150,4 @@ public class AddClassActivity extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
-
 }
