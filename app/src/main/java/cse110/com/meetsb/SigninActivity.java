@@ -76,19 +76,16 @@ public class SigninActivity extends AppCompatActivity {
         });
 
         if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
-            finish();
             jumpToSwipePage();
         }
 
         if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
-            finish();
             jumpToConfirmPage();
         }
     }
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void userSignIn() {
@@ -207,15 +204,17 @@ public class SigninActivity extends AppCompatActivity {
     private void jumpToSwipePage() {
         finish();
         startActivity(new Intent(this, SwipeActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void jumpToConfirmPage() {
         finish();
         startActivity(new Intent(this, ConfirmActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void jumpToSignUpPage() {
-        //finish();
+        finish();
         startActivity(new Intent(this, SignupActivity.class));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

@@ -65,11 +65,4 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-    public void openSetting(View view) {
-        Intent intent = new Intent(this, SettingActivity.class);
-        startActivity(intent);
-    }
 }

@@ -74,6 +74,7 @@ public class SwipeActivity extends AppCompatActivity {
     int currentCourseIndex;
     int selectedCourseIndex;
     List<String> studentInThisCourse;
+    HashSet<String> courseSet;
 
     //user swipe information
     HashSet<String> liked;
@@ -236,7 +237,6 @@ public class SwipeActivity extends AppCompatActivity {
         btnAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(SwipeActivity.this, AddClassActivity.class));
                 overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
             }
@@ -369,15 +369,49 @@ public class SwipeActivity extends AppCompatActivity {
                 user = dataSnapshot.getValue(User.class);
 
                 courseTaking = new ArrayList<>();
+                courseSet = new HashSet<>();
                 //get the courses that the user is taking and get the default course
                 for(String courseName : user.getCourseTakingOffsetMap().keySet()) {
                     courseTaking.add(courseName);
+                    courseSet.add(courseName);
                 }
 
                 //set the spinner view
                 courseChoosing = (Spinner)findViewById(R.id.classInfo_spinner_class);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, courseTaking);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, courseTaking);
                 courseChoosing.setAdapter(adapter);
+
+                //attachListener to courseTaking
+                databaseReference.child("USER").child(userUid).child("courseTakingOffsetMap").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        String key = dataSnapshot.getKey();
+                        if(!courseSet.contains(key)) {
+                            courseTaking.add(key);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 //set current course
                 if(courseTaking.size() == 0) {
