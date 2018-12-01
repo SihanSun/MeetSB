@@ -42,7 +42,7 @@
         android:inputType="numberDecimal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:textColor="#fff" />
+        android:textColor="#000" />
 
 
     <Button

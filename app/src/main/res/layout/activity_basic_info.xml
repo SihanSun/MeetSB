@@ -36,7 +36,8 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        android:paddingLeft="20dp" />
+        android:paddingLeft="20dp"
+        android:textColor="#000" />
 
     <Spinner
         android:id="@+id/basic_info_spinner_gender"
@@ -61,7 +62,7 @@
         android:paddingLeft="20dp"
         android:paddingTop="15dp"
         android:paddingRight="10dp"
-        android:textColor="#fff" />
+        android:textColor="#000" />
 
     <Button
         android:id="@+id/basic_info_button_continue"
