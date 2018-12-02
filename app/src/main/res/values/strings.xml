@@ -49,6 +49,9 @@
         <item>CSE140L</item>
         <item>CSE120</item>
         <item>CSE130</item>
+        <item>ECON1</item>
+        <item>ECON2</item>
+        <item>ECON120A</item>
     </string-array>
 
     <string name="class_prompt">What class are you taking</string>

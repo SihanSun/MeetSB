@@ -74,15 +74,15 @@ public class SigninActivity extends AppCompatActivity {
                 setPasswordRecovery();
             }
         });
-
-        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
-            jumpToSwipePage();
-        }
-
-        if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
-            Toast.makeText(this, "Please confirm your email first", Toast.LENGTH_SHORT).show();
-            jumpToConfirmPage();
-        }
+//
+//        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
+//            jumpToSwipePage();
+//        }
+//
+//        if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
+//            Toast.makeText(this, "Please confirm your email first", Toast.LENGTH_SHORT).show();
+//            jumpToConfirmPage();
+//        }
     }
     @Override
     public void finish() {
@@ -94,9 +94,9 @@ public class SigninActivity extends AppCompatActivity {
         //check user email or password
         String email = userEmailAddress.getText().toString();
         String password = userPassword.getText().toString();
-        if (!isValid(email, password)) {
-            return;
-        }
+//        if (!isValid(email, password)) {
+//            return;
+//        }
 
         firebaseAuth.signInWithEmailAndPassword(email.trim()
         ,password.trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

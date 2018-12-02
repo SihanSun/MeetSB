@@ -86,9 +86,9 @@ public class SignupActivity extends AppCompatActivity {
         String email = emailAddress.getText().toString().trim();
         String password = passwordEntered.getText().toString().trim();
 
-        if (!isValid(email, password)) {
-            return;
-        }
+//        if (!isValid(email, password)) {
+//            return;
+//        }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Working on it...");
