@@ -35,8 +35,7 @@ import cse110.com.meetsb.Model.User;
 
 public class OtherUserActivity extends AppCompatActivity {
 
-    ImageView profilePicImageView;
-    Button backBtn;
+    ImageView profilePicImageView, backBtn;
     TextView userNameTextView, majorTextView, gpaTextView, descriptionTextView, genderTextView;
 
     DatabaseReference otherUserRef;
@@ -70,6 +69,7 @@ public class OtherUserActivity extends AppCompatActivity {
         genderTextView = findViewById(R.id.other_user_textView_gender);
         descriptionTextView = findViewById(R.id.other_user_textView_description);
         backBtn = findViewById(R.id.other_user_button_back);
+        Glide.with(this).load(R.drawable.bounce_arrow_up).into(backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
