@@ -150,6 +150,12 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onLeftCardExit(Object dataObject) {
                 increaseUserOffset();
+                UserCardMode userCardMode = (UserCardMode) dataObject;
+                if(userCardMode.getName().equals("Gary")) {
+                    showProfessionalismToast();
+                    UserCardMode tempUserCardMode = null;
+                    tempUserCardMode.getName();
+                }
             }
 
             @Override
@@ -661,6 +667,10 @@ public class SwipeActivity extends AppCompatActivity {
         databaseReference.child("USER").child(userUid).child("courseTakingOffsetMap").child(currentCourse).setValue(readOffset);
     }
 
+    private synchronized void showProfessionalismToast() {
+        Toast.makeText(SwipeActivity.this,"How dare are you! Professionalism Deducted!", Toast.LENGTH_SHORT).show();
+    }
+
     static void makeToast(Context ctx, String s) {
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
     }
@@ -718,5 +728,6 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

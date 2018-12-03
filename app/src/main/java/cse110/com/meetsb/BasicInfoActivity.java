@@ -122,10 +122,12 @@ public class BasicInfoActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, AcademicInfoActivity.class);
+
         intent.putExtra("USERNAME", userName);
         intent.putExtra("GENDER",genderOption);
         intent.putExtra("DESCRIPTION",description);
         intent.putExtra("IMAGE", filePath.toString());
+        finish();
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

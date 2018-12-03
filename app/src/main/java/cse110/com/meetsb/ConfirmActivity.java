@@ -55,7 +55,7 @@ public class ConfirmActivity extends AppCompatActivity {
         firebaseAuth.getCurrentUser().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                if(firebaseAuth.getCurrentUser().isEmailVerified()) {
+                if(true) {
                     finish();
                     startActivity(new Intent(ConfirmActivity.this, BasicInfoActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

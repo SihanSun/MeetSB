@@ -52,6 +52,7 @@
         <item>ECON1</item>
         <item>ECON2</item>
         <item>ECON120A</item>
+        <item>Team SB</item>
     </string-array>
 
     <string name="class_prompt">What class are you taking</string>
