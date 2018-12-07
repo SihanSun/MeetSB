@@ -6,7 +6,7 @@
     android:id="@+id/signIn_linearLayout_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/signin_bg"
+    android:background="@drawable/study_bg"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".SigninActivity">

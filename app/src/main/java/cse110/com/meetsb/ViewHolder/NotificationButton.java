@@ -42,7 +42,7 @@ public class NotificationButton extends AppCompatButton {
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.notButton);
         redCircleSize = typedArray.getDimension(R.styleable.notButton_circleSize, 20);
         circleColor = typedArray.getColor(R.styleable.notButton_circleBgColor, Color.RED);
-        textColor = typedArray.getColor(R.styleable.notButton_textColor, Color.WHITE);
+        textColor = typedArray.getColor(R.styleable.notButton_textColor, Color.RED);
         paint = new Paint();
         paint.setAntiAlias(true);
         typedArray.recycle();
