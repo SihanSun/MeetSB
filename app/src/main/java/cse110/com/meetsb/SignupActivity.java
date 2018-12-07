@@ -106,7 +106,6 @@ public class SignupActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         progressDialog.dismiss();
-                                        finish();
                                         startActivity(new Intent(SignupActivity.this, ConfirmActivity.class));
                                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {
