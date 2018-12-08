@@ -84,7 +84,7 @@
             android:background="@drawable/chat_btn"
             notButton:circleBgColor="@android:color/holo_red_light"
             notButton:circleSize="12dp"
-            notButton:textColor="@android:color/white" />
+            notButton:textColor="@android:color/holo_red_light" />
 
         <Button
             android:id="@+id/buttons_button_like"
