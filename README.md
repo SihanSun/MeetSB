@@ -36,5 +36,5 @@ Have at least two android phone running Android 5.0 (Lollipop) or later.
 ## Known Bugs
 1. Sometimes when uploading the profile picture, it may appears in side way. Do not worry, just click save and continue, it will appear normal in profile page.
 
-2. After a new class is added. When switching to that newly added class, it will fail on the first time, just try again and it will works.
+2. After a new class is added, when the user is trying to switch to that newly added class, it will fail on the first time, just try again and it will work.
 
