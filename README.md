@@ -25,7 +25,7 @@ Have at least two android phone running Android 5.0 (Lollipop) or later.
 
 ## How To Install
 1. Download the APK file from the link down below:
-   https://drive.google.com/drive/u/3/folders/1phsrO4qX7ICUZtoj2cr72IQPJ-iF8fiW
+   https://drive.google.com/drive/folders/1phsrO4qX7ICUZtoj2cr72IQPJ-iF8fiW?usp=sharing
 2. Make sure "Install apps from unknown sources" is enbaled in the setting menu, specifically from the Android Security Setting.
 3. Run the APK file from the downloads folder and install it.
 
