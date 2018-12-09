@@ -3,30 +3,38 @@ An Android App that can help UCSD Students to find their ideal study buddies.
 
 ## Developer
 
-Study Buddies Team
+Team SB
+Denghui Chen		Kuanghanying Zhao	    Mu He	 
+Sihan Sun		    Sutianyi Wen	      	Weilin Liu
+Xinpei Tan		  Yuting Xu		          Zhongyu Chen	
+Zhaoyi Li
 
-## Dependencies
+## Login Credentials
+We have provided the following accounts for testing pruposes.
+1.  Email Address: sis070@ucsd.edu
+    Password: cse110gary
 
-- Android-Studio : [https://developer.android.com/studio/install](https://developer.android.com/studio/install) Please go to the website and download the latest version and install.
-- FireBase: [https://firebase.google.com/](https://firebase.google.com/)
+2.  Email Address: wel288@ucsd.edu
+    Password: cse110gary
+    
+3.  Email Address: zhc180@ucsd.edu
+    Password: cse110gary
 
-- SwipeCards Library: https://github.com/Diolor/Swipecards
+## Requirement
+Have at least two android phone running Android 5.0 (Lollipop) or later.
 
-- Glide Library: https://bumptech.github.io/glide
+## How To Install
+1. Download the APK file from the link down below:
+   https://drive.google.com/drive/u/3/folders/1phsrO4qX7ICUZtoj2cr72IQPJ-iF8fiW
+2. Make sure "Install apps from unknown sources" is enbaled in the setting menu, specifically from the Android Security Setting.
+3. Run the APK file from the downloads folder and install it.
 
-## Platforms
+## How To Run
+1. Open App drawer on the Andriod Device.
+2. Click and Run "meetSB"
 
-The system has roughly two parts:
+## Known Bugs
+1. Sometimes when uploading the profile picture, it may appears in side way. Do not worry, just click save and continue, it will appear normal in profile page.
 
-- Front-end
-- Back-end
+2. After a new class is added. When switching to that newly added class, it will fail on the first time, just try again and it will works.
 
-We are separating the development between front-end and back-end
-
-### Front-end
-
-The front-end is designed on Android Studio.
-
-### Back-end
-
-The back-end is backed by Firebase.
