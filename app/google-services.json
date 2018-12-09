@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "617989091433",
+    "firebase_url": "https://meetsb-cdac3.firebaseio.com",
+    "project_id": "meetsb-cdac3",
+    "storage_bucket": "meetsb-cdac3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617989091433:android:67c64a7610d7d603",
+        "android_client_info": {
+          "package_name": "cse110.com.meetsb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617989091433-hjllavgsji2v775vfvu688qhm3ei3sre.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cse110.com.meetsb",
+            "certificate_hash": "e391f38738274027585bb23c32bbac9661f22b98"
+          }
+        },
+        {
+          "client_id": "617989091433-jcp2of8lj0u205e8lrvi85h8bdrni6ph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBijEM0qdjsJ87DNAMVZjxwPiLinuB_i_M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617989091433-jcp2of8lj0u205e8lrvi85h8bdrni6ph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
